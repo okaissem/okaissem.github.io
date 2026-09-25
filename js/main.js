@@ -134,7 +134,7 @@
           (fruit.season ? '<span class="fruit-season">' + escapeHtml(fruit.season) + "</span>" : "") +
           '<h3 class="fruit-name">' + escapeHtml(fruit.name) + "</h3>" +
           '<p class="fruit-desc">' + escapeHtml(fruit.desc) + "</p>" +
-          '<a href="#" class="fruit-ask btn-kakao">가격 문의 ›</a>' +
+          '<a href="#" class="fruit-ask btn-kakao">오늘 가격 물어보기 ›</a>' +
           "</div>" +
           "</article>"
         );
