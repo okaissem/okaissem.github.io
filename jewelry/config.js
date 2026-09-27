@@ -67,6 +67,8 @@ window.JEWELRY_CONFIG = {
     eyebrow: "HANDPICKED JEWELRY",
     headline: "당신의 하루에\n작은 빛 하나",
     subCopy: "반지 · 목걸이 · 귀걸이 · 팔찌\n매일 착용해도 편안한 쥬얼리를 고릅니다.",
+    // 첫 화면 큰 반지 이미지 (배경이 투명한 PNG). 빈칸이면 그림(SVG)으로 나옵니다.
+    image: "images/hero-ring.png",
   },
 
   // ------------------------------------------------------------
@@ -86,25 +88,27 @@ window.JEWELRY_CONFIG = {
   // 4. 상품 (시안용 예시 - 실제 상품 사진·이름으로 바꿔 주세요)
   // ------------------------------------------------------------
   // category: 반지 / 목걸이 / 귀걸이 / 팔찌 중 하나
-  // image   : 실제 사진 파일 경로 (빈칸이면 예시 그림이 나옵니다)
+  // image   : 사진 파일 경로 (빈칸이면 예시 그림이 나옵니다)
+  //           지금 images/ 폴더의 사진은 3D로 그린 시안용 가상 이미지입니다.
+  // virtual : true 이면 사진 위에 "가상 이미지" 표시 (실제 사진으로 바꾸면 지워 주세요)
   // gem     : 예시 그림의 보석 색 (image 가 있으면 쓰지 않습니다)
   // metal   : 예시 그림의 금속 색 - gold / rose / silver
   // price   : 판매 가격 (빈칸이면 "스토어에서 가격 보기"로 나옵니다) - 지금 값은 가상 가격
   // link    : 스마트스토어 상품 주소 (빈칸이면 스토어 첫 화면으로 연결)
   categories: ["반지", "목걸이", "귀걸이", "팔찌"],
   products: [
-    { name: "솔리테어 큐빅 반지", price: "89,000원", category: "반지", metal: "gold", gem: "#f4f7ff", image: "", link: "" },
-    { name: "이터니티 라인 반지", price: "129,000원", category: "반지", metal: "rose", gem: "#ffe3ea", image: "", link: "" },
-    { name: "에메랄드 포인트 반지", price: "159,000원", category: "반지", metal: "gold", gem: "#3fb37f", image: "", link: "" },
-    { name: "데일리 실버 반지", price: "39,000원", category: "반지", metal: "silver", gem: "#dfe8ff", image: "", link: "" },
-    { name: "한 알 진주 목걸이", price: "69,000원", category: "목걸이", metal: "gold", gem: "#fbf4e8", image: "", link: "" },
-    { name: "하트 펜던트 목걸이", price: "79,000원", category: "목걸이", metal: "rose", gem: "#ff8fa8", image: "", link: "" },
-    { name: "사파이어 드롭 목걸이", price: "149,000원", category: "목걸이", metal: "silver", gem: "#4a6cf0", image: "", link: "" },
-    { name: "미니 볼 귀걸이", price: "29,000원", category: "귀걸이", metal: "gold", gem: "#f4f7ff", image: "", link: "" },
-    { name: "진주 드롭 귀걸이", price: "59,000원", category: "귀걸이", metal: "silver", gem: "#fbf4e8", image: "", link: "" },
-    { name: "루비 스터드 귀걸이", price: "99,000원", category: "귀걸이", metal: "rose", gem: "#d8344f", image: "", link: "" },
-    { name: "테니스 팔찌", price: "119,000원", category: "팔찌", metal: "silver", gem: "#f4f7ff", image: "", link: "" },
-    { name: "체인 레이어드 팔찌", price: "49,000원", category: "팔찌", metal: "gold", gem: "#f7d774", image: "", link: "" },
+    { name: "솔리테어 큐빅 반지", price: "89,000원", category: "반지", metal: "gold", gem: "#f4f7ff", virtual: true, image: "images/01-solitaire-ring.jpg", link: "" },
+    { name: "이터니티 라인 반지", price: "129,000원", category: "반지", metal: "rose", gem: "#ffe3ea", virtual: true, image: "images/02-eternity-ring.jpg", link: "" },
+    { name: "에메랄드 포인트 반지", price: "159,000원", category: "반지", metal: "gold", gem: "#3fb37f", virtual: true, image: "images/03-emerald-ring.jpg", link: "" },
+    { name: "데일리 실버 반지", price: "39,000원", category: "반지", metal: "silver", gem: "#dfe8ff", virtual: true, image: "images/04-silver-ring.jpg", link: "" },
+    { name: "한 알 진주 목걸이", price: "69,000원", category: "목걸이", metal: "gold", gem: "#fbf4e8", virtual: true, image: "images/05-pearl-necklace.jpg", link: "" },
+    { name: "하트 펜던트 목걸이", price: "79,000원", category: "목걸이", metal: "rose", gem: "#ff8fa8", virtual: true, image: "images/06-heart-necklace.jpg", link: "" },
+    { name: "사파이어 드롭 목걸이", price: "149,000원", category: "목걸이", metal: "silver", gem: "#4a6cf0", virtual: true, image: "images/07-sapphire-necklace.jpg", link: "" },
+    { name: "미니 볼 귀걸이", price: "29,000원", category: "귀걸이", metal: "gold", gem: "#f4f7ff", virtual: true, image: "images/08-ball-earrings.jpg", link: "" },
+    { name: "진주 드롭 귀걸이", price: "59,000원", category: "귀걸이", metal: "silver", gem: "#fbf4e8", virtual: true, image: "images/09-pearl-earrings.jpg", link: "" },
+    { name: "루비 스터드 귀걸이", price: "99,000원", category: "귀걸이", metal: "rose", gem: "#d8344f", virtual: true, image: "images/10-ruby-earrings.jpg", link: "" },
+    { name: "테니스 팔찌", price: "119,000원", category: "팔찌", metal: "gold", gem: "#f4f7ff", virtual: true, image: "images/11-tennis-bracelet.jpg", link: "" },
+    { name: "체인 레이어드 팔찌", price: "49,000원", category: "팔찌", metal: "gold", gem: "#f7d774", virtual: true, image: "images/12-chain-bracelet.jpg", link: "" },
   ],
 
   // ------------------------------------------------------------
