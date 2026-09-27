@@ -16,7 +16,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Noto+Serif+KR:wght@400;600&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet" />
 
 <!-- 디자인을 고친 뒤에는 ?v= 뒤 숫자를 바꾸면 손님 휴대폰에 새 디자인이 바로 보입니다 -->
-<link rel="stylesheet" href="style.css?v=20260927b" />
+<link rel="stylesheet" href="style.css?v=20260927c" />
 </head>
 <body>
 
@@ -26,7 +26,7 @@
     <a href="#story">브랜드</a>
     <a href="#collection">컬렉션</a>
     <a href="#video">영상</a>
-    <a href="#visit">문의</a>
+    <a href="#visit" data-nav="info">문의</a>
   </nav>
 </header>
 
@@ -85,7 +85,21 @@
     <p class="gift-note">무료 선물 포장 · 메시지 카드 · 쇼핑백</p>
   </section>
 
-  <!-- 방문·문의 -->
+  <!-- 홈페이지 안내 (시안을 보여 줄 때) - config.js 의 siteInfo.show 로 켜고 끕니다 -->
+  <section class="section site-info reveal" id="site-info" hidden>
+    <p class="kicker">ABOUT THIS HOMEPAGE</p>
+    <h2 data-bind="siteInfo.title"></h2>
+    <p class="lead" data-bind="siteInfo.body"></p>
+    <ol class="points" id="features"></ol>
+    <div class="price-box">
+      <span class="price-label" data-bind="siteInfo.priceLabel"></span>
+      <strong class="price-value" data-bind="siteInfo.price"></strong>
+      <span class="price-note" data-bind="siteInfo.priceNote"></span>
+    </div>
+    <a class="btn btn-gold" data-bind-href="siteInfo.pricingLink">가격표 자세히 보기</a>
+  </section>
+
+  <!-- 방문·문의 (실제 매장용) -->
   <section class="section visit reveal" id="visit">
     <p class="kicker">VISIT &amp; CONTACT</p>
     <h2>매장 안내</h2>
@@ -106,7 +120,7 @@
   <a class="bar-store" data-link="smartstore" target="_blank" rel="noopener">스토어에서 구매</a>
 </div>
 
-<script src="config.js?v=20260927b"></script>
-<script src="main.js?v=20260927b"></script>
+<script src="config.js?v=20260927c"></script>
+<script src="main.js?v=20260927c"></script>
 </body>
 </html>
