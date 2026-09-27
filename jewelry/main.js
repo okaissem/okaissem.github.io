@@ -171,7 +171,10 @@
         img.src = p.image;
         img.alt = p.name;
         img.loading = "lazy";
+        img.width = 800;
+        img.height = 800;
         thumb.appendChild(img);
+        if (p.virtual) thumb.appendChild(el("span", "sample", "가상 이미지"));
       } else {
         thumb.innerHTML = jewelrySvg(p.category, p.metal, p.gem || "#f4f7ff");
         thumb.appendChild(el("span", "sample", "예시 이미지"));
@@ -321,7 +324,18 @@
   document.addEventListener("DOMContentLoaded", function () {
     fillText();
     fillLinks();
-    document.getElementById("heroRing").innerHTML = jewelrySvg("반지", "gold", "#eef3ff");
+    var heroRing = document.getElementById("heroRing");
+    var heroImage = (config.hero || {}).image;
+    if (heroImage) {
+      var heroImg = el("img");
+      heroImg.src = heroImage;
+      heroImg.alt = "";
+      heroImg.width = 900;
+      heroImg.height = 900;
+      heroRing.appendChild(heroImg);
+    } else {
+      heroRing.innerHTML = jewelrySvg("반지", "gold", "#eef3ff");
+    }
     renderPoints();
     renderCollection();
     renderVideo();

@@ -80,7 +80,8 @@ h1, h2 { font-family: var(--font-serif); font-weight: 600; margin: 0; }
   animation: breathe 5s ease-in-out infinite;
 }
 .hero-ring { position: absolute; inset: 0; animation: float 6s ease-in-out infinite; }
-.hero-ring svg { width: 100%; height: 100%; filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.6)); }
+.hero-ring svg, .hero-ring img { width: 100%; height: 100%; filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.6)); }
+.hero-ring img { object-fit: contain; }
 .spark {
   position: absolute; width: 18px; height: 18px;
   background: radial-gradient(circle, #fff 0 12%, transparent 13%),
@@ -133,8 +134,8 @@ h1, h2 { font-family: var(--font-serif); font-weight: 600; margin: 0; }
 .card a { text-decoration: none; display: block; }
 .thumb { aspect-ratio: 1; background: radial-gradient(circle at 50% 40%, #2f2a24, #191613 70%); display: grid; place-items: center; position: relative; }
 .thumb svg { width: 78%; height: 78%; }
-.thumb img { width: 100%; height: 100%; object-fit: cover; }
-.thumb .sample { position: absolute; top: 10px; left: 10px; font-size: 11px; color: var(--ivory-soft); border: 1px solid var(--line); border-radius: 999px; padding: 1px 8px; }
+.thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.thumb .sample { position: absolute; top: 10px; left: 10px; font-size: 11px; color: var(--ivory); background: rgba(20, 18, 16, 0.55); border-radius: 999px; padding: 1px 8px; }
 .card-body { padding: 14px 16px 18px; }
 .card-cat { font-size: 12px; color: var(--gold); letter-spacing: 0.1em; }
 .card-name { display: block; font-family: var(--font-serif); font-size: 16px; margin: 2px 0 6px; }
