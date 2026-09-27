@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<!-- 홈페이지 제작 가격표 페이지 (손님에게 링크로 보내는 용도) -->
+<!-- 검색(네이버·구글)에 나오지 않게 합니다 -->
+<meta name="robots" content="noindex, nofollow" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>홈페이지 제작 가격표 | 유튜브·SNS 연동</title>
+<meta name="description" content="가게 홈페이지 제작 가격표. 기본형·표준형·프리미엄 패키지와 유튜브·인스타그램·카카오톡 채널·네이버 연동 가격을 안내합니다." />
+<meta name="theme-color" content="#2e7d4f" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%90%3C/text%3E%3C/svg%3E" />
+
+<!-- 글꼴 (인터넷이 안 되면 기본 글꼴로 자동 표시됩니다) -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --ink: #1c1714;
+    --ink-soft: #5a4f47;
+    --green: #2e7d4f;
+    --green-deep: #1d5a36;
+    --green-light: #e8f4ec;
+    --orange: #ff8a1f;
+    --yellow: #ffc21a;
+    --cream: #fff8ea;
+    --white: #ffffff;
+    --line: #f0e2c6;
+    --radius-lg: 24px;
+    --radius-md: 16px;
+    --shadow: 0 10px 28px rgba(60, 30, 5, 0.12);
+    --font-body: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", -apple-system, sans-serif;
+    --font-display: "Black Han Sans", "Noto Sans KR", "Apple SD Gothic Neo", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--cream);
+    color: var(--ink);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    word-break: keep-all;
+  }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 16px; }
+
+  /* 맨 위 */
+  .hero { background: var(--green-deep); color: var(--white); padding: 56px 0 48px; text-align: center; }
+  .hero .eyebrow { display: inline-block; background: var(--yellow); color: var(--ink); font-weight: 700;
+    font-size: 14px; padding: 4px 14px; border-radius: 999px; }
+  .hero h1 { font-family: var(--font-display); font-weight: 400; font-size: clamp(32px, 7vw, 52px);
+    line-height: 1.2; margin: 16px 0 12px; }
+  .hero p { margin: 0 auto; max-width: 560px; opacity: 0.9; }
+
+  section { padding: 48px 0 8px; }
+  h2 { font-family: var(--font-display); font-weight: 400; font-size: clamp(24px, 5vw, 32px);
+    color: var(--green-deep); margin: 0 0 6px; }
+  .lead { margin: 0 0 24px; color: var(--ink-soft); }
+
+  /* 패키지 카드 */
+  .plans { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+  .plan { position: relative; background: var(--white); border: 2px solid var(--line);
+    border-radius: var(--radius-lg); padding: 28px 24px; box-shadow: var(--shadow); }
+  .plan.best { border-color: var(--green); }
+  .plan .tag { position: absolute; top: -14px; left: 24px; background: var(--orange); color: var(--white);
+    font-weight: 700; font-size: 13px; padding: 3px 12px; border-radius: 999px; }
+  .plan h3 { margin: 0; font-size: 20px; }
+  .price { font-size: 34px; font-weight: 900; color: var(--green-deep); margin: 8px 0 2px;
+    font-variant-numeric: tabular-nums; }
+  .price small { font-size: 15px; font-weight: 500; color: var(--ink-soft); }
+  .meta { font-size: 14px; color: var(--ink-soft); margin: 0 0 16px; }
+  .plan ul { margin: 0; padding: 0; list-style: none; }
+  .plan li { padding: 6px 0 6px 26px; position: relative; border-top: 1px dashed var(--line); }
+  .plan li::before { content: "✓"; position: absolute; left: 4px; color: var(--green); font-weight: 900; }
+
+  /* 표 */
+  .table-box { background: var(--white); border-radius: var(--radius-md); box-shadow: var(--shadow);
+    overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; min-width: 520px; }
+  th, td { padding: 14px 16px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { background: var(--green-light); color: var(--green-deep); font-size: 14px; }
+  td.num { white-space: nowrap; font-weight: 700; font-variant-numeric: tabular-nums; }
+  tr.bundle td { background: #fff4df; }
+  tr:last-child td { border-bottom: 0; }
+  .save { display: inline-block; margin-left: 6px; font-size: 12px; font-weight: 700; color: var(--white);
+    background: var(--orange); padding: 1px 8px; border-radius: 999px; }
+
+  /* 휴대폰에서는 표를 한 줄씩 카드처럼 보여 줍니다 */
+  @media (max-width: 600px) {
+    table { min-width: 0; }
+    thead { display: none; }
+    tr { display: block; padding: 14px 16px; border-bottom: 1px solid var(--line); }
+    tr:last-child { border-bottom: 0; }
+    td { display: block; padding: 2px 0; border: 0; }
+    td:first-child { font-weight: 700; }
+    td.num { color: var(--green-deep); }
+    td:last-child { font-size: 14px; color: var(--ink-soft); }
+    td br { display: none; }
+    tr.bundle { background: #fff4df; }
+  }
+
+  .example { margin-top: 16px; background: var(--green-light); border-radius: var(--radius-md);
+    padding: 16px 20px; }
+  .example b { color: var(--green-deep); }
+
+  /* 진행 순서 */
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;
+    counter-reset: step; padding: 0; margin: 0; list-style: none; }
+  .steps li { background: var(--white); border-radius: var(--radius-md); padding: 18px 18px 18px 60px;
+    position: relative; box-shadow: var(--shadow); counter-increment: step; }
+  .steps li::before { content: counter(step); position: absolute; left: 16px; top: 16px; width: 32px;
+    height: 32px; border-radius: 50%; background: var(--green); color: var(--white); font-weight: 900;
+    display: grid; place-items: center; }
+  .steps b { display: block; }
+  .steps span { font-size: 14px; color: var(--ink-soft); }
+
+  .case { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; justify-content: space-between;
+    background: var(--white); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow); }
+  .btn { display: inline-block; background: var(--green); color: var(--white); text-decoration: none;
+    font-weight: 700; padding: 12px 22px; border-radius: 999px; }
+  .btn:hover { background: var(--green-deep); }
+
+  footer { padding: 40px 0 56px; font-size: 13px; color: var(--ink-soft); }
+  footer ul { margin: 0; padding-left: 18px; }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow">가게 홈페이지 제작</span>
+    <h1>홈페이지 제작 가격표</h1>
+    <p>휴대폰에서 잘 보이는 가게 홈페이지를 만들고, 유튜브·인스타그램·카카오톡 채널·네이버까지 한 번에 연결해 드립니다.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section aria-labelledby="plans-title">
+    <h2 id="plans-title">제작 패키지</h2>
+    <p class="lead">대부분의 동네 가게에는 표준형이 알맞습니다. 모든 금액은 부가세(VAT) 별도입니다.</p>
+    <div class="plans">
+      <article class="plan">
+        <h3>기본형</h3>
+        <p class="price">500,000<small>원</small></p>
+        <p class="meta">제작 7일 · 수정 2회</p>
+        <ul>
+          <li>한 페이지 홈페이지</li>
+          <li>휴대폰·PC 화면 모두 대응</li>
+          <li>가게 소개·위치·전화 연결</li>
+        </ul>
+      </article>
+      <article class="plan best">
+        <span class="tag">추천</span>
+        <h3>표준형</h3>
+        <p class="price">900,000<small>원</small></p>
+        <p class="meta">제작 10~14일 · 수정 3회</p>
+        <ul>
+          <li>기본형 내용 전부</li>
+          <li>상품(메뉴) 소개 20개 이내</li>
+          <li>움직이는 화면 효과</li>
+          <li>카카오톡 상담 버튼</li>
+          <li>네이버·구글 검색 등록</li>
+        </ul>
+      </article>
+      <article class="plan">
+        <h3>프리미엄</h3>
+        <p class="price">1,500,000<small>원</small></p>
+        <p class="meta">제작 14~21일 · 수정 5회</p>
+        <ul>
+          <li>표준형 내용 전부</li>
+          <li>여러 페이지 구성</li>
+          <li>홍보영상(쇼츠) 1편 제작</li>
+          <li>유튜브·SNS 연동 전체 포함</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section aria-labelledby="unit-title">
+    <h2 id="unit-title">페이지별 단가</h2>
+    <p class="lead">원하는 페이지만 골라서 만들 수도 있습니다. 상품이 많아도 상세 페이지 틀은 한 번만 만들고, 상품은 등록 비용만 받습니다.</p>
+    <div class="table-box">
+      <table>
+        <thead>
+          <tr><th scope="col">구분</th><th scope="col">단가 (VAT 별도)</th><th scope="col">설명</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>메인 페이지</td><td class="num">400,000원</td><td>첫 화면. 휴대폰·PC 대응, 전체 디자인 방향을 정합니다</td></tr>
+          <tr><td>서브 페이지</td><td class="num">1페이지 100,000원</td><td>매장 소개, 오시는 길, 문의 등</td></tr>
+          <tr><td>상품 목록·상세 틀</td><td class="num">300,000원</td><td>한 번 만들면 모든 상품에 씁니다 (분류가 많으면 500,000원)</td></tr>
+          <tr><td>상품 등록</td><td class="num">1개 10,000원</td><td>사진·이름·설명 올리기</td></tr>
+          <tr><td>기능 추가</td><td class="num">100,000~300,000원</td><td>문의 양식, 예약, 게시판 등</td></tr>
+          <tr><td>외국어 페이지</td><td class="num">해당 페이지 값의 50%</td><td>영어·중국어·일본어 등</td></tr>
+          <tr><td>온라인 결제(쇼핑몰)</td><td class="num">1,000,000원부터</td><td>결제·주문 관리가 필요할 때 따로 견적</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="example">패키지 가격도 이 단가로 계산했습니다.<br />
+      기본형 = 메인 40만 + 서브 1개 10만 = <b>50만 원</b><br />
+      표준형 = 메인 40만 + 상품 틀 30만 + 상품 20개 20만 = <b>90만 원</b><br />
+      글·사진을 직접 써 드리거나 디자인을 처음부터 새로 하면 비용이 추가됩니다.</p>
+  </section>
+
+  <section aria-labelledby="options-title">
+    <h2 id="options-title">유튜브·SNS 연동 옵션</h2>
+    <p class="lead">기본형·표준형에는 필요한 연동만 골라서 추가합니다. 묶음으로 고르시면 더 저렴합니다.</p>
+    <div class="table-box">
+      <table>
+        <thead>
+          <tr><th scope="col">연동 항목</th><th scope="col">가격 (VAT 별도)</th><th scope="col">내용</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>유튜브 연동</td><td class="num">100,000원</td><td>유튜브 영상·쇼츠를 홈페이지 안에서 바로 재생, 채널 바로가기 버튼</td></tr>
+          <tr><td>유튜브 채널 만들기</td><td class="num">50,000원</td><td>채널 개설, 프로필·배너 이미지, 가게 소개글</td></tr>
+          <tr><td>홍보영상(쇼츠) 제작</td><td class="num">1편 150,000원</td><td>30초 안팎 세로 영상, 유튜브 쇼츠·인스타 릴스·틱톡에 그대로 업로드</td></tr>
+          <tr><td>인스타그램 연동</td><td class="num">50,000원</td><td>인스타 바로가기 버튼, 최근 게시물 보여주기</td></tr>
+          <tr><td>카카오톡 채널 연동</td><td class="num">50,000원</td><td>카톡 상담·채널 추가 버튼, 채널 개설 도움</td></tr>
+          <tr><td>네이버 블로그·플레이스 연동</td><td class="num">50,000원</td><td>블로그 바로가기, 네이버플레이스 지도·리뷰 연결</td></tr>
+          <tr class="bundle"><td>SNS 묶음<br />(인스타·카톡·네이버)</td><td class="num">120,000원<span class="save">3만 원 할인</span></td><td>위 3가지를 한꺼번에</td></tr>
+          <tr class="bundle"><td>유튜브 + SNS 전체 묶음</td><td class="num">200,000원<span class="save">5만 원 할인</span></td><td>유튜브 연동 + SNS 묶음</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="example">예시: 표준형 900,000원 + 유튜브·SNS 전체 묶음 200,000원 = <b>1,100,000원</b> (VAT 별도)</p>
+  </section>
+
+  <section aria-labelledby="allinone-title">
+    <h2 id="allinone-title">올인원 1년 패키지 <small style="font-family:var(--font-body);font-size:16px;color:var(--ink-soft)">상품 100개 기준</small></h2>
+    <p class="lead">홈페이지 제작과 상품 100개 등록, 유튜브·네이버플레이스·카카오톡 채널 연동, 1년 관리를 한 번에 맡기는 상품입니다. 쥬얼리·꽃집·옷가게처럼 상품이 많은 매장에 알맞습니다.</p>
+    <div class="plans">
+      <article class="plan">
+        <h3>기본 관리형</h3>
+        <p class="price">2,700,000<small>원 / 1년</small></p>
+        <p class="meta">VAT 별도 · 따로 하면 2,760,000원</p>
+        <ul>
+          <li>매장 홈페이지 제작 (분류별 상품 목록)</li>
+          <li>상품 100개 등록</li>
+          <li>유튜브 연동</li>
+          <li>네이버플레이스 연동</li>
+          <li>카카오톡 채널 연동</li>
+          <li>1년 동안 수정 월 2회, 오류 점검</li>
+        </ul>
+      </article>
+      <article class="plan best">
+        <span class="tag">추천</span>
+        <h3>운영 대행형</h3>
+        <p class="price">3,500,000<small>원 / 1년</small></p>
+        <p class="meta">VAT 별도 · 따로 하면 3,600,000원</p>
+        <ul>
+          <li>기본 관리형 내용 전부</li>
+          <li>유튜브 쇼츠·인스타 게시물 월 4개 제작·업로드</li>
+          <li>네이버플레이스 소식·사진 관리</li>
+          <li>새 상품 등록 월 5개까지 무료</li>
+          <li>1년 동안 수정 월 2회, 오류 점검</li>
+        </ul>
+      </article>
+    </div>
+    <p class="example">나눠 내기 예시: 기본 관리형은 계약금 1,500,000원 + 월 100,000원 × 12개월, 운영 대행형은 계약금 1,100,000원 + 월 200,000원 × 12개월 (VAT 별도)<br />
+      상품이 100개보다 많거나 1년 안에 새로 추가하면 1개당 10,000원입니다.<br />
+      상품 사진 촬영이 필요하면 촬영비를 따로 받습니다 (상품 100개 기준 100만~150만 원).</p>
+  </section>
+
+  <section aria-labelledby="care-title">
+    <h2 id="care-title">유지관리 (선택)</h2>
+    <p class="lead">완성 후 1개월은 무료로 관리해 드립니다. 그 뒤에는 아래 요금제 중 하나를 고를 수 있습니다.</p>
+    <div class="table-box">
+      <table>
+        <thead>
+          <tr><th scope="col">요금제</th><th scope="col">월 요금 (VAT 별도)</th><th scope="col">내용</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>기본 관리</td><td class="num">30,000원</td><td>글·사진·영업시간 수정 월 2회, 오류 점검</td></tr>
+          <tr><td>SNS 관리 포함</td><td class="num">100,000원</td><td>기본 관리 + 유튜브 쇼츠·인스타 게시물 월 4개 올려 드림</td></tr>
+          <tr><td>관리 없이 필요할 때만</td><td class="num">1회 20,000원</td><td>수정할 때마다 요청</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section aria-labelledby="steps-title">
+    <h2 id="steps-title">진행 순서</h2>
+    <p class="lead">돈을 내시기 전에 시안부터 확인하실 수 있습니다.</p>
+    <ol class="steps">
+      <li><b>상담</b><span>가게와 원하시는 내용을 알려 주세요</span></li>
+      <li><b>시안 확인</b><span>"미리보기" 표시가 붙은 시안을 먼저 보여 드립니다</span></li>
+      <li><b>계약·계약금 50%</b><span>시안이 마음에 드시면 계약합니다</span></li>
+      <li><b>완성·잔금 50%</b><span>수정을 마치고 정식으로 오픈합니다</span></li>
+    </ol>
+  </section>
+
+  <section aria-labelledby="case-title">
+    <h2 id="case-title">제작 사례</h2>
+    <div class="case">
+      <div>
+        <b>과일철이네2</b> · 동네 과일가게 (표준형)<br />
+        <span class="meta">움직이는 화면 효과, 카카오톡 상담, 네이버플레이스 연결, 홍보영상</span>
+      </div>
+      <a class="btn" href="../">홈페이지 보러 가기</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <ul>
+    <li>모든 금액은 부가세(VAT) 별도입니다.</li>
+    <li>도메인(예: 가게이름.com) 비용은 실비로 따로 받습니다 (보통 1년에 2~3만 원).</li>
+    <li>자세한 조건은 계약서에 따릅니다.</li>
+  </ul>
+</footer>
+
+</body>
+</html>
