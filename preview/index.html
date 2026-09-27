@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<!-- 미리보기(시안) 페이지: 사진·글꼴·스크립트는 홈페이지 폴더의 파일을 그대로 씁니다 -->
+<base href="../" />
+<!-- 검색(네이버·구글)에 나오지 않게 합니다 -->
+<meta name="robots" content="noindex, nofollow" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>[미리보기] 과일철이네2 | 신선한 제철과일·선물용 과일</title>
+<meta name="description" content="가족에게 드리는 마음으로 좋은 과일만 정성껏 고르는 과일철이네2. 신선한 제철과일, 선물용 과일, 지역 배달을 만나보세요." />
+<meta name="theme-color" content="#ffe9a6" />
+
+<!-- Open Graph 기본 메타태그 -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="과일철이네2 | 신선한 제철과일·선물용 과일" />
+<meta property="og:description" content="가족에게 드리는 마음으로 좋은 과일만 정성껏 고르는 과일철이네2. 신선한 제철과일, 선물용 과일, 지역 배달을 만나보세요." />
+<meta property="og:locale" content="ko_KR" />
+<meta property="og:image" content="public/images/fruits/17-strawberry.jpg" />
+
+<!-- 파비콘 (사과 이모지, 별도 파일 없이 바로 표시됩니다) -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8D%8E%3C/text%3E%3C/svg%3E" />
+
+<!-- 글꼴 (인터넷이 안 되면 기본 글꼴로 자동 표시됩니다) -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet" />
+
+<!-- 영화 같은 3D 스크롤 효과 켜기 ("동작 줄이기" 설정 기기에서는 자동으로 꺼집니다) -->
+<script>
+  if (!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches)) {
+    document.documentElement.classList.add("cinema");
+  }
+</script>
+<!-- 디자인을 고친 뒤에는 아래 ?v= 뒤 숫자를 바꾸면 손님 휴대폰에 새 디자인이 바로 보입니다 -->
+<link rel="stylesheet" href="css/style.css?v=20260925a" />
+<link rel="stylesheet" href="css/cinema.css?v=20260925a" />
+</head>
+<body>
+
+<!-- 영화 효과: 오프닝 타이틀, 위아래 검은 띠, 필름 질감, 진행바 -->
+<div class="film-intro" id="film-intro" aria-hidden="true">
+  <p class="film-intro-small">A FRESH FRUIT STORY</p>
+  <p class="film-intro-title" data-config="storeName">과일철이네2</p>
+</div>
+<div class="letterbox letterbox-top" aria-hidden="true"></div>
+<div class="letterbox letterbox-bottom" aria-hidden="true"></div>
+<div class="film-grain" aria-hidden="true"></div>
+<div class="scroll-progress" aria-hidden="true"><span id="scroll-progress-bar"></span></div>
+<nav class="scene-nav" id="scene-nav" aria-label="장면 바로가기"></nav>
+
+<!-- ============================================================ -->
+<!-- ① 상단 헤더 -->
+<!-- ============================================================ -->
+<header class="site-header" id="site-header">
+  <div class="header-inner">
+    <a href="#hero" class="logo"><span class="logo-mark">🍎</span><span data-config="storeName">과일철이네2</span></a>
+
+    <nav class="main-nav" id="main-nav">
+      <a href="#trailer" class="nav-link">예고편</a>
+      <a href="#about" class="nav-link">소개</a>
+      <a href="#showcase" class="nav-link">과일 20종</a>
+      <a href="#gift" class="nav-link">선물세트</a>
+      <a href="#benefits" class="nav-link">이용혜택</a>
+      <a href="#info" class="nav-link">배달·영업안내</a>
+      <a href="#visit" class="nav-link">오시는길</a>
+    </nav>
+
+    <a href="#" class="btn btn-kakao btn-header-kakao">카카오톡 상담</a>
+
+    <button class="menu-toggle" id="menu-toggle" aria-label="메뉴 열기" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+
+<!-- ============================================================ -->
+<!-- ② 히어로 (검정 배경) -->
+<!-- ============================================================ -->
+<section class="hero scene-pin" id="hero" data-scene="hero" data-chapter="첫 만남">
+  <div class="scene-stage hero-stage">
+    <div class="hero-particles" id="hero-particles" aria-hidden="true"></div>
+
+    <div class="wrap hero-inner">
+      <div class="hero-text" id="hero-text">
+        <span class="scene-no">SCENE 01</span>
+        <p class="hero-question" data-config="hero.question">마트 과일, 맛이 매번 복불복이셨죠?</p>
+        <h1 class="hero-headline display" data-config="hero.headline">그럼 과일철이네2!</h1>
+        <p class="hero-sub" data-config-nl="hero.subCopy">신선한 제철과일부터 소중한 분께 전하는 선물용 과일까지<br />과일철이네2가 정성껏 준비합니다.</p>
+        <div class="hero-buttons">
+          <a href="#products" class="btn btn-primary">오늘의 과일 보기</a>
+          <a href="#" class="btn btn-kakao">카카오톡 1:1 상담</a>
+        </div>
+      </div>
+
+      <div class="hero-visual" id="hero-visual">
+        <div class="hero-photo" id="hero-photo">
+          <img data-config-img="hero.image" src="public/images/fruits/17-strawberry.jpg" alt="과일철이네2 딸기 선물세트" />
+        </div>
+        <div class="stamp" id="hero-stamp" data-config-nl="hero.stamp">오늘도<br />과일철이네</div>
+      </div>
+    </div>
+
+    <p class="hero-caption display" id="hero-caption" data-config-nl="hero.caption">진짜 맛있는 과일은,<br />고르는 사람이 다릅니다.</p>
+
+    <div class="scroll-cue" id="scroll-cue" aria-hidden="true"><span></span>SCROLL</div>
+
+    <div class="hero-ticker" aria-hidden="true">
+      <div class="ticker-track" id="ticker-track"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- ③ 노란 띠 - 질문 & 큰 제목 -->
+<!-- ============================================================ -->
+<section class="hook stage3d" id="hook" data-transition="iris" data-chapter="질문">
+  <div class="wrap hook-inner">
+    <span class="scene-no dark" data-3d="rise">SCENE 02</span>
+    <p class="hook-question" data-3d="rise" data-config-nl="hook.question">가족과 함께 먹을 과일,<br />아무거나 고르진 않으셨나요?</p>
+    <div class="hook-circle" data-3d="coin">
+      <img data-config-img="hook.image" src="public/images/fruits/16-shine-muscat.jpg" alt="과일철이네2 샤인머스켓" loading="lazy" />
+    </div>
+    <p class="hook-small" data-3d="rise" data-config="hook.smallCopy">아이부터 어르신까지, 온 가족이 만족하는</p>
+    <h2 class="hook-big display outline" data-3d="standup" data-config="hook.bigCopy">과일철이네2 제철과일!</h2>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- ③-1 15초 홍보 영상 (예고편) -->
+<!-- ============================================================ -->
+<section class="section trailer stage3d" id="trailer" data-transition="frame">
+  <div class="wrap trailer-inner">
+    <div class="section-head trailer-head">
+      <span class="scene-no" data-3d="subtitle" data-i="0">TRAILER</span>
+      <p class="eyebrow" data-3d="subtitle" data-i="1" data-config-nl="trailer.smallCopy">15초 만에 만나보는</p>
+      <h2 class="section-title display" data-3d="subtitle" data-i="2" data-config-nl="trailer.title">과일철이네2 예고편</h2>
+      <p class="section-desc" data-3d="subtitle" data-i="3" data-config-nl="trailer.desc"></p>
+    </div>
+    <div class="trailer-phone" data-3d="zoom">
+      <video
+        class="trailer-video"
+        id="trailer-video"
+        src="public/video/promo-15s.mp4"
+        poster="public/video/promo-15s-poster.jpg"
+        muted
+        loop
+        playsinline
+        controls
+        preload="none"
+        aria-label="과일철이네2 15초 홍보 영상"
+      ></video>
+      <button class="trailer-sound" id="trailer-sound" type="button" aria-pressed="false">🔇 소리 켜기</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- ④ 소개 + POINT 3가지 (흰 배경) -->
+<!-- ============================================================ -->
+<section class="section about stage3d" id="about" data-transition="frame" data-chapter="약속">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="scene-no" data-3d="subtitle" data-i="0">SCENE 03</span>
+      <p class="eyebrow" data-3d="subtitle" data-i="1" data-config-nl="about.smallCopy">어린이부터 어르신까지<br />모두의 입맛을 사로잡은</p>
+      <h2 class="section-title display red" data-3d="subtitle" data-i="2" data-config="about.title">과일철이네2!</h2>
+      <p class="section-desc" data-3d="subtitle" data-i="3" data-config-nl="about.body"></p>
+    </div>
+
+    <div class="points" id="points">
+      <!-- JS가 config.about.points 값으로 자동 채웁니다 -->
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- ④-1 3D 회전 과일 쇼케이스 (스크롤하면 원형으로 돌아갑니다) -->
+<!-- ============================================================ -->
+<section class="showcase scene-pin" id="showcase" data-scene="ring" data-chapter="과일 20종">
+  <div class="scene-stage showcase-stage">
+    <div class="showcase-glow" aria-hidden="true"></div>
+    <div class="ring-viewport">
+      <div class="ring" id="ring">
+        <!-- JS가 config.fruits 값으로 20개 카드를 원형으로 배치합니다 -->
+      </div>
+    </div>
+    <div class="showcase-center">
+      <span class="scene-no">SCENE 04</span>
+      <p class="showcase-small" data-config="showcase.smallCopy">스크롤을 내려보세요</p>
+      <h2 class="showcase-title display" data-config-nl="showcase.title">오늘의 과일<br />20가지 이야기</h2>
+    </div>
+    <p class="showcase-now" id="showcase-now"></p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- ⑤ 과일 상품 20종 -->
+<!-- ============================================================ -->
+<section class="section products stage3d" id="products" data-transition="frame" data-chapter="골라보기">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="scene-no" data-3d="subtitle" data-i="0">SCENE 05</span>
+      <p class="eyebrow" data-3d="subtitle" data-i="1" data-config="products.smallCopy">오늘은 어떤 과일 드실래요?</p>
+      <h2 class="section-title display" data-3d="subtitle" data-i="2" data-config="products.title">과일철이네2 과일 20종</h2>
+      <p class="section-desc" data-3d="subtitle" data-i="3" data-config="products.subtitle"></p>
+    </div>
+
+    <p class="price-notice" data-3d="rise" data-config-nl="products.priceNotice">
+      과일 가격은 매일 아침 시세에 따라 바뀌어서 홈페이지에 정가를 적어두지 않아요.<br />오늘 가격은 전화(010-2237-3494)나 카카오톡으로 직접 물어봐 주세요!
+    </p>
+
+    <div class="season-tabs" id="season-tabs" role="tablist" aria-label="계절별 과일 보기">
+      <!-- JS가 계절 탭을 자동으로 만듭니다 -->
+    </div>
+
+    <div class="fruit-grid" id="fruit-grid">
+      <!-- JS가 config.fruits(20개) 값으로 자동 채웁니다 -->
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- ⑥ 선물용 과일 -->
+<!-- ============================================================ -->
+<section class="section gift stage3d" id="gift" data-transition="wipe" data-chapter="선물">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="scene-no" data-3d="subtitle" data-i="0">SCENE 06</span>
+      <p class="eyebrow" data-3d="subtitle" data-i="1" data-config="gift.smallCopy">소중한 마음까지 함께 전합니다</p>
+      <h2 class="section-title display red" data-3d="subtitle" data-i="2" data-config="gift.title">선물용 과일세트</h2>
+      <p class="section-desc" data-3d="subtitle" data-i="3" data-config-nl="gift.body"></p>
+    </div>
+
+    <div class="gift-cards" id="gift-cards">
+      <!-- JS가 config.gift.cards 값으로 자동 채웁니다 -->
+    </div>
+
+    <div class="section-cta" data-3d="rise">
+      <a href="#" class="btn btn-kakao btn-large">카카오톡으로 선물 상담하기</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- ⑦ 이런 분들께 추천해요 (주황 배경 말풍선) -->
+<!-- ============================================================ -->
+<section class="section recommend stage3d" id="recommend" data-transition="iris" data-chapter="추천">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="scene-no dark" data-3d="subtitle" data-i="0">SCENE 07</span>
+      <p class="eyebrow dark" data-3d="subtitle" data-i="1" data-config="recommend.smallCopy">이럴 때 과일철이네2를 찾아주세요</p>
+      <h2 class="section-title display outline" data-3d="subtitle" data-i="2" data-config="recommend.title">이런 분들께 추천해요</h2>
+    </div>
+    <div class="bubbles" id="bubbles">
+      <!-- JS가 config.recommend.items 값으로 자동 채웁니다 -->
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- ⑧ 이용 혜택 (쿠폰) -->
+<!-- ============================================================ -->
+<section class="section benefits stage3d" id="benefits" data-transition="wipe" data-chapter="혜택">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="scene-no dark" data-3d="subtitle" data-i="0">SCENE 08</span>
+      <p class="eyebrow dark" data-3d="subtitle" data-i="1" data-config="benefits.smallCopy">과일철이네2에서만 누리는</p>
+      <h2 class="section-title display outline tilt" data-3d="subtitle" data-i="2" data-config="benefits.title">이용 혜택</h2>
+    </div>
+    <div class="coupons" id="coupons">
+      <!-- JS가 config.benefits.items 값으로 자동 채웁니다 -->
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- ⑨ 배달 / 영업 안내 -->
+<!-- ============================================================ -->
+<section class="section info stage3d" id="info" data-transition="frame" data-chapter="안내">
+  <div class="wrap">
+    <div class="info-grid">
+      <div class="info-box" id="delivery" data-3d="rise" data-i="0">
+        <span class="info-badge">DELIVERY</span>
+        <h3 class="info-title" data-config="delivery.title">신선한 과일, 편하게 받아보세요</h3>
+        <dl class="info-list">
+          <div><dt>배달시간</dt><dd data-config="delivery.time">08:00 ~ 18:30</dd></div>
+          <div><dt>배달지역</dt><dd id="delivery-areas">성남 구시가지 / 위례 / 야탑</dd></div>
+          <div><dt>최소주문</dt><dd data-config="delivery.minOrder">20,000원 이상</dd></div>
+        </dl>
+        <p class="info-note" data-config-nl="delivery.note"></p>
+        <a href="#" class="btn btn-kakao">카카오톡으로 배달 문의</a>
+      </div>
+
+      <div class="info-box" id="hours" data-3d="rise" data-i="1">
+        <span class="info-badge">OPEN</span>
+        <h3 class="info-title" data-config="hours.title">과일철이네2 영업안내</h3>
+        <dl class="info-list">
+          <div><dt>영업시간</dt><dd data-config="hours.openTime">08:00 ~ 19:00</dd></div>
+          <div><dt>정기휴무</dt><dd data-config="hours.closedDay">매월 둘째·넷째 일요일</dd></div>
+          <div><dt>배달시간</dt><dd data-config="hours.deliveryTime">08:00 ~ 18:30</dd></div>
+        </dl>
+      </div>
+
+      <div class="info-box" id="visit" data-3d="rise" data-i="2">
+        <span class="info-badge">VISIT</span>
+        <h3 class="info-title">매장 방문 안내</h3>
+        <dl class="info-list">
+          <div><dt>주소</dt><dd id="visit-address">주소 준비중입니다. 카카오톡으로 문의해주세요.</dd></div>
+          <div id="visit-phone-row" hidden><dt>전화</dt><dd><a id="visit-phone" href="#"></a></dd></div>
+        </dl>
+        <a href="#" class="btn btn-naver">네이버 지도에서 위치 보기</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- ⑩ 엔딩: 마지막 장면 → 엔딩 크레딧 → THE END -->
+<!-- ============================================================ -->
+<section class="finale scene-pin" id="contact" data-chapter="엔딩" data-scene="finale">
+  <div class="scene-stage finale-stage">
+    <div class="finale-bg" id="finale-bg" aria-hidden="true">
+      <img data-config-img="finale.image" src="public/images/fruits/12-watermelon.jpg" alt="" loading="lazy" />
+    </div>
+
+    <div class="wrap finale-inner" id="finale-title">
+      <span class="scene-no">FINAL SCENE</span>
+      <p class="finale-small" data-config="finale.smallCopy">오늘 저녁 식탁에, 소중한 분께 드릴 선물로</p>
+      <h2 class="finale-big display" data-config-nl="finale.bigCopy">지금 바로<br />과일철이네2를 만나보세요!</h2>
+      <div class="contact-buttons">
+        <a href="#" class="btn btn-kakao btn-large">카카오톡 1:1 상담</a>
+        <a href="#" class="btn btn-naver btn-large">네이버 지도로 오시는 길</a>
+      </div>
+    </div>
+
+    <!-- 엔딩 크레딧 (config.finale.credits + 매장 정보로 자동 작성) -->
+    <div class="credits-window" id="credits-window">
+      <div class="credits" id="credits">
+        <p class="credits-head">CREDITS</p>
+        <p class="credits-title display" data-config="storeName">과일철이네2</p>
+        <dl class="credits-list" id="credits-list"></dl>
+      </div>
+    </div>
+
+    <div class="the-end" id="the-end">
+      <p class="the-end-small">THE END</p>
+      <p class="the-end-big display" data-config="finale.theEnd">과일철이네2에서 만나요!</p>
+      <div class="contact-buttons">
+        <a href="#" class="btn btn-kakao btn-large">카카오톡 1:1 상담</a>
+        <a href="#" class="btn btn-naver btn-large">오시는 길</a>
+        <a href="#" class="btn btn-tel btn-large" id="the-end-tel" hidden>전화하기</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============================================================ -->
+<!-- ⑪ 하단 Footer -->
+<!-- ============================================================ -->
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <p class="footer-store-name display" data-config="storeName">과일철이네2</p>
+    <p class="footer-copy" data-config-nl="mainCopy">가족에게 드리는 마음으로, 좋은 과일만 정성껏</p>
+    <nav class="footer-links">
+      <a href="#about">소개</a>
+      <a href="#products">과일 20종</a>
+      <a href="#gift">선물세트</a>
+      <a href="#benefits">이용혜택</a>
+      <a href="#info">배달·영업안내</a>
+      <a href="#visit">오시는길</a>
+    </nav>
+    <p class="footer-bottom">© <span id="footer-year">2026</span> <span data-config="storeName">과일철이네2</span>. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- 모바일 하단 고정 상담바 -->
+<div class="mobile-fixed-bar" id="mobile-fixed-bar">
+  <a href="#" class="mobile-bar-btn btn-kakao">카카오톡 상담</a>
+  <a href="#" class="mobile-bar-btn btn-naver">오시는 길</a>
+</div>
+
+<script src="config/site-config.js?v=20260925a"></script>
+<script src="js/main.js?v=20260925a"></script>
+<script src="js/cinema.js?v=20260925a"></script>
+
+<!-- ============================================================ -->
+<!-- 미리보기(결제 전 시안) 표시 - 잔금 확인 후 정식 홈페이지로 공개합니다 -->
+<!-- ============================================================ -->
+<style>
+  .preview-watermark {
+    position: fixed; inset: 0; z-index: 150; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='220'%3E%3Ctext x='150' y='115' text-anchor='middle' transform='rotate(-28 150 110)' font-family='sans-serif' font-size='26' font-weight='700' fill='%23000' fill-opacity='0.09'%3E미리보기 · 시안%3C/text%3E%3C/svg%3E");
+  }
+  .preview-badge {
+    position: fixed; top: 76px; left: 50%; transform: translateX(-50%); z-index: 160;
+    background: #c62828; color: #fff; font-weight: 700; font-size: 14px; line-height: 1.3;
+    padding: 8px 16px; border-radius: 999px; box-shadow: 0 4px 14px rgba(0,0,0,.25);
+    white-space: nowrap; pointer-events: none;
+  }
+</style>
+<div class="preview-watermark" aria-hidden="true"></div>
+<div class="preview-badge" role="note">미리보기 · 결제 전 시안입니다</div>
+<script>
+  // 이 페이지는 <base href="../"> 를 쓰기 때문에, 메뉴의 "#소개" 같은 링크가
+  // 정식 홈페이지로 넘어가지 않고 이 페이지 안에서 움직이도록 잡아줍니다.
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest('a[href^="#"]');
+    if (!a || e.defaultPrevented) return;
+    var id = a.getAttribute("href").slice(1);
+    if (!id) return;
+    var target = document.getElementById(id);
+    if (!target) return;
+    e.preventDefault();
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+</script>
+</body>
+</html>
