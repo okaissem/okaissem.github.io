@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<!-- 쥬얼리 매장 홈페이지 시안 (결제 전 미리보기) -->
+<!-- 검색(네이버·구글)에 나오지 않게 합니다 -->
+<meta name="robots" content="noindex, nofollow" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>[미리보기] 쥬얼리 매장 홈페이지 시안</title>
+<meta name="theme-color" content="#141210" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%92%8D%3C/text%3E%3C/svg%3E" />
+
+<!-- 글꼴 (인터넷이 안 되면 기본 글꼴로 자동 표시됩니다) -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Noto+Serif+KR:wght@400;600&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet" />
+
+<!-- 디자인을 고친 뒤에는 ?v= 뒤 숫자를 바꾸면 손님 휴대폰에 새 디자인이 바로 보입니다 -->
+<link rel="stylesheet" href="style.css?v=20260927a" />
+</head>
+<body>
+
+<header class="site-header">
+  <a class="logo" href="#top" data-bind="storeName"></a>
+  <nav class="nav" aria-label="메뉴">
+    <a href="#story">브랜드</a>
+    <a href="#collection">컬렉션</a>
+    <a href="#video">영상</a>
+    <a href="#visit">문의</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- 첫 화면 -->
+  <section class="hero">
+    <div class="hero-text">
+      <p class="eyebrow" data-bind="hero.eyebrow"></p>
+      <h1 class="headline" data-bind="hero.headline"></h1>
+      <p class="sub" data-bind="hero.subCopy"></p>
+      <div class="hero-actions">
+        <a class="btn btn-gold" href="#collection">컬렉션 보기</a>
+        <a class="btn btn-line" data-link="smartstore" target="_blank" rel="noopener">스마트스토어</a>
+      </div>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <div class="halo"></div>
+      <div class="hero-ring" id="heroRing"></div>
+      <span class="spark s1"></span><span class="spark s2"></span><span class="spark s3"></span>
+    </div>
+  </section>
+
+  <!-- 브랜드 이야기 -->
+  <section class="section story reveal" id="story">
+    <p class="kicker">OUR PROMISE</p>
+    <h2 data-bind="story.title"></h2>
+    <p class="lead" data-bind="story.body"></p>
+    <ol class="points" id="points"></ol>
+  </section>
+
+  <!-- 컬렉션 -->
+  <section class="section collection reveal" id="collection">
+    <p class="kicker">COLLECTION</p>
+    <h2>컬렉션</h2>
+    <p class="lead">마음에 드는 제품을 누르면 스마트스토어에서 가격과 옵션을 확인할 수 있습니다.</p>
+    <div class="filters" id="filters" role="tablist" aria-label="분류"></div>
+    <ul class="grid" id="grid"></ul>
+  </section>
+
+  <!-- 유튜브 -->
+  <section class="section video reveal" id="video">
+    <p class="kicker">YOUTUBE</p>
+    <h2 data-bind="youtube.title"></h2>
+    <p class="lead" data-bind="youtube.desc"></p>
+    <div class="video-box" id="videoBox"></div>
+    <a class="btn btn-line" data-link="youtube" target="_blank" rel="noopener">유튜브 채널 바로가기</a>
+  </section>
+
+  <!-- 선물 -->
+  <section class="section gift reveal">
+    <p class="kicker">GIFT</p>
+    <h2 data-bind="gift.title"></h2>
+    <ul class="gift-tags" id="giftTags"></ul>
+    <p class="lead" data-bind="gift.desc"></p>
+    <p class="gift-note">무료 선물 포장 · 메시지 카드 · 쇼핑백</p>
+  </section>
+
+  <!-- 방문·문의 -->
+  <section class="section visit reveal" id="visit">
+    <p class="kicker">VISIT &amp; CONTACT</p>
+    <h2>매장 안내</h2>
+    <dl class="info" id="info"></dl>
+    <div class="channels" id="channels"></div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p class="logo" data-bind="storeName"></p>
+  <p data-bind="tagline"></p>
+</footer>
+
+<!-- 화면 아래 고정 버튼 -->
+<div class="bottom-bar">
+  <a class="bar-kakao" data-link="kakao" target="_blank" rel="noopener">카카오톡 상담</a>
+  <a class="bar-store" data-link="smartstore" target="_blank" rel="noopener">스토어에서 구매</a>
+</div>
+
+<script src="config.js?v=20260927a"></script>
+<script src="main.js?v=20260927a"></script>
+</body>
+</html>
