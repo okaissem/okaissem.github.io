@@ -86,6 +86,20 @@
   .save { display: inline-block; margin-left: 6px; font-size: 12px; font-weight: 700; color: var(--white);
     background: var(--orange); padding: 1px 8px; border-radius: 999px; }
 
+  /* 휴대폰에서는 표를 한 줄씩 카드처럼 보여 줍니다 */
+  @media (max-width: 600px) {
+    table { min-width: 0; }
+    thead { display: none; }
+    tr { display: block; padding: 14px 16px; border-bottom: 1px solid var(--line); }
+    tr:last-child { border-bottom: 0; }
+    td { display: block; padding: 2px 0; border: 0; }
+    td:first-child { font-weight: 700; }
+    td.num { color: var(--green-deep); }
+    td:last-child { font-size: 14px; color: var(--ink-soft); }
+    td br { display: none; }
+    tr.bundle { background: #fff4df; }
+  }
+
   .example { margin-top: 16px; background: var(--green-light); border-radius: var(--radius-md);
     padding: 16px 20px; }
   .example b { color: var(--green-deep); }
