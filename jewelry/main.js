@@ -250,11 +250,6 @@
       li.appendChild(el("span", null, f.desc));
       list.appendChild(li);
     });
-    document.querySelectorAll("[data-bind-href]").forEach(function (node) {
-      var url = pick(node.getAttribute("data-bind-href"));
-      if (url) node.href = url;
-      else node.hidden = true;
-    });
   }
 
   // ---------- 매장 안내 ----------
