@@ -464,6 +464,22 @@
   }
 
   // ---------------------------------------------------------
+  // 미리보기(결제 전 시안) 표시: config.previewMode 가 true 일 때만
+  // ---------------------------------------------------------
+  function setupPreviewMode() {
+    if (!config.previewMode) return;
+    var mark = document.createElement("div");
+    mark.className = "preview-watermark";
+    mark.setAttribute("aria-hidden", "true");
+    var badge = document.createElement("div");
+    badge.className = "preview-badge";
+    badge.setAttribute("role", "note");
+    badge.textContent = "미리보기 · 결제 전 시안입니다";
+    document.body.appendChild(mark);
+    document.body.appendChild(badge);
+  }
+
+  // ---------------------------------------------------------
   // 초기 실행
   // ---------------------------------------------------------
   document.addEventListener("DOMContentLoaded", function () {
@@ -481,5 +497,6 @@
     setupHeader();
     setupRevealAnimation();
     setupTrailer();
+    setupPreviewMode();
   });
 })();

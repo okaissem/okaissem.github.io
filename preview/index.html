@@ -33,8 +33,8 @@
   }
 </script>
 <!-- 디자인을 고친 뒤에는 아래 ?v= 뒤 숫자를 바꾸면 손님 휴대폰에 새 디자인이 바로 보입니다 -->
-<link rel="stylesheet" href="css/style.css?v=20260925a" />
-<link rel="stylesheet" href="css/cinema.css?v=20260925a" />
+<link rel="stylesheet" href="css/style.css?v=20260927a" />
+<link rel="stylesheet" href="css/cinema.css?v=20260927a" />
 </head>
 <body>
 
@@ -383,27 +383,13 @@
   <a href="#" class="mobile-bar-btn btn-naver">오시는 길</a>
 </div>
 
-<script src="config/site-config.js?v=20260925a"></script>
-<script src="js/main.js?v=20260925a"></script>
-<script src="js/cinema.js?v=20260925a"></script>
+<script src="config/site-config.js?v=20260927a"></script>
+<script src="js/main.js?v=20260927a"></script>
+<script src="js/cinema.js?v=20260927a"></script>
 
 <!-- ============================================================ -->
-<!-- 미리보기(결제 전 시안) 표시 - 잔금 확인 후 정식 홈페이지로 공개합니다 -->
+<!-- 미리보기 표시는 config/site-config.js 의 previewMode 로 켜고 끕니다 -->
 <!-- ============================================================ -->
-<style>
-  .preview-watermark {
-    position: fixed; inset: 0; z-index: 150; pointer-events: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='220'%3E%3Ctext x='150' y='115' text-anchor='middle' transform='rotate(-28 150 110)' font-family='sans-serif' font-size='26' font-weight='700' fill='%23000' fill-opacity='0.09'%3E미리보기 · 시안%3C/text%3E%3C/svg%3E");
-  }
-  .preview-badge {
-    position: fixed; top: 76px; left: 50%; transform: translateX(-50%); z-index: 160;
-    background: #c62828; color: #fff; font-weight: 700; font-size: 14px; line-height: 1.3;
-    padding: 8px 16px; border-radius: 999px; box-shadow: 0 4px 14px rgba(0,0,0,.25);
-    white-space: nowrap; pointer-events: none;
-  }
-</style>
-<div class="preview-watermark" aria-hidden="true"></div>
-<div class="preview-badge" role="note">미리보기 · 결제 전 시안입니다</div>
 <script>
   // 이 페이지는 <base href="../"> 를 쓰기 때문에, 메뉴의 "#소개" 같은 링크가
   // 정식 홈페이지로 넘어가지 않고 이 페이지 안에서 움직이도록 잡아줍니다.
