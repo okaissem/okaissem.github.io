@@ -232,6 +232,31 @@
     });
   }
 
+  // ---------- 홈페이지 안내 / 매장 안내 중 하나 보여 주기 ----------
+  function renderSiteInfo() {
+    var info = config.siteInfo || {};
+    if (!info.show) return;
+    document.getElementById("site-info").hidden = false;
+    document.getElementById("visit").hidden = true;
+    var nav = document.querySelector('[data-nav="info"]');
+    if (nav) {
+      nav.href = "#site-info";
+      nav.textContent = "홈페이지 안내";
+    }
+    var list = document.getElementById("features");
+    (info.features || []).forEach(function (f) {
+      var li = el("li");
+      li.appendChild(el("b", null, f.title));
+      li.appendChild(el("span", null, f.desc));
+      list.appendChild(li);
+    });
+    document.querySelectorAll("[data-bind-href]").forEach(function (node) {
+      var url = pick(node.getAttribute("data-bind-href"));
+      if (url) node.href = url;
+      else node.hidden = true;
+    });
+  }
+
   // ---------- 매장 안내 ----------
   function renderInfo() {
     var dl = document.getElementById("info");
@@ -264,6 +289,9 @@
 
     if (config.previewMode) {
       box.parentNode.appendChild(el("p", "demo-note", "※ 전화번호·주소·영업시간·가격은 시안용 가상 정보입니다."));
+    }
+    if (config.previewMode && (config.siteInfo || {}).show) {
+      document.getElementById("site-info").appendChild(el("p", "demo-note", "※ 위 컬렉션의 상품·가격과 채널 링크는 시안용 가상 정보입니다."));
     }
   }
 
@@ -304,6 +332,7 @@
     renderVideo();
     renderGift();
     renderInfo();
+    renderSiteInfo();
     setupReveal();
     setupPreviewMode();
   });
