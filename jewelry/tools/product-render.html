@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><style>html,body{margin:0;background:transparent}</style>
+<script type="importmap">{"imports":{"three":"./node_modules/three/build/three.module.js","three/addons/":"./node_modules/three/examples/jsm/"}}</script>
+</head><body>
+<script type="module">
+import * as THREE from "three";
+import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
+
+const q = new URLSearchParams(location.search);
+const TYPE = q.get("type") || "solitaire";
+const SIZE = Number(q.get("size") || 1024);
+const TRANSPARENT = q.get("transparent") === "1";
+const METAL = { gold: 0xffc86e, rose: 0xf2b09a, silver: 0xf4f6f9 }[q.get("metal") || "gold"];
+const GEM = new THREE.Color(q.get("gem") || "#ffffff");
+const BG = new THREE.Color(q.get("bg") || "#efe6da");
+
+const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true, alpha: TRANSPARENT });
+renderer.setPixelRatio(1);
+renderer.setSize(SIZE, SIZE);
+renderer.toneMapping = THREE.AgXToneMapping;
+renderer.toneMappingExposure = 1.3;
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.VSMShadowMap;
+document.body.appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();
+if (!TRANSPARENT) {
+  scene.background = BG;
+}
+const pmrem = new THREE.PMREMGenerator(renderer);
+scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.02).texture;
+
+if (!TRANSPARENT) {
+  const floor = new THREE.Mesh(new THREE.PlaneGeometry(60, 60), new THREE.ShadowMaterial({ opacity: 0.16 }));
+  floor.rotation.x = -Math.PI / 2;
+  floor.receiveShadow = true;
+  scene.add(floor);
+}
+const key = new THREE.DirectionalLight(0xffffff, 2.2);
+key.position.set(3, 6, 3);
+key.castShadow = true;
+key.shadow.mapSize.set(2048, 2048);
+key.shadow.radius = 12;
+key.shadow.blurSamples = 20;
+key.shadow.camera.left = key.shadow.camera.bottom = -4;
+key.shadow.camera.right = key.shadow.camera.top = 4;
+scene.add(key);
+scene.add(new THREE.HemisphereLight(0xffffff, BG, 0.6));
+
+// ---------- 재질 ----------
+const metal = new THREE.MeshPhysicalMaterial({ color: METAL, metalness: 1, roughness: 0.12, clearcoat: 0.6, clearcoatRoughness: 0.05 });
+// 배경이 투명한 그림에서는 투과 대신 반사형 보석을 씁니다 (투과하면 회색으로 탁해짐)
+const gemMat = (color = GEM) => new THREE.MeshPhysicalMaterial(TRANSPARENT ? {
+  color, metalness: 0.2, roughness: 0, clearcoat: 1, iridescence: 0.6, envMapIntensity: 3, flatShading: true,
+} : {
+  color, metalness: 0, roughness: 0, transmission: 1, thickness: 0.6, ior: 2.4,
+  dispersion: 3, specularIntensity: 1, envMapIntensity: 2.5, flatShading: true,
+});
+const pearlMat = new THREE.MeshPhysicalMaterial({
+  color: 0xeadcc4, roughness: 0.2, metalness: 0, clearcoat: 1, clearcoatRoughness: 0.08,
+  iridescence: 1, iridescenceIOR: 1.6, sheen: 1, sheenColor: 0xffeef4, envMapIntensity: 1.4,
+});
+
+function shadowAll(obj) {
+  obj.traverse((o) => { if (o.isMesh) { o.castShadow = true; } });
+  return obj;
+}
+
+// 브릴리언트 컷 보석 (높이 약 0.62 * s)
+function brilliant(s = 1, mat = gemMat()) {
+  const p = [[0.0001, -0.42], [0.36, -0.02], [0.4, 0], [0.4, 0.04], [0.24, 0.2], [0.0001, 0.2]]
+    .map(([x, y]) => new THREE.Vector2(x * s, y * s));
+  return new THREE.Mesh(new THREE.LatheGeometry(p, 16), mat);
+}
+// 물방울 컷
+function teardrop(s = 1, mat = gemMat()) {
+  const p = [];
+  for (let i = 0; i <= 10; i++) {
+    const t = i / 10;
+    const y = -0.55 + t * 1.1;
+    const r = Math.sin(Math.PI * Math.pow(t, 0.8)) * 0.32 * (1 - t * 0.55);
+    p.push(new THREE.Vector2(Math.max(r, 0.0001) * s, y * s));
+  }
+  return new THREE.Mesh(new THREE.LatheGeometry(p, 12), mat);
+}
+// 에메랄드(스텝) 컷
+function stepCut(s = 1, mat = gemMat()) {
+  const g = new THREE.CylinderGeometry(0.3 * s, 0.42 * s, 0.34 * s, 8, 1);
+  const m = new THREE.Mesh(g, mat);
+  m.scale.set(1.25, 1, 0.9);
+  const pav = new THREE.Mesh(new THREE.ConeGeometry(0.42 * s, 0.34 * s, 8), mat);
+  pav.rotation.x = Math.PI;
+  pav.position.y = -0.34 * s;
+  pav.scale.set(1.25, 1, 0.9);
+  const grp = new THREE.Group();
+  grp.add(m, pav);
+  return grp;
+}
+// 고리를 이어 만든 체인
+function chain(curve, linkLen = 0.09, thick = 0.014) {
+  const len = curve.getLength();
+  const n = Math.floor(len / (linkLen * 0.75));
+  const geo = new THREE.TorusGeometry(linkLen * 0.5, thick, 8, 20);
+  geo.scale(1.35, 0.75, 1);
+  const mesh = new THREE.InstancedMesh(geo, metal, n);
+  const m = new THREE.Matrix4(), qn = new THREE.Quaternion(), qt = new THREE.Quaternion();
+  const up = new THREE.Vector3(1, 0, 0);
+  for (let i = 0; i < n; i++) {
+    const t = i / n;
+    const pos = curve.getPointAt(t);
+    const tan = curve.getTangentAt(t);
+    qn.setFromUnitVectors(up, tan);
+    qt.setFromAxisAngle(tan, i % 2 ? Math.PI / 2 : 0);
+    const qq = qt.multiply(qn);
+    m.compose(pos, qq, new THREE.Vector3(1, 1, 1));
+    mesh.setMatrixAt(i, m);
+  }
+  mesh.castShadow = true;
+  return mesh;
+}
+// 보석 받침(4발)
+function setting(r = 0.33, h = 0.46, y = 0) {
+  const g = new THREE.Group();
+  for (let i = 0; i < 4; i++) {
+    const a = Math.PI / 4 + (i * Math.PI) / 2;
+    const prong = new THREE.Mesh(new THREE.CylinderGeometry(0.035 * r / 0.33, 0.045 * r / 0.33, h, 12), metal);
+    prong.position.set(Math.cos(a) * r, y, Math.sin(a) * r);
+    prong.rotation.z = -Math.cos(a) * 0.25;
+    prong.rotation.x = Math.sin(a) * 0.25;
+    g.add(prong);
+  }
+  const basket = new THREE.Mesh(new THREE.TorusGeometry(r * 0.85, 0.035 * r / 0.33, 12, 48), metal);
+  basket.rotation.x = Math.PI / 2;
+  basket.position.y = y - h * 0.5;
+  g.add(basket);
+  return g;
+}
+function band(radius = 1, tube = 0.1, depth = 1.9) {
+  const b = new THREE.Mesh(new THREE.TorusGeometry(radius, tube, 64, 256), metal);
+  b.scale.set(1, 1, depth);
+  return b;
+}
+
+// ---------- 카메라 두 가지 ----------
+const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100);
+function standingView(d = 1, y = 1.15) { camera.position.set(0, 4.2 * d, 8.2 * d); camera.lookAt(0, y, 0); }
+function flatView(d = 1) { camera.position.set(0, 6.2 * d, 4.6 * d); camera.lookAt(0, 0, 0.1); }
+
+const root = new THREE.Group();
+scene.add(root);
+
+// ---------- 상품별 모양 ----------
+const builders = {
+  solitaire() {
+    const r = new THREE.Group();
+    r.add(band());
+    const g = brilliant(); g.position.y = 1.5; r.add(g);
+    r.add(setting(0.33, 0.46, 1.36));
+    r.position.y = 1.1; r.rotation.set(-0.05, 0.95, 0);
+    root.add(r); standingView();
+  },
+  eternity() {
+    const r = new THREE.Group();
+    r.add(band(1, 0.09, 1.6));
+    const n = 15;
+    for (let i = 0; i < n; i++) {
+      const a = Math.PI * (0.12 + (0.76 * i) / (n - 1));
+      const s = brilliant(0.3, gemMat());
+      const pos = new THREE.Vector3(Math.cos(a) * 1.1, Math.sin(a) * 1.1, 0);
+      s.position.copy(pos);
+      s.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), pos.clone().normalize());
+      r.add(s);
+    }
+    r.position.y = 1.1; r.rotation.set(-0.05, 0.95, 0);
+    root.add(r); standingView(0.8, 1.05);
+  },
+  emerald() {
+    const r = new THREE.Group();
+    r.add(band(1, 0.1, 1.9));
+    const g = stepCut(1.05); g.position.y = 1.5; r.add(g);
+    r.add(setting(0.38, 0.4, 1.36));
+    r.position.y = 1.1; r.rotation.set(-0.05, 0.95, 0);
+    root.add(r); standingView();
+  },
+  plainband() {
+    const r = new THREE.Group();
+    r.add(band(1, 0.13, 2.4));
+    for (let i = -1; i <= 1; i++) {
+      const a = Math.PI / 2 + i * 0.16;
+      const s = brilliant(0.22, gemMat());
+      const pos = new THREE.Vector3(Math.cos(a) * 1.08, Math.sin(a) * 1.08, 0);
+      s.position.copy(pos);
+      s.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), pos.clone().normalize());
+      r.add(s);
+    }
+    r.position.y = 1.15; r.rotation.set(-0.05, 0.95, 0);
+    root.add(r); standingView(0.8, 1.1);
+  },
+  necklace(pendant) {
+    const pts = [];
+    for (let i = 0; i <= 60; i++) {
+      const t = i / 60, a = Math.PI * (0.05 + 0.9 * t);
+      pts.push(new THREE.Vector3(-Math.cos(a) * 1.9, 0.03, Math.sin(a) * 1.7 - 1.25));
+    }
+    const curve = new THREE.CatmullRomCurve3(pts);
+    root.add(chain(curve, 0.075, 0.012));
+    const bottom = curve.getPointAt(0.5);
+    const bail = new THREE.Mesh(new THREE.TorusGeometry(0.07, 0.018, 12, 32), metal);
+    bail.position.set(bottom.x, 0.05, bottom.z + 0.08);
+    bail.rotation.x = -Math.PI / 2;
+    root.add(bail);
+    pendant.position.set(bottom.x, pendant.position.y, bottom.z + 0.45);
+    root.add(pendant);
+    flatView(0.95);
+  },
+  pearlnecklace() {
+    const p = new THREE.Mesh(new THREE.SphereGeometry(0.3, 64, 48), pearlMat);
+    p.position.y = 0.3;
+    builders.necklace(p);
+  },
+  heart() {
+    const s = new THREE.Shape();
+    s.moveTo(0, -0.35);
+    s.bezierCurveTo(-0.05, -0.25, -0.42, -0.05, -0.42, 0.14);
+    s.bezierCurveTo(-0.42, 0.34, -0.2, 0.42, 0, 0.25);
+    s.bezierCurveTo(0.2, 0.42, 0.42, 0.34, 0.42, 0.14);
+    s.bezierCurveTo(0.42, -0.05, 0.05, -0.25, 0, -0.35);
+    const geo = new THREE.ExtrudeGeometry(s, { depth: 0.12, bevelEnabled: true, bevelThickness: 0.08, bevelSize: 0.06, bevelSegments: 3, curveSegments: 32 });
+    geo.center();
+    const h = new THREE.Mesh(geo, gemMat());
+    const frame = new THREE.Mesh(geo, metal);
+    frame.scale.set(1.12, 1.12, 0.5);
+    const g = new THREE.Group();
+    g.add(frame, h);
+    g.rotation.x = -Math.PI / 2;
+    g.position.y = 0.14;
+    builders.necklace(g);
+  },
+  dropnecklace() {
+    const d = teardrop(0.9);
+    const g = new THREE.Group();
+    g.add(d);
+    const cap = new THREE.Mesh(new THREE.SphereGeometry(0.07, 24, 16), metal);
+    cap.position.y = 0.5;
+    g.add(cap);
+    g.rotation.x = -Math.PI / 2 + 0.25;
+    g.position.y = 0.28;
+    builders.necklace(g);
+  },
+  pair(make, spacing = 0.75) {
+    [-1, 1].forEach((side) => {
+      const e = make(side);
+      e.position.x += side * spacing;
+      root.add(e);
+    });
+    flatView(0.62);
+  },
+  balls() {
+    builders.pair((side) => {
+      const g = new THREE.Group();
+      const ball = new THREE.Mesh(new THREE.SphereGeometry(0.28, 64, 48), metal);
+      ball.position.y = 0.28;
+      const post = new THREE.Mesh(new THREE.CylinderGeometry(0.025, 0.025, 0.5, 12), metal);
+      post.rotation.z = Math.PI / 2;
+      post.position.set(side * 0.35, 0.22, -0.1);
+      post.rotation.y = side * 0.5;
+      g.add(ball, post);
+      return g;
+    }, 0.6);
+  },
+  pearldrop() {
+    builders.pair((side) => {
+      const g = new THREE.Group();
+      const hook = new THREE.Mesh(new THREE.TorusGeometry(0.28, 0.028, 12, 48, Math.PI * 1.4), metal);
+      hook.rotation.x = -Math.PI / 2;
+      hook.rotation.z = Math.PI * 0.3;
+      hook.position.set(0, 0.04, -0.62);
+      const stem = new THREE.Mesh(new THREE.CylinderGeometry(0.022, 0.022, 0.34, 12), metal);
+      stem.rotation.x = Math.PI / 2;
+      stem.position.set(0.02, 0.05, -0.2);
+      const pearl = new THREE.Mesh(new THREE.SphereGeometry(0.26, 64, 48), pearlMat);
+      pearl.position.set(0, 0.26, 0.2);
+      g.add(hook, stem, pearl);
+      g.rotation.y = side * 0.12;
+      return g;
+    }, 0.62);
+  },
+  studs() {
+    builders.pair(() => {
+      const g = new THREE.Group();
+      const s = brilliant(0.75, gemMat());
+      s.position.y = 0.42;
+      g.add(s, setting(0.25, 0.34, 0.3));
+      return g;
+    }, 0.55);
+  },
+  tennis() {
+    const g = new THREE.Group();
+    const n = 34;
+    for (let i = 0; i < n; i++) {
+      const a = (i / n) * Math.PI * 2;
+      const x = Math.cos(a) * 1.55, z = Math.sin(a) * 1.15;
+      const link = new THREE.Mesh(new THREE.CylinderGeometry(0.15, 0.15, 0.12, 24), metal);
+      link.position.set(x, 0.06, z);
+      link.rotation.y = -a;
+      const tg = gemMat(new THREE.Color("#ffffff"));
+      tg.transmission = 0;
+      tg.color = new THREE.Color("#b9c4d6");
+      tg.metalness = 0.35;
+      tg.envMapIntensity = 1.8;
+      tg.clearcoat = 1;
+      tg.iridescence = 0.5;
+      const s = brilliant(0.26, tg);
+      s.position.set(x, 0.24, z);
+      g.add(link, s);
+    }
+    root.add(g);
+    flatView(0.92);
+  },
+  chains() {
+    const loop = (rx, rz, y) => {
+      const pts = [];
+      for (let i = 0; i < 64; i++) {
+        const a = (i / 64) * Math.PI * 2;
+        pts.push(new THREE.Vector3(Math.cos(a) * rx, y, Math.sin(a) * rz));
+      }
+      return new THREE.CatmullRomCurve3(pts, true);
+    };
+    root.add(chain(loop(1.5, 1.05, 0.05), 0.16, 0.03));
+    const thin = chain(loop(1.2, 0.8, 0.04), 0.09, 0.016);
+    thin.position.set(0.25, 0, 0.2);
+    root.add(thin);
+    flatView(0.9);
+  },
+};
+
+builders[TYPE]();
+shadowAll(root);
+renderer.render(scene, camera);
+window.__done = true;
+</script>
+</body></html>

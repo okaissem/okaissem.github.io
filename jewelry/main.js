@@ -211,8 +211,18 @@
   // ---------- 유튜브 ----------
   function renderVideo() {
     var box = document.getElementById("videoBox");
-    var id = (config.youtube || {}).videoId;
-    if (id) {
+    var yt = config.youtube || {};
+    var id = yt.videoId;
+    if (!id && yt.video) {
+      var video = el("video");
+      video.src = yt.video;
+      if (yt.poster) video.poster = yt.poster;
+      video.controls = true;
+      video.playsInline = true;
+      video.preload = "metadata";
+      video.setAttribute("aria-label", "매장 광고 영상");
+      box.appendChild(video);
+    } else if (id) {
       var frame = el("iframe");
       frame.src = "https://www.youtube-nocookie.com/embed/" + encodeURIComponent(id);
       frame.title = "매장 소개 영상";
