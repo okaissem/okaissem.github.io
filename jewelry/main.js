@@ -24,6 +24,31 @@
     return node;
   }
 
+  // ---------- 시안용 가상 링크 ("#demo") ----------
+  var toastTimer;
+  function showToast(message) {
+    var toast = document.querySelector(".toast") || document.body.appendChild(el("div", "toast"));
+    toast.setAttribute("role", "status");
+    toast.textContent = message;
+    toast.classList.add("shown");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toast.classList.remove("shown"); }, 2200);
+  }
+
+  // 링크 주소 넣기 - "#demo" 이면 누를 때 안내만 띄웁니다
+  function setLink(node, url) {
+    if (url === "#demo") {
+      node.href = "#";
+      node.removeAttribute("target");
+      node.addEventListener("click", function (e) {
+        e.preventDefault();
+        showToast("시안용 가상 링크입니다. 실제 주소를 받으면 연결됩니다.");
+      });
+    } else {
+      node.href = url;
+    }
+  }
+
   // ---------- 예시 쥬얼리 그림 ----------
   var METALS = {
     gold: ["#fbeab8", "#d4b06a", "#86652a"],
@@ -98,7 +123,7 @@
   function fillLinks() {
     document.querySelectorAll("[data-link]").forEach(function (node) {
       var url = links[node.getAttribute("data-link")];
-      if (url) node.href = url;
+      if (url) setLink(node, url);
       else node.hidden = true;
     });
     var bar = document.querySelector(".bottom-bar");
@@ -155,7 +180,8 @@
       var body = el("div", "card-body");
       body.appendChild(el("span", "card-cat", p.category));
       body.appendChild(el("span", "card-name", p.name));
-      body.appendChild(el("span", "card-cta", "스토어에서 가격 보기 →"));
+      if (p.price) body.appendChild(el("span", "card-price", p.price));
+      body.appendChild(el("span", "card-cta", p.price ? "구매하기 →" : "가격 보기 →"));
       a.appendChild(thumb);
       a.appendChild(body);
       li.appendChild(a);
@@ -230,11 +256,15 @@
     ].forEach(function (item) {
       if (!links[item[0]]) return;
       var a = el("a", "btn btn-line", item[1]);
-      a.href = links[item[0]];
       a.target = "_blank";
       a.rel = "noopener";
+      setLink(a, links[item[0]]);
       box.appendChild(a);
     });
+
+    if (config.previewMode) {
+      box.parentNode.appendChild(el("p", "demo-note", "※ 전화번호·주소·영업시간·가격은 시안용 가상 정보입니다."));
+    }
   }
 
   // ---------- 스크롤하면 나타나기 ----------

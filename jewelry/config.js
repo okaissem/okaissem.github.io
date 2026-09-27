@@ -27,18 +27,20 @@ window.JEWELRY_CONFIG = {
   storeNameKo: "파이니스트 주얼리",
   tagline: "매일 끼고 싶은, 오래 남는 반짝임",
 
-  // 연락처 - 받으면 채워 주세요 (빈칸이면 버튼이 숨겨집니다)
-  phone: "",
-  address: "",
-  hours: "",
+  // 연락처 - 빈칸이면 버튼이 숨겨집니다
+  // ※ 지금 값은 시안용 가상 정보입니다. 실제 정보를 받으면 바꿔 주세요.
+  phone: "010-0000-0000",
+  address: "OO시 OO구 OO로 123, 1층",
+  hours: "매일 11:00 – 20:00 (월요일 휴무)",
 
   // 바로가기 주소
+  // "#demo" 는 시안용 가상 링크입니다. 누르면 "가상 링크" 안내만 뜹니다.
   links: {
     smartstore: "https://smartstore.naver.com/finest_jewelry",
-    kakao: "", // 카카오톡 채널 주소 (예: https://pf.kakao.com/_xxxx)
-    naverPlace: "", // 네이버플레이스 주소
-    instagram: "",
-    youtube: "", // 유튜브 채널 주소
+    kakao: "#demo", // 카카오톡 채널 주소 (예: https://pf.kakao.com/_xxxx)
+    naverPlace: "#demo", // 네이버플레이스 주소
+    instagram: "#demo",
+    youtube: "#demo", // 유튜브 채널 주소
   },
 
   // ------------------------------------------------------------
@@ -70,21 +72,22 @@ window.JEWELRY_CONFIG = {
   // image   : 실제 사진 파일 경로 (빈칸이면 예시 그림이 나옵니다)
   // gem     : 예시 그림의 보석 색 (image 가 있으면 쓰지 않습니다)
   // metal   : 예시 그림의 금속 색 - gold / rose / silver
+  // price   : 판매 가격 (빈칸이면 "스토어에서 가격 보기"로 나옵니다) - 지금 값은 가상 가격
   // link    : 스마트스토어 상품 주소 (빈칸이면 스토어 첫 화면으로 연결)
   categories: ["반지", "목걸이", "귀걸이", "팔찌"],
   products: [
-    { name: "솔리테어 큐빅 반지", category: "반지", metal: "gold", gem: "#f4f7ff", image: "", link: "" },
-    { name: "이터니티 라인 반지", category: "반지", metal: "rose", gem: "#ffe3ea", image: "", link: "" },
-    { name: "에메랄드 포인트 반지", category: "반지", metal: "gold", gem: "#3fb37f", image: "", link: "" },
-    { name: "데일리 실버 반지", category: "반지", metal: "silver", gem: "#dfe8ff", image: "", link: "" },
-    { name: "한 알 진주 목걸이", category: "목걸이", metal: "gold", gem: "#fbf4e8", image: "", link: "" },
-    { name: "하트 펜던트 목걸이", category: "목걸이", metal: "rose", gem: "#ff8fa8", image: "", link: "" },
-    { name: "사파이어 드롭 목걸이", category: "목걸이", metal: "silver", gem: "#4a6cf0", image: "", link: "" },
-    { name: "미니 볼 귀걸이", category: "귀걸이", metal: "gold", gem: "#f4f7ff", image: "", link: "" },
-    { name: "진주 드롭 귀걸이", category: "귀걸이", metal: "silver", gem: "#fbf4e8", image: "", link: "" },
-    { name: "루비 스터드 귀걸이", category: "귀걸이", metal: "rose", gem: "#d8344f", image: "", link: "" },
-    { name: "테니스 팔찌", category: "팔찌", metal: "silver", gem: "#f4f7ff", image: "", link: "" },
-    { name: "체인 레이어드 팔찌", category: "팔찌", metal: "gold", gem: "#f7d774", image: "", link: "" },
+    { name: "솔리테어 큐빅 반지", price: "89,000원", category: "반지", metal: "gold", gem: "#f4f7ff", image: "", link: "" },
+    { name: "이터니티 라인 반지", price: "129,000원", category: "반지", metal: "rose", gem: "#ffe3ea", image: "", link: "" },
+    { name: "에메랄드 포인트 반지", price: "159,000원", category: "반지", metal: "gold", gem: "#3fb37f", image: "", link: "" },
+    { name: "데일리 실버 반지", price: "39,000원", category: "반지", metal: "silver", gem: "#dfe8ff", image: "", link: "" },
+    { name: "한 알 진주 목걸이", price: "69,000원", category: "목걸이", metal: "gold", gem: "#fbf4e8", image: "", link: "" },
+    { name: "하트 펜던트 목걸이", price: "79,000원", category: "목걸이", metal: "rose", gem: "#ff8fa8", image: "", link: "" },
+    { name: "사파이어 드롭 목걸이", price: "149,000원", category: "목걸이", metal: "silver", gem: "#4a6cf0", image: "", link: "" },
+    { name: "미니 볼 귀걸이", price: "29,000원", category: "귀걸이", metal: "gold", gem: "#f4f7ff", image: "", link: "" },
+    { name: "진주 드롭 귀걸이", price: "59,000원", category: "귀걸이", metal: "silver", gem: "#fbf4e8", image: "", link: "" },
+    { name: "루비 스터드 귀걸이", price: "99,000원", category: "귀걸이", metal: "rose", gem: "#d8344f", image: "", link: "" },
+    { name: "테니스 팔찌", price: "119,000원", category: "팔찌", metal: "silver", gem: "#f4f7ff", image: "", link: "" },
+    { name: "체인 레이어드 팔찌", price: "49,000원", category: "팔찌", metal: "gold", gem: "#f7d774", image: "", link: "" },
   ],
 
   // ------------------------------------------------------------
