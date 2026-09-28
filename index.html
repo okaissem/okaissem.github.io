@@ -176,6 +176,7 @@
   .work b { display: block; font-size: 26px; color: var(--navy); margin: 10px 0 6px; }
   .work p { margin: 0 0 14px; color: var(--soft); font-size: 15px; }
   .work .go { font-weight: 900; color: var(--blue); }
+  @media (min-width: 901px) { .work:last-child:nth-child(odd) { grid-column: 1 / -1; justify-self: center; width: calc(50% - 14px); } }
   @media (max-width: 900px) { .works { grid-template-columns: 1fr; } }
   @media (max-width: 480px) { .work { grid-template-columns: 120px 1fr; padding: 20px; gap: 16px; } .work b { font-size: 21px; } }
 
@@ -362,6 +363,10 @@
         <a class="work" href="jewelry/">
           <div class="phone"><div class="screen"><img src="cardnews/src/shots/jw-m.png" alt="Finest Jewelry 홈페이지 화면" loading="lazy" /></div></div>
           <div style="text-align:left"><span class="tag">온라인 쥬얼리 브랜드</span><b>Finest Jewelry</b><p>분류별 컬렉션, 세트 할인 자동 계산, DM·카톡 주문서, 20초 광고 영상</p><span class="go">홈페이지 보러 가기 →</span></div>
+        </a>
+        <a class="work" href="shop/">
+          <div class="phone"><div class="screen"><img src="cardnews/src/shots/shop-m.png" alt="4종목 쇼핑몰 홈페이지 화면" loading="lazy" /></div></div>
+          <div style="text-align:left"><span class="tag">4종목 · 상품 4,000개</span><b>Daily Select</b><p>쥬얼리·모자·티셔츠·가방, 검색·색상·사이즈 필터, 실측 사이즈표, 엑셀로 상품 한 번에 등록</p><span class="go">홈페이지 보러 가기 →</span></div>
         </a>
       </div>
     </div>
