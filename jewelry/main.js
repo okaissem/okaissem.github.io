@@ -27,7 +27,10 @@
   // ---------- 시안용 가상 링크 ("#demo") ----------
   var toastTimer;
   function showToast(message) {
-    var toast = document.querySelector(".toast") || document.body.appendChild(el("div", "toast"));
+    var toast = document.querySelector(".toast") || el("div", "toast");
+    // 주문서가 열려 있으면 주문서 위에 보이도록 그 안에 띄웁니다
+    var host = document.querySelector("dialog[open]") || document.body;
+    if (toast.parentNode !== host) host.appendChild(toast);
     toast.setAttribute("role", "status");
     toast.textContent = message;
     toast.classList.add("shown");
@@ -156,12 +159,12 @@
   function makeCard(p) {
       var li = el("li", "card");
       li.dataset.category = p.category;
-      var a = el("a");
-      a.href = p.link || links.smartstore || "#";
-      a.target = "_blank";
-      a.rel = "noopener";
+      var a = el("button", "card-btn");
+      a.type = "button";
+      a.dataset.order = p.id || "";
+      a.setAttribute("aria-label", p.name + " 주문하기");
 
-      var thumb = el("div", "thumb");
+      var thumb = el("span", "thumb");
       if (p.image) {
         var img = el("img");
         img.src = p.image;
@@ -176,11 +179,11 @@
         thumb.appendChild(el("span", "sample", "예시 이미지"));
       }
 
-      var body = el("div", "card-body");
+      var body = el("span", "card-body");
       body.appendChild(el("span", "card-cat", p.category));
       body.appendChild(el("span", "card-name", p.name));
       if (p.price) body.appendChild(el("span", "card-price", p.price));
-      body.appendChild(el("span", "card-cta", p.price ? "구매하기 →" : "가격 보기 →"));
+      body.appendChild(el("span", "card-cta", "주문하기 →"));
       a.appendChild(thumb);
       a.appendChild(body);
       li.appendChild(a);
@@ -191,6 +194,7 @@
     var grid = document.getElementById("grid");
     var filters = document.getElementById("filters");
     (config.products || []).forEach(function (p) {
+      addToCatalog(p, p.category);
       grid.appendChild(makeCard(p));
     });
 
@@ -226,6 +230,7 @@
     var grid = document.getElementById("lumiereGrid");
     var total = 0;
     info.items.forEach(function (p) {
+      addToCatalog(p, info.title);
       grid.appendChild(makeCard(p));
       total += Number(String(p.price || "0").replace(/[^0-9]/g, ""));
     });
@@ -240,6 +245,18 @@
     row.appendChild(el("span", "set-rate", rate + "% 할인"));
     box.appendChild(row);
     box.appendChild(el("span", "set-note", won(total - setPrice) + " 아껴요 · 선물 포장 무료"));
+    var setItem = {
+      id: "lumiere-set",
+      name: (info.title || "").replace(/\s*컬렉션$/, "") + " " + info.items.length + "종 세트",
+      category: "세트",
+      price: won(setPrice),
+      image: info.items[0].image,
+    };
+    catalog.unshift({ group: info.title, item: setItem });
+    var buy = el("button", "btn btn-gold set-buy", setItem.name + " 주문하기");
+    buy.type = "button";
+    buy.dataset.order = setItem.id;
+    box.appendChild(buy);
   }
 
   // ---------- 유튜브 ----------
@@ -317,6 +334,7 @@
     [
       ["smartstore", "스마트스토어"],
       ["kakao", "카카오톡 채널"],
+      ["dm", "인스타그램 DM"],
       ["naverPlace", "네이버플레이스"],
       ["instagram", "인스타그램"],
       ["youtube", "유튜브"],
@@ -334,6 +352,221 @@
     }
     if (config.previewMode && (config.siteInfo || {}).show) {
       document.getElementById("site-info").appendChild(el("p", "demo-note", "※ 위 컬렉션의 상품·가격과 채널 링크는 시안용 가상 정보입니다."));
+    }
+  }
+
+  // ---------- 주문서 (홈페이지·DM으로 바로 주문) ----------
+  var catalog = []; // { group, item }
+  var orderCfg = config.order || {};
+  var fromYoutube = false;
+  var CHANNELS = {
+    dm: { label: "인스타그램 DM으로 주문", cls: "ch-dm", app: "인스타그램 DM" },
+    kakao: { label: "카카오톡으로 주문", cls: "ch-kakao", app: "카카오톡" },
+    sms: { label: "문자로 주문", cls: "ch-sms", app: "문자" },
+  };
+
+  function addToCatalog(p, group) {
+    if (p.id) catalog.push({ group: group, item: p });
+  }
+
+  function findItem(id) {
+    for (var i = 0; i < catalog.length; i++) {
+      if (catalog[i].item.id === id) return catalog[i].item;
+    }
+    return null;
+  }
+
+  function priceNumber(p) {
+    return Number(String(p.price || "").replace(/[^0-9]/g, ""));
+  }
+
+  var sheet, qty = 1;
+
+  function currentItem() {
+    return findItem(document.getElementById("orderProduct").value) || catalog[0].item;
+  }
+
+  function needsSize(item) {
+    return item.category === "반지" || item.category === "세트";
+  }
+
+  function buildMessage() {
+    var item = currentItem();
+    var unit = priceNumber(item);
+    var name = document.getElementById("orderName").value.trim();
+    var memo = document.getElementById("orderMemo").value.trim();
+    var lines = [
+      "안녕하세요, " + (fromYoutube ? "유튜브 영상" : "홈페이지") + " 보고 주문합니다.",
+      "[주문서 · " + config.storeName + "]",
+      "· 제품: " + item.name,
+      "· 수량: " + qty + "개",
+    ];
+    if (needsSize(item)) lines.push("· 반지 사이즈: " + document.getElementById("orderSize").value);
+    lines.push("· 선물 포장: " + (document.getElementById("orderGift").checked ? "원해요" : "필요 없어요"));
+    lines.push("· 금액: " + (unit ? won(unit * qty) : "상담 후 안내"));
+    if (name) lines.push("· 주문자: " + name);
+    if (memo) lines.push("· 요청 사항: " + memo);
+    return lines.join("\n");
+  }
+
+  function updateOrder() {
+    var item = currentItem();
+    var unit = priceNumber(item);
+    var img = document.getElementById("orderImg");
+    img.hidden = !item.image;
+    if (item.image) img.src = item.image;
+    document.getElementById("orderPrice").textContent = item.price || "가격은 상담 후 안내";
+    document.getElementById("orderQty").textContent = qty;
+    document.getElementById("qtyDown").disabled = qty <= 1;
+    document.getElementById("qtyUp").disabled = qty >= 9;
+    document.getElementById("sizeRow").hidden = !needsSize(item);
+    document.getElementById("orderTotal").textContent = unit ? won(unit * qty) : "상담 후 안내";
+    document.getElementById("orderMessage").textContent = buildMessage();
+  }
+
+  function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text).then(
+        function () { return true; },
+        function () { return copyFallback(text); }
+      );
+    }
+    return Promise.resolve(copyFallback(text));
+  }
+
+  function copyFallback(text) {
+    var area = el("textarea");
+    area.value = text;
+    area.setAttribute("readonly", "");
+    area.style.cssText = "position:fixed;opacity:0;top:0;left:0";
+    sheet.appendChild(area);
+    area.select();
+    var ok = false;
+    try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+    area.remove();
+    return ok;
+  }
+
+  function sendOrder(key) {
+    var ch = CHANNELS[key];
+    var msg = buildMessage();
+    var url;
+    if (key === "sms") {
+      url = config.phone && !config.previewMode
+        ? "sms:" + config.phone.replace(/[^0-9+]/g, "") + "?&body=" + encodeURIComponent(msg)
+        : "#demo";
+    } else {
+      url = links[key];
+    }
+
+    if (url === "#demo") {
+      copyText(msg);
+      showToast("시안용: 실제로는 주문 내용이 담긴 " + ch.app + " 창이 열립니다.");
+      return;
+    }
+    if (key === "sms") {
+      window.location.href = url;
+      return;
+    }
+    // DM·카카오톡은 글을 미리 채울 수 없어서, 복사해 두고 대화창을 엽니다
+    window.open(url, "_blank", "noopener");
+    copyText(msg).then(function (ok) {
+      showToast(ok
+        ? "주문 내용이 복사됐어요. " + ch.app + " 대화창에 붙여넣기만 하세요."
+        : "아래 '보낼 주문 내용'을 복사해 " + ch.app + "으로 보내 주세요.");
+      if (!ok) sheet.querySelector(".order-preview").open = true;
+    });
+  }
+
+  function openOrder(id) {
+    if (!catalog.length) return;
+    var item = findItem(id) || catalog[0].item;
+    document.getElementById("orderProduct").value = item.id;
+    qty = 1;
+    updateOrder();
+    if (typeof sheet.showModal === "function") sheet.showModal();
+    else sheet.setAttribute("open", "");
+  }
+
+  function setupOrder() {
+    sheet = document.getElementById("orderSheet");
+    if (!sheet || !catalog.length) return;
+
+    // 제품 고르기 (분류별로 묶기)
+    var select = document.getElementById("orderProduct");
+    var groups = {};
+    catalog.forEach(function (c) {
+      if (!groups[c.group]) {
+        groups[c.group] = el("optgroup");
+        groups[c.group].label = c.group;
+        select.appendChild(groups[c.group]);
+      }
+      var opt = el("option", null, c.item.name);
+      opt.value = c.item.id;
+      groups[c.group].appendChild(opt);
+    });
+
+    var size = document.getElementById("orderSize");
+    ["모르겠어요 (상담 요청)"].concat(orderCfg.ringSizes || []).forEach(function (s) {
+      var opt = el("option", null, s);
+      opt.value = s;
+      size.appendChild(opt);
+    });
+
+    // 주문 보내기 버튼
+    var box = document.getElementById("orderChannels");
+    (orderCfg.channels || ["dm", "kakao", "sms"]).forEach(function (key) {
+      var ch = CHANNELS[key];
+      if (!ch || (key === "sms" ? !config.phone : !links[key])) return;
+      var btn = el("button", "order-send " + ch.cls, ch.label);
+      btn.type = "button";
+      btn.addEventListener("click", function () { sendOrder(key); });
+      box.appendChild(btn);
+    });
+
+    document.getElementById("qtyDown").addEventListener("click", function () { qty = Math.max(1, qty - 1); updateOrder(); });
+    document.getElementById("qtyUp").addEventListener("click", function () { qty = Math.min(9, qty + 1); updateOrder(); });
+    sheet.addEventListener("input", updateOrder);
+    sheet.addEventListener("change", updateOrder);
+    // 바깥(어두운 곳)을 누르면 닫기
+    sheet.addEventListener("click", function (e) {
+      if (e.target === sheet) sheet.close();
+    });
+
+    // 페이지 어디서든 data-order 버튼을 누르면 주문서 열기
+    document.addEventListener("click", function (e) {
+      var btn = e.target.closest && e.target.closest("[data-order]");
+      if (!btn) return;
+      e.preventDefault();
+      openOrder(btn.dataset.order);
+    });
+  }
+
+  // ---------- 유튜브에서 온 손님 (?from=youtube&order=제품id) ----------
+  function setupDeepLink() {
+    var params = new URLSearchParams(window.location.search);
+    try {
+      if (params.get("from") === "youtube") sessionStorage.setItem("jewelry-from", "youtube");
+      fromYoutube = sessionStorage.getItem("jewelry-from") === "youtube";
+    } catch (e) {
+      fromYoutube = params.get("from") === "youtube";
+    }
+
+    var id = params.get("order");
+    if (id && findItem(id)) {
+      openOrder(id);
+    } else if (fromYoutube && orderCfg.youtubeWelcome) {
+      var ribbon = el("div", "yt-ribbon");
+      var go = el("button", "yt-go", orderCfg.youtubeWelcome + " →");
+      go.type = "button";
+      go.dataset.order = orderCfg.youtubeWelcomeItem || "";
+      var close = el("button", "yt-close", "×");
+      close.type = "button";
+      close.setAttribute("aria-label", "안내 닫기");
+      close.addEventListener("click", function () { ribbon.remove(); });
+      ribbon.appendChild(go);
+      ribbon.appendChild(close);
+      document.body.appendChild(ribbon);
     }
   }
 
@@ -387,6 +620,8 @@
     renderGift();
     renderInfo();
     renderSiteInfo();
+    setupOrder();
+    setupDeepLink();
     setupReveal();
     setupPreviewMode();
   });

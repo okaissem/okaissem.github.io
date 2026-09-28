@@ -31,8 +31,8 @@ window.JEWELRY_CONFIG = {
     body: "쥬얼리 매장을 위한 홈페이지 시안입니다. 매장 사진과 정보만 보내 주시면 이 모습 그대로 만들어 드립니다.",
     features: [
       { title: "휴대폰·PC 모두", desc: "손님 대부분이 보는 휴대폰 화면에 맞춰 만듭니다." },
-      { title: "분류별 컬렉션", desc: "반지·목걸이·귀걸이·팔찌로 나누고, 누르면 스마트스토어 구매로 연결됩니다." },
-      { title: "유튜브·SNS 연동", desc: "유튜브 영상, 카카오톡 채널, 네이버플레이스, 인스타그램을 한곳에 모읍니다." },
+      { title: "홈페이지에서 바로 주문", desc: "제품을 누르면 주문서가 열리고, 인스타그램 DM·카카오톡·문자로 주문이 들어옵니다. 스토어 수수료가 없습니다." },
+      { title: "유튜브 → 주문 연결", desc: "유튜브 영상 설명·고정 댓글의 링크를 누르면 영상 속 제품 주문서가 바로 열리고, 유튜브에서 온 주문인지 표시됩니다." },
       { title: "결제 전 시안 확인", desc: "지금 보시는 것처럼 시안을 먼저 보고 결정하실 수 있습니다." },
     ],
   },
@@ -53,11 +53,34 @@ window.JEWELRY_CONFIG = {
   // 바로가기 주소
   // "#demo" 는 시안용 가상 링크입니다. 누르면 "가상 링크" 안내만 뜹니다.
   links: {
-    smartstore: "https://smartstore.naver.com/finest_jewelry",
+    smartstore: "https://smartstore.naver.com/finest_jewelry", // 매장 안내에만 나옵니다 (구매 버튼은 아래 주문서로 연결)
+    dm: "#demo", // 인스타그램 DM 주소 (예: https://ig.me/m/인스타아이디) - 누르면 DM 창이 바로 열립니다
     kakao: "#demo", // 카카오톡 채널 주소 (예: https://pf.kakao.com/_xxxx)
     naverPlace: "#demo", // 네이버플레이스 주소
     instagram: "#demo",
     youtube: "#demo", // 유튜브 채널 주소
+  },
+
+  // ------------------------------------------------------------
+  // 1-1. 주문서 (스마트스토어 대신 홈페이지에서 바로 주문받기)
+  // ------------------------------------------------------------
+  // 제품을 누르면 주문서가 열리고, 손님이 고른 내용이 주문 메시지로 만들어집니다.
+  //   - 인스타그램 DM / 카카오톡 : 주문 내용이 복사된 채로 대화창이 열려, 붙여넣기만 하면 됩니다
+  //   - 문자 : 주문 내용이 미리 채워진 문자 창이 열립니다 (위 phone 번호로)
+  // 쓰지 않을 방법은 channels 에서 지우면 버튼이 사라집니다.
+  //
+  // ★ 유튜브에서 주문 받기 (유튜브에는 DM 기능이 없어서 링크로 연결합니다)
+  //   영상 설명란·고정 댓글에 아래 주소를 넣으면, 누른 손님에게 주문서가 바로 열리고
+  //   주문 메시지에 "유튜브 영상 보고 주문해요"가 붙어 유튜브 손님인지 알 수 있습니다.
+  //     루미에르 4종 세트 : https://okaissem.github.io/jewelry/?from=youtube&order=lumiere-set
+  //     특정 제품        : https://okaissem.github.io/jewelry/?from=youtube&order=emerald-ring  (제품의 id)
+  //     홈페이지 첫 화면  : https://okaissem.github.io/jewelry/?from=youtube
+  order: {
+    channels: ["dm", "kakao", "sms"],
+    ringSizes: ["5호", "7호", "9호", "11호", "13호", "15호", "17호", "19호"],
+    // 유튜브에서 온 손님에게 화면 아래에 띄우는 안내 (빈칸이면 안 띄웁니다)
+    youtubeWelcome: "유튜브 시청자님, 영상 속 루미에르 세트를 20% 할인가로 주문하세요",
+    youtubeWelcomeItem: "lumiere-set",
   },
 
   // ------------------------------------------------------------
@@ -94,10 +117,10 @@ window.JEWELRY_CONFIG = {
     desc: "빛을 뜻하는 루미에르. 6발로 감싼 라운드 다이아몬드를 반지부터 목걸이, 귀걸이, 팔찌까지 같은 디자인으로 맞췄습니다.",
     setDiscount: 20,
     items: [
-      { name: "루미에르 반지", category: "반지", price: "89,000원", image: "images/01-solitaire-ring-photo.jpg", virtual: true, link: "" },
-      { name: "루미에르 목걸이", category: "목걸이", price: "79,000원", image: "images/13-lumiere-necklace.jpg", virtual: true, link: "" },
-      { name: "루미에르 귀걸이", category: "귀걸이", price: "59,000원", image: "images/14-lumiere-earrings.jpg", virtual: true, link: "" },
-      { name: "루미에르 팔찌", category: "팔찌", price: "99,000원", image: "images/15-lumiere-bracelet.jpg", virtual: true, link: "" },
+      { id: "lumiere-ring", name: "루미에르 반지", category: "반지", price: "89,000원", image: "images/01-solitaire-ring-photo.jpg", virtual: true },
+      { id: "lumiere-necklace", name: "루미에르 목걸이", category: "목걸이", price: "79,000원", image: "images/13-lumiere-necklace.jpg", virtual: true },
+      { id: "lumiere-earrings", name: "루미에르 귀걸이", category: "귀걸이", price: "59,000원", image: "images/14-lumiere-earrings.jpg", virtual: true },
+      { id: "lumiere-bracelet", name: "루미에르 팔찌", category: "팔찌", price: "99,000원", image: "images/15-lumiere-bracelet.jpg", virtual: true },
     ],
   },
 
@@ -111,21 +134,21 @@ window.JEWELRY_CONFIG = {
   // gem     : 예시 그림의 보석 색 (image 가 있으면 쓰지 않습니다)
   // metal   : 예시 그림의 금속 색 - gold / rose / silver
   // price   : 판매 가격 (빈칸이면 "스토어에서 가격 보기"로 나옵니다) - 지금 값은 가상 가격
-  // link    : 스마트스토어 상품 주소 (빈칸이면 스토어 첫 화면으로 연결)
+  // id      : 주문 바로가기 주소에 쓰는 영문 이름 (예: ?order=emerald-ring) - 겹치지 않게
   categories: ["반지", "목걸이", "귀걸이", "팔찌"],
   products: [
-    { name: "루미에르 다이아몬드 반지", price: "89,000원", category: "반지", metal: "gold", gem: "#f4f7ff", virtual: true, image: "images/01-solitaire-ring-photo.jpg", link: "" },
-    { name: "이터니티 라인 반지", price: "129,000원", category: "반지", metal: "rose", gem: "#ffe3ea", virtual: true, image: "images/02-eternity-ring.jpg", link: "" },
-    { name: "에메랄드 포인트 반지", price: "159,000원", category: "반지", metal: "gold", gem: "#3fb37f", virtual: true, image: "images/03-emerald-ring.jpg", link: "" },
-    { name: "데일리 실버 반지", price: "39,000원", category: "반지", metal: "silver", gem: "#dfe8ff", virtual: true, image: "images/04-silver-ring.jpg", link: "" },
-    { name: "한 알 진주 목걸이", price: "69,000원", category: "목걸이", metal: "gold", gem: "#fbf4e8", virtual: true, image: "images/05-pearl-necklace.jpg", link: "" },
-    { name: "하트 펜던트 목걸이", price: "79,000원", category: "목걸이", metal: "rose", gem: "#ff8fa8", virtual: true, image: "images/06-heart-necklace.jpg", link: "" },
-    { name: "사파이어 드롭 목걸이", price: "149,000원", category: "목걸이", metal: "silver", gem: "#4a6cf0", virtual: true, image: "images/07-sapphire-necklace.jpg", link: "" },
-    { name: "미니 볼 귀걸이", price: "29,000원", category: "귀걸이", metal: "gold", gem: "#f4f7ff", virtual: true, image: "images/08-ball-earrings.jpg", link: "" },
-    { name: "진주 드롭 귀걸이", price: "59,000원", category: "귀걸이", metal: "silver", gem: "#fbf4e8", virtual: true, image: "images/09-pearl-earrings.jpg", link: "" },
-    { name: "루비 스터드 귀걸이", price: "99,000원", category: "귀걸이", metal: "rose", gem: "#d8344f", virtual: true, image: "images/10-ruby-earrings.jpg", link: "" },
-    { name: "테니스 팔찌", price: "119,000원", category: "팔찌", metal: "gold", gem: "#f4f7ff", virtual: true, image: "images/11-tennis-bracelet.jpg", link: "" },
-    { name: "체인 레이어드 팔찌", price: "49,000원", category: "팔찌", metal: "gold", gem: "#f7d774", virtual: true, image: "images/12-chain-bracelet.jpg", link: "" },
+    { id: "diamond-ring", name: "루미에르 다이아몬드 반지", price: "89,000원", category: "반지", metal: "gold", gem: "#f4f7ff", virtual: true, image: "images/01-solitaire-ring-photo.jpg" },
+    { id: "eternity-ring", name: "이터니티 라인 반지", price: "129,000원", category: "반지", metal: "rose", gem: "#ffe3ea", virtual: true, image: "images/02-eternity-ring.jpg" },
+    { id: "emerald-ring", name: "에메랄드 포인트 반지", price: "159,000원", category: "반지", metal: "gold", gem: "#3fb37f", virtual: true, image: "images/03-emerald-ring.jpg" },
+    { id: "silver-ring", name: "데일리 실버 반지", price: "39,000원", category: "반지", metal: "silver", gem: "#dfe8ff", virtual: true, image: "images/04-silver-ring.jpg" },
+    { id: "pearl-necklace", name: "한 알 진주 목걸이", price: "69,000원", category: "목걸이", metal: "gold", gem: "#fbf4e8", virtual: true, image: "images/05-pearl-necklace.jpg" },
+    { id: "heart-necklace", name: "하트 펜던트 목걸이", price: "79,000원", category: "목걸이", metal: "rose", gem: "#ff8fa8", virtual: true, image: "images/06-heart-necklace.jpg" },
+    { id: "sapphire-necklace", name: "사파이어 드롭 목걸이", price: "149,000원", category: "목걸이", metal: "silver", gem: "#4a6cf0", virtual: true, image: "images/07-sapphire-necklace.jpg" },
+    { id: "ball-earrings", name: "미니 볼 귀걸이", price: "29,000원", category: "귀걸이", metal: "gold", gem: "#f4f7ff", virtual: true, image: "images/08-ball-earrings.jpg" },
+    { id: "pearl-earrings", name: "진주 드롭 귀걸이", price: "59,000원", category: "귀걸이", metal: "silver", gem: "#fbf4e8", virtual: true, image: "images/09-pearl-earrings.jpg" },
+    { id: "ruby-earrings", name: "루비 스터드 귀걸이", price: "99,000원", category: "귀걸이", metal: "rose", gem: "#d8344f", virtual: true, image: "images/10-ruby-earrings.jpg" },
+    { id: "tennis-bracelet", name: "테니스 팔찌", price: "119,000원", category: "팔찌", metal: "gold", gem: "#f4f7ff", virtual: true, image: "images/11-tennis-bracelet.jpg" },
+    { id: "chain-bracelet", name: "체인 레이어드 팔찌", price: "49,000원", category: "팔찌", metal: "gold", gem: "#f7d774", virtual: true, image: "images/12-chain-bracelet.jpg" },
   ],
 
   // ------------------------------------------------------------
