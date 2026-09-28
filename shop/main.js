@@ -17,6 +17,7 @@
     { key: "10u", label: "10만 원 이상", min: 100001, max: Infinity },
   ];
 
+  var fromYoutube = false;
   var state = { cat: "", sub: "", q: "", colors: [], sizes: [], prices: [], stock: false, sale: false, sort: "rec", shown: PAGE };
   var byId = {};
   products.forEach(function (p, i) { p._i = i; byId[p.id] = p; });
@@ -64,14 +65,15 @@
     return "rgb(" + f(r) + "," + f(g) + "," + f(b) + ")";
   }
   var SHAPES = {
+    "아우터": '<path class="b" d="M70 36 L46 46 L30 120 L28 176 L48 178 L58 112 L60 182 L140 182 L142 112 L152 178 L172 176 L170 120 L154 46 L130 36 L100 96 Z"/><path class="l" d="M70 36 L86 82 L100 96 L114 82 L130 36 M100 96 L100 182"/><circle class="d" cx="108" cy="122" r="3.5"/><circle class="d" cx="108" cy="148" r="3.5"/>',
+    "셔츠": '<path class="b" d="M72 42 L48 50 L30 110 L28 152 L46 154 L58 104 L58 170 L142 170 L142 104 L154 154 L172 152 L170 110 L152 50 L128 42 L100 60 Z"/><path class="d" d="M76 40 L100 62 L124 40 L112 34 L100 48 L88 34 Z"/><path class="l" d="M100 62 L100 170"/><circle class="d" cx="100" cy="86" r="3"/><circle class="d" cx="100" cy="112" r="3"/><circle class="d" cx="100" cy="138" r="3"/>',
+    "바지": '<path class="b" d="M62 32 L138 32 L148 180 L110 180 L100 84 L90 180 L52 180 Z"/><rect class="d" x="62" y="32" width="76" height="14" rx="3"/><path class="l" d="M100 46 L100 84 M70 52 Q80 62 76 74 M130 52 Q120 62 124 74"/>',
+    "원피스": '<path class="b" d="M80 34 Q100 50 120 34 L130 40 L124 88 L152 178 L48 178 L76 88 L70 40 Z"/><path class="d" d="M76 86 L124 86 L123 97 L77 97 Z"/><path class="l" d="M80 34 Q100 50 120 34 M86 104 L76 176 M114 104 L124 176"/>',
+    "니트": '<path class="b" d="M72 42 L48 50 L30 110 L28 152 L46 154 L58 104 L58 168 L142 168 L142 104 L154 154 L172 152 L170 110 L152 50 L128 42 Q100 64 72 42 Z"/><path class="d" d="M58 156 L142 156 L142 170 L58 170 Z M28 144 L47 146 L46 156 L27 154 Z M172 144 L153 146 L154 156 L173 154 Z"/><path class="l w4" d="M74 44 Q100 64 126 44"/><path class="l" d="M86 80 L86 150 M100 76 L100 150 M114 80 L114 150"/>',
     "반팔": '<path class="b" d="M72 42 L48 50 L22 78 L40 98 L58 86 L58 168 L142 168 L142 86 L160 98 L178 78 L152 50 L128 42 Q100 64 72 42 Z"/><path class="l" d="M72 42 Q100 64 128 42 M58 86 L58 96 M142 86 L142 96"/>',
     "오버핏": '<path class="b" d="M68 40 L40 50 L16 86 L38 104 L54 92 L54 170 L146 170 L146 92 L162 104 L184 86 L160 50 L132 40 Q100 62 68 40 Z"/><path class="l" d="M68 40 Q100 62 132 40"/>',
     "긴팔": '<path class="b" d="M72 42 L48 50 L30 110 L28 152 L46 154 L58 104 L58 168 L142 168 L142 104 L154 154 L172 152 L170 110 L152 50 L128 42 Q100 64 72 42 Z"/><path class="l" d="M72 42 Q100 64 128 42 M28 144 L47 146 M172 144 L153 146"/>',
     "민소매": '<path class="b" d="M78 38 Q74 70 60 84 L60 168 L140 168 L140 84 Q126 70 122 38 L110 38 Q100 58 90 38 Z"/><path class="l" d="M90 38 Q100 58 110 38"/>',
-    "볼캡": '<path class="b" d="M52 118 Q50 62 100 60 Q150 62 150 118 Z"/><path class="d" d="M52 118 Q100 110 150 118 L180 132 Q152 148 110 140 Q70 134 52 118 Z"/><path class="l" d="M100 60 Q96 90 100 118 M74 68 Q70 92 72 116"/><circle class="d" cx="100" cy="60" r="4"/>',
-    "스냅백": '<path class="b" d="M50 122 Q48 56 100 54 Q152 56 150 122 Z"/><path class="d" d="M42 122 L158 122 L164 136 L36 136 Z"/><path class="l" d="M100 54 L100 122 M76 60 L72 122 M124 60 L128 122"/>',
-    "버킷햇": '<path class="d" d="M30 120 Q100 96 170 120 Q156 146 100 146 Q44 146 30 120 Z"/><path class="b" d="M64 116 L72 62 Q100 52 128 62 L136 116 Q100 126 64 116 Z"/><path class="l" d="M68 100 Q100 110 132 100"/>',
-    "비니": '<path class="b" d="M56 128 Q56 50 100 48 Q144 50 144 128 Z"/><rect class="d" x="50" y="116" width="100" height="34" rx="8"/><path class="l" d="M66 120 L66 146 M82 120 L82 146 M100 120 L100 146 M118 120 L118 146 M134 120 L134 146"/>',
     "토트백": '<path class="l w6" d="M74 86 Q74 42 100 42 Q126 42 126 86"/><path class="b" d="M46 84 L154 84 L146 170 L54 170 Z"/><path class="l" d="M50 100 L150 100"/>',
     "숄더백": '<path class="l w5" d="M64 88 Q100 16 136 88"/><path class="b" d="M50 98 Q50 84 64 84 L136 84 Q150 84 150 98 L144 158 Q142 168 130 168 L70 168 Q58 168 56 158 Z"/><path class="d" d="M50 98 Q50 84 64 84 L136 84 Q150 84 150 98 L150 118 Q100 132 50 118 Z"/><circle class="l" cx="100" cy="124" r="4"/>',
     "크로스백": '<path class="l w4" d="M66 110 Q100 -14 134 110"/><rect class="b" x="60" y="104" width="80" height="62" rx="10"/><path class="d" d="M60 114 Q60 104 70 104 L130 104 Q140 104 140 114 L140 132 Q100 146 60 132 Z"/>',
@@ -80,7 +82,7 @@
   };
   function art(p, colorName) {
     var fill = hex(colorName || (p.col || [])[0]);
-    var shape = SHAPES[p.sub] || SHAPES[{ "모자": "볼캡", "티셔츠": "반팔", "가방": "토트백" }[p.c]] ||
+    var shape = SHAPES[p.sub] || SHAPES[{ "의류": "아우터", "티셔츠": "반팔", "가방": "토트백" }[p.c]] ||
       '<circle class="l w6" cx="100" cy="112" r="34"/><circle class="b" cx="100" cy="76" r="12"/>';
     return '<div class="art"><svg viewBox="0 0 200 200" role="img" aria-label="' + escapeHtml((colorName || "") + " " + (p.sub || p.c)) + '">' +
       '<rect width="200" height="200" fill="#ecebe6"/><ellipse cx="100" cy="182" rx="62" ry="6" fill="#000" opacity="0.07"/>' +
@@ -115,7 +117,7 @@
   }
 
   // ---------- 첫 화면 종목 타일 ----------
-  var TILE_LOOK = { "모자": ["볼캡", "네이비"], "티셔츠": ["반팔", "스카이블루"], "가방": ["토트백", "카멜"] };
+  var TILE_LOOK = { "의류": ["아우터", "베이지"], "티셔츠": ["반팔", "스카이블루"], "가방": ["토트백", "카멜"] };
   function countIn(cat) { return products.filter(function (p) { return p.c === cat; }).length; }
   function renderTiles() {
     $("totalCount").textContent = products.length.toLocaleString("ko-KR");
@@ -394,6 +396,8 @@
       d.appendChild(el("dd", "", r[1]));
       spec.appendChild(d);
     });
+    $("checkout").hidden = true;
+    $("payGuide").hidden = true;
     drawProduct();
     var sheet = $("productSheet");
     if (!sheet.open) sheet.showModal();
@@ -428,53 +432,149 @@
     Array.prototype.forEach.call(document.querySelectorAll("#pMeasure tr[data-size]"), function (tr) { tr.classList.toggle("on", tr.dataset.size === order.size); });
     $("qty").textContent = order.qty;
     $("pTotal").textContent = won(pay(p) * order.qty);
-    $("orderMessage").textContent = message();
     var sold = p.st === "품절";
-    $("orderHow").textContent = sold ? "품절된 상품입니다. DM으로 재입고 알림을 요청해 주세요." : "아래 방법 중 하나를 누르면 주문 내용이 복사되고 대화창이 열립니다.";
-    renderChannels(sold);
+    $("consultBtn").textContent = sold ? "카톡으로 재입고 문의" : "카톡으로 상담하기";
+    $("orderBtn").disabled = sold;
+    $("orderBtn").textContent = sold ? "품절" : "바로 주문하기";
+    $("orderNote").textContent = sold ? "품절된 상품입니다. 카톡으로 재입고 알림을 요청해 주세요." : "회원가입 없이 주문할 수 있어요. 궁금한 점은 먼저 카톡으로 물어보세요.";
+    $("orderMessage").textContent = message();
   }
-  function message() {
+
+  // ---------- 메시지 (상담 · 주문) ----------
+  function optionLines() {
     var p = order.p;
-    var lines = ["[" + config.storeName + " 주문]", "상품: " + p.n + " (" + p.id + ")"];
+    var lines = ["상품: " + p.n + " (" + p.id + ")"];
     if (order.color) lines.push("색상: " + order.color);
     if (order.size) lines.push("사이즈: " + order.size);
     lines.push("수량: " + order.qty + "개", "금액: " + won(pay(p) * order.qty));
-    lines.push("", "받는 분 성함 / 연락처 / 주소:");
-    return lines.join("\n");
+    return lines;
   }
-  var CHANNELS = [
-    { key: "dm", label: "인스타 DM", cls: "ch-dm" },
-    { key: "kakao", label: "카카오톡", cls: "ch-kakao" },
-    { key: "sms", label: "문자", cls: "ch-sms" },
-  ];
-  function renderChannels(sold) {
-    var box = $("orderChannels");
-    box.innerHTML = "";
-    CHANNELS.forEach(function (ch) {
-      var b = el("button", ch.cls, sold && ch.key !== "dm" ? ch.label : sold ? "재입고 알림 요청" : ch.label + "로 주문");
-      b.type = "button";
-      if (sold && ch.key !== "dm") b.disabled = true;
-      b.addEventListener("click", function () { send(ch.key, sold); });
-      box.appendChild(b);
-    });
+  function youtubeLine() {
+    return fromYoutube && config.youtube && config.youtube.tag ? ["(" + config.youtube.tag + ")"] : [];
   }
+  function consultMessage() {
+    var p = order.p;
+    var head = p.st === "품절" ? "[재입고 문의]" : "[상담 요청]";
+    return [head].concat(youtubeLine(), optionLines(), ["", "궁금한 점: "]).join("\n");
+  }
+  function payMethod() {
+    var r = document.querySelector('input[name="payMethod"]:checked');
+    return r && r.value === "card" ? "카드·간편결제" : "무통장 입금";
+  }
+  function message() {
+    var memo = $("oMemo").value.trim();
+    return ["[" + config.storeName + " 주문]"].concat(youtubeLine(), optionLines(), [
+      "",
+      "받는 분: " + $("oName").value.trim(),
+      "연락처: " + $("oPhone").value.trim(),
+      "주소: " + $("oAddr").value.trim(),
+    ], memo ? ["요청 사항: " + memo] : [], ["결제 방법: " + payMethod()]).join("\n");
+  }
+
+  // ---------- 보내기 (카톡 · 문자) ----------
   function copy(text) {
     if (navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(text).catch(function () {});
     return Promise.resolve();
   }
-  function send(key, sold) {
-    var p = order.p;
-    if (!sold && (p.sz || []).length > 1 && !order.size) { toast("사이즈를 골라 주세요."); return; }
-    var text = sold ? "[재입고 알림 요청]\n" + p.n + " (" + p.id + ")" + (order.color ? "\n색상: " + order.color : "") : message();
+  // 메시지를 복사하고 카톡 채널(또는 문자)을 엽니다. 시안(#demo)에서는 안내만 띄웁니다.
+  function openChannel(key, text, done) {
     var url = key === "sms" ? "sms:" + (config.phone || "") + "?&body=" + encodeURIComponent(text) : (config.links || {})[key];
     copy(text).then(function () {
+      if (done) done();
       if (!url || url === "#demo" || (key === "sms" && config.previewMode)) {
-        toast("주문 내용을 복사했습니다. (시안이라 실제 대화창은 열리지 않습니다)");
+        toast("메시지를 복사했습니다. (시안이라 실제 대화창은 열리지 않습니다)");
         return;
       }
-      toast("주문 내용을 복사했습니다. 대화창에 붙여넣기 해 주세요.");
-      window.location.href = url;
+      toast("메시지를 복사했습니다. 대화창에 붙여넣기 해 주세요.");
+      if (key === "sms") window.location.href = url;
+      else window.open(url, "_blank", "noopener");
     });
+  }
+  function needSize() {
+    var p = order.p;
+    if ((p.sz || []).length > 1 && !order.size) { toast("사이즈를 먼저 골라 주세요."); return true; }
+    return false;
+  }
+  function consult() {
+    openChannel("kakao", consultMessage());
+  }
+  function startOrder() {
+    if (needSize()) return;
+    var box = $("checkout");
+    box.hidden = false;
+    $("payGuide").hidden = true;
+    renderChannels();
+    $("orderMessage").textContent = message();
+    box.scrollIntoView({ block: "start", behavior: "smooth" });
+    setTimeout(function () { $("oName").focus({ preventScroll: true }); }, 300);
+  }
+  var ORDER_CHANNELS = [
+    { key: "kakao", label: "카카오톡으로 주문 보내기", cls: "ch-kakao" },
+    { key: "sms", label: "문자로 보내기", cls: "ch-sms" },
+  ];
+  function renderChannels() {
+    var box = $("orderChannels");
+    box.innerHTML = "";
+    ORDER_CHANNELS.forEach(function (ch) {
+      var b = el("button", ch.cls, ch.label);
+      b.type = "button";
+      b.addEventListener("click", function () { sendOrder(ch.key); });
+      box.appendChild(b);
+    });
+  }
+  function sendOrder(key) {
+    if (needSize()) return;
+    var missing = [["oName", "성함"], ["oPhone", "연락처"], ["oAddr", "주소"]].filter(function (f) { return !$(f[0]).value.trim(); });
+    if (missing.length) {
+      toast("적어 주세요: " + missing.map(function (f) { return f[1]; }).join(", "));
+      $(missing[0][0]).focus();
+      return;
+    }
+    if (!/^0\d{1,2}-?\d{3,4}-?\d{4}$/.test($("oPhone").value.trim())) {
+      toast("연락처를 010-0000-0000 모양으로 적어 주세요.");
+      $("oPhone").focus();
+      return;
+    }
+    openChannel(key, message(), showPayGuide);
+  }
+  // 주문서를 보낸 뒤: 입금 계좌 또는 결제 링크 안내
+  function showPayGuide() {
+    var g = $("payGuide");
+    var total = won(pay(order.p) * order.qty);
+    var payCfg = config.pay || {};
+    g.innerHTML = "";
+    g.appendChild(el("h3", "", "주문서를 보냈어요"));
+    if (payMethod() === "카드·간편결제" && payCfg.payLink) {
+      g.appendChild(el("p", "", "아래 버튼을 눌러 " + total + "을 결제해 주세요. 결제가 확인되면 1~3일 안에 보내 드립니다."));
+      var a = el("a", "btn btn-dark pay-link", "카드·간편결제로 " + total + " 결제하기");
+      a.href = payCfg.payLink;
+      a.target = "_blank";
+      a.rel = "noopener";
+      if (payCfg.payLink === "#demo") {
+        a.removeAttribute("target");
+        a.addEventListener("click", function (e) { e.preventDefault(); toast("시안용 가상 결제 링크입니다. 실제로는 토스·카카오페이 결제 창이 열립니다."); });
+      }
+      g.appendChild(a);
+    } else {
+      var bank = payCfg.bank || {};
+      g.appendChild(el("p", "", "아래 계좌로 입금해 주세요. 입금이 확인되면 1~3일 안에 보내 드립니다."));
+      var dl = el("dl", "bank");
+      [["입금할 금액", total], ["은행", bank.name], ["계좌번호", bank.account], ["예금주", bank.holder]].forEach(function (r) {
+        if (!r[1]) return;
+        var d = el("div");
+        d.appendChild(el("dt", "", r[0]));
+        d.appendChild(el("dd", "", r[1]));
+        dl.appendChild(d);
+      });
+      g.appendChild(dl);
+      var c = el("button", "btn btn-line", "계좌번호 복사");
+      c.type = "button";
+      c.addEventListener("click", function () { copy(bank.account || "").then(function () { toast("계좌번호를 복사했습니다."); }); });
+      g.appendChild(c);
+    }
+    g.appendChild(el("p", "fine", "카톡 대화창에 주문 내용을 붙여넣어 보내 주셔야 주문이 접수됩니다."));
+    g.hidden = false;
+    g.scrollIntoView({ block: "nearest", behavior: "smooth" });
   }
 
   // ---------- 주소(URL)에 지금 보는 화면 기억 ----------
@@ -489,6 +589,13 @@
   }
   function readUrl() {
     var ps = new URLSearchParams(location.search);
+    // 유튜브에서 온 손님은 다른 화면으로 옮겨도 기억합니다
+    try {
+      if (ps.get("from") === "youtube") sessionStorage.setItem("shop-from", "youtube");
+      fromYoutube = sessionStorage.getItem("shop-from") === "youtube";
+    } catch (e) {
+      fromYoutube = ps.get("from") === "youtube";
+    }
     if (catOf(ps.get("cat"))) state.cat = ps.get("cat");
     if (ps.get("sub") && catOf(state.cat) && catOf(state.cat).subs.indexOf(ps.get("sub")) >= 0) state.sub = ps.get("sub");
     if (ps.get("q")) { state.q = ps.get("q"); $("q").value = state.q; }
@@ -544,6 +651,15 @@
     $("resetFilter").addEventListener("click", function () {
       document.querySelectorAll("#filterSheet input").forEach(function (i) { i.checked = false; });
     });
+    $("consultBtn").addEventListener("click", consult);
+    $("orderBtn").addEventListener("click", startOrder);
+    ["oName", "oPhone", "oAddr", "oMemo"].forEach(function (id) {
+      $(id).addEventListener("input", function () { $("orderMessage").textContent = message(); });
+    });
+    document.querySelectorAll('input[name="payMethod"]').forEach(function (r) {
+      r.addEventListener("change", function () { $("orderMessage").textContent = message(); });
+    });
+    if (!(config.pay || {}).payLink) $("payCardOpt").hidden = true;
     $("qtyDown").addEventListener("click", function () { if (order.qty > 1) { order.qty--; drawProduct(); } });
     $("qtyUp").addEventListener("click", function () { if (order.qty < 99) { order.qty++; drawProduct(); } });
     $("productSheet").addEventListener("close", function () {
@@ -555,6 +671,18 @@
     ["productSheet", "filterSheet"].forEach(function (id) {
       $(id).addEventListener("click", function (e) { if (e.target === this) this.close(); });
     });
+
+    if (fromYoutube && config.youtube && config.youtube.welcome) {
+      var ribbon = el("div", "yt-ribbon");
+      ribbon.appendChild(el("span", "yt-mark", "▶"));
+      ribbon.appendChild(el("p", "", config.youtube.welcome));
+      var x = el("button", "yt-close", "×");
+      x.type = "button";
+      x.setAttribute("aria-label", "안내 닫기");
+      x.addEventListener("click", function () { ribbon.remove(); });
+      ribbon.appendChild(x);
+      document.body.appendChild(ribbon);
+    }
 
     if (config.previewMode) document.body.insertBefore(el("p", "preview-badge", "미리보기 · 결제 전 시안입니다 · 상품 4,000개는 가상 상품"), document.body.firstChild);
 

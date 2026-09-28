@@ -1,5 +1,5 @@
 """
-시안용 가상 상품 4,000개(종목마다 1,000개)를 만들어 data/products.js 로 저장합니다.
+시안용 가상 상품 4,000개(의류·가방·쥬얼리·티셔츠 1,000개씩)를 만들어 data/products.js 로 저장합니다.
 
   python3 shop/tools/make_sample_products.py
 
@@ -29,13 +29,14 @@ JEWELRY = {
 }
 JW_METAL = [("14K 골드", ["골드", "로즈골드", "화이트골드"]), ("925 실버", ["실버", "골드"]), ("써지컬 스틸", ["실버", "골드", "로즈골드"])]
 
-CAP = {
-    "볼캡": ["워싱 볼캡", "로고 볼캡", "코듀로이 볼캡", "나일론 볼캡", "울 볼캡"],
-    "버킷햇": ["코튼 버킷햇", "리버시블 버킷햇", "나일론 버킷햇", "퍼 버킷햇"],
-    "비니": ["골지 비니", "숏 비니", "울 비니", "와치캡"],
-    "스냅백": ["자수 스냅백", "플랫 스냅백", "메시 스냅백"],
+APPAREL = {
+    "아우터": ["트렌치 코트", "숏 패딩", "울 코트", "데님 재킷", "니트 가디건", "바람막이 재킷"],
+    "셔츠": ["옥스퍼드 셔츠", "린넨 셔츠", "스트라이프 셔츠", "오버핏 셔츠", "체크 셔츠"],
+    "바지": ["와이드 슬랙스", "데님 팬츠", "조거 팬츠", "코튼 치노 팬츠", "카고 팬츠"],
+    "원피스": ["플리츠 원피스", "셔츠 원피스", "니트 원피스", "롱 원피스"],
+    "니트": ["라운드 니트", "브이넥 니트", "케이블 니트", "니트 조끼", "터틀넥 니트"],
 }
-CAP_MAT = ["면 100%", "면 폴리 혼방", "나일론 100%", "울 50% 아크릴 50%", "코듀로이 (면 100%)"]
+APPAREL_MAT = ["면 100%", "울 50% 폴리 50%", "폴리에스터 100%", "린넨 100%", "면 98% 스판 2%", "아크릴 혼방", "나일론 100%"]
 
 TEE = {
     "반팔": ["로고 반팔 티셔츠", "무지 반팔 티셔츠", "포켓 반팔 티셔츠", "스트라이프 반팔 티셔츠", "레터링 반팔 티셔츠"],
@@ -94,19 +95,33 @@ def jewelry(i):
     }, price(19, 159))
 
 
-def cap(i):
-    sub = rng.choice(list(CAP))
-    base = rng.choice(CAP[sub])
-    sizes = rng.choice([["FREE"], ["FREE"], ["M", "L"]])
+def apparel(i):
+    sub = rng.choice(list(APPAREL))
+    base = rng.choice(APPAREL[sub])
+    order = ["S", "M", "L", "XL"]
+    if sub == "바지":
+        sizes = rng.choice([["26", "28", "30", "32", "34"], ["S", "M", "L"]])
+    elif sub == "원피스":
+        sizes = rng.choice([["S", "M"], ["FREE"]])
+    else:
+        sizes = rng.choice([["S", "M", "L", "XL"], ["M", "L"], ["FREE"]])
     ms = {}
     for s in sizes:
-        head = 58 if s in ("FREE", "M") else 60
-        ms[s] = [head, rng.choice([6, 6.5, 7]) if sub in ("볼캡", "스냅백") else (5 if sub == "버킷햇" else None), rng.choice([11, 12, 13]) if sub != "비니" else 20]
+        # 사이즈마다 치수를 조금씩 늘립니다 (허리 사이즈 26~34 는 0~4단계)
+        k = (int(s) - 26) / 2 if s.isdigit() else (1.5 if s == "FREE" else order.index(s))
+        if sub == "바지":
+            ms[s] = [None, None, 34 + 2 * k, 100 + k, None]
+        elif sub == "원피스":
+            ms[s] = [37 + k, 45 + 2 * k, 35 + 2 * k, 115 + 2 * k, rng.choice([None, 58])]
+        else:
+            length = 92 if sub == "아우터" and base in ("트렌치 코트", "울 코트") else 68
+            sleeve = None if base == "니트 조끼" else 59 + k
+            ms[s] = [44 + 2 * k, 53 + 3 * k, None, length + 2 * k, sleeve]
     return common({
-        "id": f"HT-{i:04d}", "c": "모자", "sub": sub,
+        "id": f"CL-{i:04d}", "c": "의류", "sub": sub,
         "n": f"{rng.choice(ADJ)} {base}", "col": rng.sample(APPAREL_COLORS, rng.randint(1, 5)), "sz": sizes,
-        "m": rng.choice(CAP_MAT), "d": "머리둘레에 맞춰 조절할 수 있고, 가볍게 눌러써도 모양이 잘 잡힙니다.", "ms": ms,
-    }, price(15, 49))
+        "m": rng.choice(APPAREL_MAT), "d": "체형을 가리지 않는 핏으로, 단독으로도 레이어드로도 입기 좋습니다.", "ms": ms,
+    }, price(29, 189))
 
 
 def tee(i):
@@ -141,7 +156,7 @@ def bag(i):
 
 def main():
     items = []
-    for make in (jewelry, cap, tee, bag):
+    for make in (apparel, bag, jewelry, tee):
         items += [make(i) for i in range(1, PER_CATEGORY + 1)]
     for it in items:
         it.setdefault("sz", [])

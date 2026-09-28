@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8" />
-<!-- 4종목 쇼핑몰 홈페이지 시안 (쥬얼리 · 모자 · 티셔츠 · 가방 / 상품 4,000개) - 결제 전 미리보기 -->
+<!-- 4종목 쇼핑몰 홈페이지 시안 (의류 · 가방 · 쥬얼리 · 티셔츠 / 상품 4,000개) - 회원가입 없이 주문, 결제 전 미리보기 -->
 <!-- 검색(네이버·구글)에 나오지 않게 합니다 -->
 <meta name="robots" content="noindex, nofollow" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
@@ -18,7 +18,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&display=swap" rel="stylesheet" />
 
 <!-- 디자인을 고친 뒤에는 ?v= 뒤 숫자를 바꾸면 손님 휴대폰에 새 디자인이 바로 보입니다 -->
-<link rel="stylesheet" href="style.css?v=20260928a" />
+<link rel="stylesheet" href="style.css?v=20260928b" />
 </head>
 <body>
 
@@ -95,7 +95,7 @@
 <!-- 화면 아래 고정 버튼 -->
 <div class="bottom-bar">
   <a class="bar-kakao" data-link="kakao" target="_blank" rel="noopener">카카오톡 상담</a>
-  <a class="bar-dm" data-link="dm" target="_blank" rel="noopener">DM 문의</a>
+  <a class="bar-dm" href="#info">주문 방법</a>
 </div>
 
 <!-- 필터 -->
@@ -162,12 +162,35 @@
         <div class="measure" id="pMeasure"></div>
         <dl class="p-spec" id="pSpec"></dl>
         <div class="order-total"><span>합계</span><strong id="pTotal"></strong></div>
-        <p class="order-how" id="orderHow">아래 방법 중 하나를 누르면 주문 내용이 복사되고 대화창이 열립니다.</p>
-        <div class="order-channels" id="orderChannels"></div>
-        <details class="order-preview">
-          <summary>보낼 주문 내용 보기</summary>
-          <pre id="orderMessage"></pre>
-        </details>
+        <div class="order-actions">
+          <button type="button" class="act-kakao" id="consultBtn">카톡으로 상담하기</button>
+          <button type="button" class="act-order" id="orderBtn">바로 주문하기</button>
+        </div>
+        <p class="order-note" id="orderNote">회원가입 없이 주문할 수 있어요. 궁금한 점은 먼저 카톡으로 물어보세요.</p>
+
+        <!-- 주문서 (회원가입 없이 이름·연락처·주소만) -->
+        <div class="checkout" id="checkout" hidden>
+          <h3>주문서</h3>
+          <label class="field"><span>받는 분 성함 <em>*</em></span><input id="oName" autocomplete="name" maxlength="20" /></label>
+          <label class="field"><span>연락처 <em>*</em></span><input id="oPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="010-0000-0000" maxlength="13" /></label>
+          <label class="field"><span>주소 <em>*</em></span><input id="oAddr" autocomplete="street-address" maxlength="120" /></label>
+          <label class="field"><span>요청 사항</span><textarea id="oMemo" rows="2" maxlength="200" placeholder="배송 요청, 받고 싶은 날짜 등"></textarea></label>
+          <fieldset class="pay-method">
+            <legend>결제 방법</legend>
+            <div class="chips">
+              <label class="chip"><input type="radio" name="payMethod" value="bank" checked />무통장 입금</label>
+              <label class="chip" id="payCardOpt"><input type="radio" name="payMethod" value="card" />카드·간편결제</label>
+            </div>
+          </fieldset>
+          <div class="order-channels" id="orderChannels"></div>
+          <details class="order-preview">
+            <summary>보낼 주문 내용 보기</summary>
+            <pre id="orderMessage"></pre>
+          </details>
+        </div>
+
+        <!-- 주문서를 보낸 뒤 결제 안내 -->
+        <div class="pay-guide" id="payGuide" hidden></div>
       </div>
     </div>
   </form>
@@ -175,8 +198,8 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
-<script src="config.js?v=20260928a"></script>
-<script src="data/products.js?v=20260928a"></script>
-<script src="main.js?v=20260928a"></script>
+<script src="config.js?v=20260928b"></script>
+<script src="data/products.js?v=20260928b"></script>
+<script src="main.js?v=20260928b"></script>
 </body>
 </html>

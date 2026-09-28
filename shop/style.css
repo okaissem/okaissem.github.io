@@ -177,12 +177,13 @@ h1, h2 { margin: 0; letter-spacing: -0.02em; text-wrap: balance; }
 /* ---------- 주문 안내 ---------- */
 .info { max-width: var(--max); margin: 0 auto; padding: 56px 16px; border-top: 1px solid var(--line); scroll-margin-top: 64px; }
 .info h2 { font-size: 26px; }
-.notice { list-style: none; margin: 24px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; counter-reset: n; }
+.notice { list-style: none; margin: 24px 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; counter-reset: n; }
 .notice li { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; counter-increment: n; }
 .notice li::before { content: counter(n); font-family: var(--font-display); font-weight: 800; color: var(--accent); font-size: 20px; display: block; }
 .notice b { display: block; margin: 6px 0 4px; }
 .notice span { color: var(--ink-soft); font-size: 14px; }
-@media (max-width: 760px) { .notice { grid-template-columns: 1fr; } }
+@media (max-width: 960px) { .notice { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .notice { grid-template-columns: 1fr; } }
 .info-list { margin: 28px 0 0; }
 .info-list div { display: grid; grid-template-columns: 110px 1fr; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
 .info-list dt { color: var(--ink-soft); }
@@ -266,13 +267,47 @@ legend { font-weight: 700; margin-bottom: 10px; padding: 0; }
 .p-spec dd { margin: 0; }
 .order-total { display: flex; justify-content: space-between; align-items: baseline; margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line); }
 .order-total strong { font-size: 22px; font-variant-numeric: tabular-nums; }
-.order-how { font-size: 13px; color: var(--ink-soft); margin: 10px 0; }
-.order-channels { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.order-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 14px; }
+.order-actions button { border: 0; border-radius: 12px; padding: 15px 8px; font-weight: 700; font-size: 15px; cursor: pointer; }
+.act-kakao { background: var(--kakao); color: var(--kakao-text); }
+.act-order { background: var(--ink); color: #fff; }
+.act-order:disabled { opacity: 0.35; cursor: not-allowed; }
+.order-note { font-size: 13px; color: var(--ink-soft); margin: 10px 0 0; }
+
+/* 주문서 */
+.checkout, .pay-guide { margin-top: 20px; padding: 18px; border-radius: var(--radius); background: var(--paper); scroll-margin-top: 16px; }
+.checkout h3, .pay-guide h3 { margin: 0 0 12px; font-size: 17px; }
+.field { display: grid; gap: 6px; margin-bottom: 12px; font-size: 14px; font-weight: 600; }
+.field em { color: var(--sale); font-style: normal; }
+.field input, .field textarea { width: 100%; border: 1px solid var(--line); border-radius: 10px; padding: 11px 12px; background: var(--surface); font-weight: 400; font-size: 16px; resize: vertical; }
+.field input:focus, .field textarea:focus { border-color: var(--ink); outline: none; }
+.pay-method { margin: 4px 0 16px; }
+.pay-method legend { font-size: 14px; }
+.order-channels { display: grid; grid-template-columns: 2fr 1fr; gap: 8px; }
 .order-channels button { border: 0; border-radius: 12px; padding: 14px 6px; font-weight: 700; cursor: pointer; font-size: 14px; }
-.ch-dm { background: linear-gradient(135deg, #f58529, #dd2a7b 50%, #8134af); color: #fff; }
 .ch-kakao { background: var(--kakao); color: var(--kakao-text); }
-.ch-sms { background: var(--ink); color: #fff; }
-.order-channels button:disabled { opacity: 0.4; cursor: not-allowed; }
+.ch-sms { background: var(--surface); border: 1px solid var(--line) !important; }
+
+/* 결제 안내 */
+.pay-guide { background: var(--accent-soft); }
+.pay-guide p { margin: 0 0 12px; font-size: 14px; }
+.pay-guide .bank { margin: 0 0 12px; background: var(--surface); border-radius: 10px; padding: 4px 14px; }
+.pay-guide .bank div { display: grid; grid-template-columns: 90px 1fr; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+.pay-guide .bank div:last-child { border-bottom: 0; }
+.pay-guide .bank dt { color: var(--ink-soft); }
+.pay-guide .bank dd { margin: 0; font-weight: 700; font-variant-numeric: tabular-nums; }
+.pay-guide .pay-link { width: 100%; margin-bottom: 12px; }
+.pay-guide .fine { font-size: 12px; color: var(--ink-soft); margin: 12px 0 0; }
+
+/* 유튜브에서 온 손님 안내 */
+.yt-ribbon {
+  position: fixed; left: 12px; right: 12px; bottom: calc(var(--bar-height) + 12px + env(safe-area-inset-bottom)); z-index: 45;
+  display: flex; align-items: center; gap: 10px; max-width: 560px; margin: 0 auto;
+  padding: 10px 10px 10px 14px; border-radius: 14px; background: var(--ink); color: #fff; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+.yt-ribbon p { margin: 0; flex: 1; font-size: 14px; }
+.yt-mark { display: grid; place-items: center; flex: none; width: 28px; height: 20px; border-radius: 6px; background: #ff0033; font-size: 10px; }
+.yt-close { flex: none; border: 0; background: none; color: #fff; font-size: 22px; cursor: pointer; width: 32px; height: 32px; }
 .order-preview { margin-top: 12px; font-size: 13px; }
 .order-preview summary { cursor: pointer; color: var(--ink-soft); }
 .order-preview pre { white-space: pre-wrap; background: var(--paper); padding: 12px; border-radius: 10px; font-family: inherit; margin: 8px 0 0; }

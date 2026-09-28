@@ -18,10 +18,10 @@ from pathlib import Path
 
 # config.js 의 categories 와 같게 맞춰 주세요 (실측 사이즈 항목 순서)
 MEASURE = {
-    "쥬얼리": [],
-    "모자": ["머리둘레", "챙길이", "높이"],
-    "티셔츠": ["가슴단면", "총장", "어깨", "소매"],
+    "의류": ["어깨", "가슴단면", "허리", "총장", "소매"],
     "가방": ["가로", "세로", "폭", "끈길이"],
+    "쥬얼리": [],
+    "티셔츠": ["가슴단면", "총장", "어깨", "소매"],
 }
 REQUIRED = ["상품코드", "종목", "상품명", "판매가(원)", "대표사진 파일명"]
 HEADER_ROW = 3
@@ -92,7 +92,7 @@ def convert(xlsx_path):
             continue
         category = str(v["종목"]).strip()
         if category not in MEASURE:
-            problems.append(f"{rownum}번째 줄 ({code}): 종목 '{category}' 은(는) 쥬얼리/모자/티셔츠/가방이 아님")
+            problems.append(f"{rownum}번째 줄 ({code}): 종목 '{category}' 은(는) 의류/가방/쥬얼리/티셔츠가 아님")
             continue
         status = str(v.get("판매상태") or "판매중").strip()
         if status == "숨김":
