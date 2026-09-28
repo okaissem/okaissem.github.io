@@ -33,13 +33,14 @@
 </head><body>
 <div id="stage">
   <img class="shot" id="s3" src="ai/3-woman.png">
-  <img class="shot" id="s7" src="ai/7-front.png">
+  <img class="shot" id="s7" src="clip/c0001.jpg">
   <img class="shot" id="s5" src="ai/5-side.png">
   <img class="shot" id="s6" src="ai/6-top.png">
   <img class="shot" id="s4" src="ai/4-table.png">
   <img class="shot" id="s2" src="ai/2-collage4.png">
   <div class="vignette"></div>
   <div class="shade" id="shade"></div>
+  <div class="shade" id="shadeTop" style="top:0; bottom:auto; height:190px; background:linear-gradient(rgba(12,8,4,.7), transparent)"></div>
   <div class="txt big" id="t1" style="top:470px">당신의 하루에</div>
   <div class="txt big" id="t2" style="top:550px">작은 빛 하나</div>
   <div class="txt kick" id="t3" style="top:58px">HANDPICKED JEWELRY</div>
@@ -65,7 +66,7 @@ const $ = (id) => document.getElementById(id);
 // [시작, 끝, 사진, 초점(사진 좌표), 시작 배율, 끝 배율, 밝기]
 const SHOTS = [
   [0, 4.5, "s3", [1085, 540], 1.0, 1.12, 1],
-  [4.5, 8.5, "s7", [840, 470], 1.04, 1.24, 1],
+  [4.5, 8.5, "s7", [836, 470], 1.0, 1.0, 1], // 장갑 낀 손 영상 (clip/ 프레임)
   [8.5, 12.5, "s5", [1090, 560], 1.14, 1.0, 1],
   [12.5, 13.833, "s6", [850, 430], 1.0, 1.14, 1],
   [13.833, 15.167, "s4", [760, 470], 1.14, 1.02, 1],
@@ -75,7 +76,6 @@ const SHOTS = [
 // 반짝임: [시각, 사진, 사진 좌표, 크기]
 const GLINTS = [
   [2.85, "s3", [1098, 530], 1.2],
-  [5.8, "s7", [795, 405], 1.4], [6.95, "s7", [930, 575], 1.0], [7.95, "s7", [860, 285], 1.2],
   [11.55, "s5", [1100, 540], 1.1],
   [13.25, "s6", [925, 300], 1.1],
   [14.58, "s4", [705, 420], 1.2], [14.83, "s4", [1200, 505], 0.9],
@@ -95,7 +95,21 @@ function shotState(t, id) {
 }
 const glintBox = $("glints");
 
+// 2번째 장면은 영상에서 뽑은 프레임(clip/c0001~c0120.jpg)을 시간에 맞춰 바꿔 끼웁니다
+const CLIP = { start: 4.5, frames: 120, fps: 30 };
 window.renderAt = function (t) {
+  const s7 = $("s7");
+  if (t >= CLIP.start && t < CLIP.start + CLIP.frames / CLIP.fps) {
+    const n = Math.min(CLIP.frames, Math.floor((t - CLIP.start) * CLIP.fps) + 1);
+    const src = "clip/c" + String(n).padStart(4, "0") + ".jpg";
+    if (!s7.src.endsWith(src)) {
+      s7.src = src;
+      return s7.decode().then(() => draw(t));
+    }
+  }
+  draw(t);
+};
+function draw(t) {
   document.querySelectorAll(".shot").forEach((n) => (n.style.opacity = 0));
   let active = null;
   for (const [a, b, sid] of SHOTS) if (t >= a && t < b) active = sid;
@@ -124,6 +138,7 @@ window.renderAt = function (t) {
   text("t7", 17.8, 20.3, 8);
   text("t8", 17.2, 20.3, 8);
   $("shade").style.opacity = t < 16.5 ? 1 : 0;
+  $("shadeTop").style.opacity = t >= 4.5 && t < 8.5 ? 1 : 0;
 
   // 반짝임
   GLINTS.forEach(([at, sid, p, size], i) => {
@@ -142,7 +157,7 @@ window.renderAt = function (t) {
   for (const c of CUTS) fade = Math.max(fade, 1 - clamp(Math.abs(t - c) / 0.3));
   for (const c of FAST) fade = Math.max(fade, 0.85 * (1 - clamp(Math.abs(t - c) / 0.12)));
   $("fade").style.opacity = fade;
-};
+}
 Promise.all([document.fonts.ready, ...[...document.images].map((i) => i.decode())]).then(() => {
   window.renderAt(0);
   window.__ready = true;
