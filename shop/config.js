@@ -22,11 +22,6 @@ window.SHOP_CONFIG = {
   storeNameKo: "모토 서플라이",
   tagline: "라이더를 위한 옷과 모자, 가방, 쥬얼리",
 
-  hero: {
-    eyebrow: "JEWELRY · CAP · APPAREL · BAG",
-    headline: "달리는 날에도\n멋은 그대로",
-    subCopy: "라이딩 재킷부터 티셔츠, 모자, 가방, 쥬얼리까지.\n회원가입 없이 바로 결제하고, 궁금하면 카톡으로 물어보세요.",
-  },
 
   // 연락처 (시안용 가상 정보)
   phone: "010-0000-0000",
@@ -93,6 +88,16 @@ window.SHOP_CONFIG = {
     "올리브": "#5b5f3a", "브라운": "#6b4a33", "카멜": "#b27b47", "레드": "#b8352f", "오렌지": "#e4572e",
     "골드": "#d4b06a", "실버": "#c9ccd1", "화이트골드": "#e6e4df",
   },
+
+  // 첫 화면 기획전 슬라이드 (4.5초마다 넘어갑니다)
+  // route: 누르면 갈 화면 { cat: 종목, sub: 세부분류, tag: "신상"|"베스트" }
+  // sub · color: 사진 대신 그릴 그림 (실제 기획전 사진을 받으면 image 로 바꿔 넣습니다)
+  slides: [
+    { kicker: "NEW ARRIVAL", title: "RIDING JACKET", desc: "바람을 막아 주는 라이딩 재킷 신상품", route: { cat: "의류", sub: "재킷" }, sub: "재킷", color: "브라운" },
+    { kicker: "BASIC", title: "HEAVY TEE", desc: "재킷 안에 받쳐 입어도 늘어나지 않는 티셔츠", route: { cat: "의류", sub: "티셔츠" }, sub: "티셔츠", color: "화이트" },
+    { kicker: "GEAR", title: "RIDING BAG", desc: "달려도 흔들리지 않는 슬링백 · 힙색 · 백팩", route: { cat: "가방" }, sub: "슬링백", color: "카키" },
+    { kicker: "FREE SHIPPING", title: "5만 원 이상 무료배송", desc: "회원가입 없이 바로 결제 · 궁금하면 카톡 1:1 상담", route: { tag: "베스트" }, sub: "볼캡", color: "오렌지" },
+  ],
 
   // 주문 안내 (순서대로 번호가 붙습니다)
   notice: [

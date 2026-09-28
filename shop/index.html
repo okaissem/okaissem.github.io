@@ -18,45 +18,79 @@
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,600..900&display=swap" rel="stylesheet" />
 
 <!-- 디자인을 고친 뒤에는 ?v= 뒤 숫자를 바꾸면 손님 휴대폰에 새 디자인이 바로 보입니다 -->
-<link rel="stylesheet" href="style.css?v=20260929a" />
+<link rel="stylesheet" href="style.css?v=20260929b" />
 </head>
 <body>
 
+<!-- 맨 위 메뉴: 장바구니 · 결제 · 카카오 1:1 상담 (회원가입 없음) -->
+<nav class="topbar" aria-label="바로가기">
+  <button type="button" data-go="cart">장바구니<span class="top-count" data-cart-count hidden></span></button>
+  <button type="button" data-go="checkout">결제하기</button>
+  <a data-link="kakao" target="_blank" rel="noopener" class="top-kakao">카카오 1:1 상담</a>
+  <a href="#info" data-go="info">주문 안내</a>
+</nav>
+
 <header class="site-header">
-  <a class="logo" href="./" data-bind="storeName"></a>
-  <form class="search" id="searchForm" role="search">
+  <button class="icon-btn" type="button" id="menuBtn" aria-label="전체 메뉴">
+    <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+  </button>
+  <a class="logo" href="./" data-go="home" data-bind="storeName"></a>
+  <div class="header-right">
+    <button class="icon-btn" type="button" id="searchBtn" aria-label="검색" aria-expanded="false" aria-controls="searchForm">
+      <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M20 20l-4-4" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+    </button>
+    <button class="icon-btn cart-btn" type="button" id="openCart" aria-label="장바구니">
+      <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M5 7h14l-1.2 11.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8L5 7z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 7V6a3 3 0 0 1 6 0v1" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      <span class="cart-count" data-cart-count hidden>0</span>
+    </button>
+  </div>
+  <form class="search" id="searchForm" role="search" hidden>
     <label class="sr-only" for="q">상품 검색</label>
     <input id="q" type="search" placeholder="재킷, 티셔츠, 블랙…" autocomplete="off" enterkeyhint="search" />
-    <button type="submit" aria-label="검색">
-      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-    </button>
+    <button type="submit">검색</button>
   </form>
-  <button class="cart-btn" type="button" id="openCart" aria-label="장바구니">
-    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M5 7h14l-1.2 11.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8L5 7z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 7V6a3 3 0 0 1 6 0v1" fill="none" stroke="currentColor" stroke-width="2"/></svg>
-    <span class="cart-count" id="cartCount" hidden>0</span>
-  </button>
 </header>
 
 <main>
 
-  <!-- 첫 화면: 종목 4개 -->
-  <section class="hero">
-    <div class="hero-text">
-      <p class="eyebrow" data-bind="hero.eyebrow"></p>
-      <h1 data-bind="hero.headline"></h1>
-      <p class="sub" data-bind="hero.subCopy"></p>
-      <ul class="hero-points">
-        <li>회원가입 없이 주문</li>
-        <li>카드 · 간편결제 · 계좌이체</li>
-        <li>카톡 상담</li>
-      </ul>
-    </div>
-    <ul class="cat-tiles" id="catTiles"></ul>
-  </section>
+  <!-- 카카오톡 1:1 상담 띠 -->
+  <a class="kakao-banner" data-link="kakao" target="_blank" rel="noopener">
+    <b class="kb-mark">KAKAO</b>
+    <span class="kb-text">카카오톡 1:1 상담 바로가기<small data-bind="storeName"></small></span>
+    <span class="kb-click">Click</span>
+  </a>
 
-  <!-- 상품 목록 -->
-  <section class="shop" id="shop">
-    <nav class="tabs" id="tabs" aria-label="종목"></nav>
+  <!-- 종목 칸: 누르면 그 종목 화면으로 -->
+  <nav class="cat-grid" id="catGrid" aria-label="상품 분류"></nav>
+
+  <!-- 첫 화면 -->
+  <div id="homeView">
+    <section class="slider" aria-roledescription="carousel" aria-label="기획전">
+      <div class="slides" id="slides"></div>
+      <div class="slide-dots" id="slideDots"></div>
+    </section>
+    <section class="home-block">
+      <div class="block-head">
+        <h2>BEST ITEM</h2>
+        <a href="?tag=베스트" data-go="tag:베스트" class="more-link">더 보기 +</a>
+      </div>
+      <ul class="grid" id="bestGrid"></ul>
+    </section>
+    <section class="home-block">
+      <div class="block-head">
+        <h2>NEW ARRIVALS</h2>
+        <a href="?tag=신상" data-go="tag:신상" class="more-link">더 보기 +</a>
+      </div>
+      <ul class="grid" id="newGrid"></ul>
+    </section>
+  </div>
+
+  <!-- 종목 · 검색 결과 화면 -->
+  <section class="shop" id="shop" hidden>
+    <div class="list-head">
+      <p class="crumbs" id="crumbs"></p>
+      <h1 id="listTitle"></h1>
+    </div>
     <div class="subs" id="subs"></div>
 
     <div class="toolbar">
@@ -104,6 +138,21 @@
   <a class="bar-kakao" data-link="kakao" target="_blank" rel="noopener">카카오톡 상담</a>
   <button class="bar-cart" type="button" id="barCart">장바구니 <span id="barCartCount"></span></button>
 </div>
+
+<!-- 전체 메뉴 -->
+<dialog class="drawer" id="drawer" aria-label="전체 메뉴">
+  <div class="drawer-head">
+    <p class="logo" data-bind="storeName"></p>
+    <button class="close" type="button" id="closeDrawer" aria-label="닫기">&times;</button>
+  </div>
+  <nav class="drawer-nav" id="drawerNav"></nav>
+  <div class="drawer-links">
+    <button type="button" data-go="cart">장바구니</button>
+    <button type="button" data-go="checkout">결제하기</button>
+    <a data-link="kakao" target="_blank" rel="noopener">카카오 1:1 상담</a>
+    <a href="#info" data-go="info">주문 안내</a>
+  </div>
+</dialog>
 
 <!-- 필터 -->
 <dialog class="sheet filter-sheet" id="filterSheet" aria-labelledby="filterTitle">
@@ -230,8 +279,8 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
-<script src="config.js?v=20260929a"></script>
-<script src="data/products.js?v=20260929a"></script>
-<script src="main.js?v=20260929a"></script>
+<script src="config.js?v=20260929b"></script>
+<script src="data/products.js?v=20260929b"></script>
+<script src="main.js?v=20260929b"></script>
 </body>
 </html>

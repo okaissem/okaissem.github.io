@@ -20,7 +20,7 @@
   ];
 
   var fromYoutube = false;
-  var state = { cat: "", sub: "", q: "", colors: [], sizes: [], prices: [], stock: false, sale: false, sort: "rec", shown: PAGE };
+  var state = { view: "home", cat: "", sub: "", tag: "", q: "", colors: [], sizes: [], prices: [], stock: false, sale: false, sort: "rec", shown: PAGE };
   var byId = {};
   products.forEach(function (p, i) { p._i = i; byId[p.id] = p; });
 
@@ -134,69 +134,108 @@
     });
   }
 
-  // ---------- 첫 화면 종목 타일 ----------
-  var TILE_LOOK = { "모자": ["볼캡", "카키"], "의류": ["재킷", "브라운"], "가방": ["백팩", "블랙"] };
+  // ---------- 종목 칸 (누르면 그 종목 화면으로) ----------
   function countIn(cat) { return products.filter(function (p) { return p.c === cat; }).length; }
-  function renderTiles() {
-    var ul = $("catTiles");
-    categories.forEach(function (c) {
-      var li = el("li");
-      var b = el("button", "cat-tile");
-      b.type = "button";
-      var look = TILE_LOOK[c.name];
-      var sample = products.filter(function (p) { return p.c === c.name && (look ? p.sub === look[0] : p.img); })[0];
-      var pic = "";
-      if (sample && sample.img) pic = '<img src="' + escapeHtml(sample.img) + '" alt="" loading="lazy" />';
-      else if (sample) pic = art(sample, look[1]);
-      b.innerHTML = pic + '<span class="label"><b>' + escapeHtml(c.name) + ' <small>' + escapeHtml(c.en) + "</small></b><span>" + countIn(c.name).toLocaleString("ko-KR") + "개</span></span>";
-      b.addEventListener("click", function () { setCat(c.name); $("shop").scrollIntoView(); });
-      li.appendChild(b);
-      ul.appendChild(li);
-    });
+  function countTag(tag) { return products.filter(function (p) { return p.tag === tag; }).length; }
+  var ICONS = {
+    "쥬얼리": '<circle cx="24" cy="29" r="11" fill="none" stroke="currentColor" stroke-width="3.5"/><path d="M18 14 L24 8 L30 14 L24 19 Z" fill="currentColor"/>',
+    "모자": '<path d="M8 30 Q8 13 24 12 Q40 13 40 30 Z" fill="currentColor"/><path d="M8 30 Q24 27 40 30 L46 34 Q38 38 26 36 Q14 35 8 30 Z" fill="currentColor" opacity="0.7"/>',
+    "의류": '<path d="M16 8 L6 13 L3 24 L10 26 L12 20 L12 42 L36 42 L36 20 L38 26 L45 24 L42 13 L32 8 Q24 14 16 8 Z" fill="currentColor"/>',
+    "가방": '<path d="M17 16 Q17 7 24 7 Q31 7 31 16" fill="none" stroke="currentColor" stroke-width="3.5"/><path d="M9 16 L39 16 L36 42 L12 42 Z" fill="currentColor"/>',
+    "신상": '<path d="M24 5 L29 18 L43 18 L32 27 L36 41 L24 33 L12 41 L16 27 L5 18 L19 18 Z" fill="currentColor"/>',
+    "베스트": '<path d="M6 16 L15 24 L24 9 L33 24 L42 16 L38 38 L10 38 Z" fill="currentColor"/>',
+  };
+  function catButton(label, sub, icon, route, active) {
+    var a = el("a", "cat-cell" + (active ? " on" : ""));
+    a.href = routeHref(route);
+    a.innerHTML = '<svg viewBox="0 0 48 48" width="34" height="34" aria-hidden="true">' + icon + "</svg><b>" + escapeHtml(label) + "</b><small>" + escapeHtml(sub) + "</small>";
+    a.addEventListener("click", function (e) { e.preventDefault(); go(route); });
+    return a;
   }
-
-  // ---------- 탭 · 세부분류 ----------
-  function renderTabs() {
-    var nav = $("tabs");
+  function renderCatGrid() {
+    var nav = $("catGrid");
     nav.innerHTML = "";
-    nav.setAttribute("role", "tablist");
-    [{ name: "" }].concat(categories).forEach(function (c) {
-      var b = el("button", "tab");
-      b.type = "button";
-      b.setAttribute("role", "tab");
-      b.setAttribute("aria-selected", String(state.cat === c.name));
-      b.innerHTML = escapeHtml(c.name || "전체") + "<small>" + (c.name ? countIn(c.name) : products.length).toLocaleString("ko-KR") + "</small>";
-      b.addEventListener("click", function () { setCat(c.name); });
-      nav.appendChild(b);
+    categories.forEach(function (c) {
+      nav.appendChild(catButton(c.name, c.en, ICONS[c.name] || ICONS["신상"], { cat: c.name }, state.view === "list" && state.cat === c.name));
     });
+    nav.appendChild(catButton("신상품", "NEW", ICONS["신상"], { tag: "신상" }, state.view === "list" && state.tag === "신상"));
+    nav.appendChild(catButton("베스트", "BEST", ICONS["베스트"], { tag: "베스트" }, state.view === "list" && state.tag === "베스트"));
+  }
+  // 종목 화면 머리 (경로 · 제목 · 세부분류)
+  function renderListHead() {
+    var title = state.q ? "‘" + state.q + "’ 검색 결과" : state.tag === "신상" ? "신상품" : state.tag === "베스트" ? "베스트" : state.cat || "전체 상품";
+    $("listTitle").textContent = title + (state.sub ? " · " + state.sub : "");
+    var cr = $("crumbs");
+    cr.innerHTML = "";
+    var home = el("a", "", "홈");
+    home.href = "./";
+    home.addEventListener("click", function (e) { e.preventDefault(); go({}); });
+    cr.appendChild(home);
+    if (state.cat) {
+      cr.appendChild(document.createTextNode(" › "));
+      var c = el("a", "", state.cat);
+      c.href = routeHref({ cat: state.cat });
+      c.addEventListener("click", function (e) { e.preventDefault(); go({ cat: state.cat }); });
+      cr.appendChild(c);
+    }
+    if (state.sub) cr.appendChild(document.createTextNode(" › " + state.sub));
     var subs = $("subs");
     subs.innerHTML = "";
     var cat = catOf(state.cat);
     if (!cat) return;
     ["전체"].concat(cat.subs).forEach(function (s) {
       var val = s === "전체" ? "" : s;
-      var b = el("button", "chip", s);
+      var n = products.filter(function (p) { return p.c === cat.name && (!val || p.sub === val); }).length;
+      var b = el("button", "chip");
       b.type = "button";
+      b.innerHTML = escapeHtml(s) + " <small>" + n.toLocaleString("ko-KR") + "</small>";
       b.setAttribute("aria-pressed", String(state.sub === val));
       b.addEventListener("click", function () { state.sub = val; state.shown = PAGE; refresh(); });
       subs.appendChild(b);
     });
   }
-  function setCat(name) {
-    state.cat = name;
-    state.sub = "";
+
+  // ---------- 화면 옮기기 (첫 화면 ↔ 종목 화면) ----------
+  // route: { cat, sub, tag, q } - 아무것도 없으면 첫 화면
+  function routeHref(route) {
+    var ps = new URLSearchParams();
+    ["cat", "sub", "tag", "q"].forEach(function (k) { if (route[k]) ps.set(k, route[k]); });
+    var qs = ps.toString();
+    return location.pathname + (qs ? "?" + qs : "");
+  }
+  function applyRoute(route) {
+    state.cat = catOf(route.cat) ? route.cat : "";
+    state.sub = state.cat && route.sub && catOf(state.cat).subs.indexOf(route.sub) >= 0 ? route.sub : "";
+    state.tag = route.tag === "신상" || route.tag === "베스트" ? route.tag : "";
+    state.q = route.q || "";
+    $("q").value = state.q;
+    state.view = state.cat || state.tag || state.q ? "list" : "home";
     // 다른 종목에 없는 색상·사이즈 필터는 지웁니다
     var pool = inScope();
     state.colors = state.colors.filter(function (c) { return pool.some(function (p) { return (p.col || []).indexOf(c) >= 0; }); });
     state.sizes = state.sizes.filter(function (s) { return pool.some(function (p) { return (p.sz || []).indexOf(s) >= 0; }); });
     state.shown = PAGE;
-    refresh();
+  }
+  function showView() {
+    $("homeView").hidden = state.view !== "home";
+    $("shop").hidden = state.view !== "list";
+    renderCatGrid();
+    if (state.view === "list") refresh();
+    else syncUrl();
+  }
+  function go(route) {
+    applyRoute(route);
+    try { history.pushState(null, "", routeHref(route)); } catch (e) {}
+    showView();
+    if ($("drawer").open) $("drawer").close();
+    var top = state.view === "list" ? $("catGrid") : document.body;
+    top.scrollIntoView({ block: "start" });
   }
 
   // ---------- 거르기 · 정렬 ----------
   function inScope() {
     return products.filter(function (p) {
-      return (!state.cat || p.c === state.cat) && (!state.sub || p.sub === state.sub);
+      return (!state.cat || p.c === state.cat) && (!state.sub || p.sub === state.sub) && (!state.tag || p.tag === state.tag);
     });
   }
   function matches(p) {
@@ -254,7 +293,7 @@
   }
   var current = [];
   function refresh() {
-    renderTabs();
+    renderListHead();
     current = sorted(inScope().filter(matches));
     var grid = $("grid");
     grid.innerHTML = "";
@@ -262,7 +301,7 @@
     current.slice(0, state.shown).forEach(function (p) { frag.appendChild(card(p)); });
     grid.appendChild(frag);
     var total = current.length;
-    $("count").innerHTML = (state.q ? "‘" + escapeHtml(state.q) + "’ " : "") + "<b>" + total.toLocaleString("ko-KR") + "</b>개 상품";
+    $("count").innerHTML = "<b>" + total.toLocaleString("ko-KR") + "</b>개 상품";
     $("empty").hidden = total > 0;
     var shown = Math.min(state.shown, total);
     $("progress").textContent = total ? shown.toLocaleString("ko-KR") + " / " + total.toLocaleString("ko-KR") : "";
@@ -294,7 +333,6 @@
       b.addEventListener("click", function () { remove(); state.shown = PAGE; refresh(); });
       box.appendChild(b);
     }
-    if (state.q) add("검색: " + state.q, function () { state.q = ""; $("q").value = ""; });
     state.colors.forEach(function (c) { add(c, function () { state.colors = state.colors.filter(function (x) { return x !== c; }); }); });
     state.sizes.forEach(function (s) { add(s, function () { state.sizes = state.sizes.filter(function (x) { return x !== s; }); }); });
     state.prices.forEach(function (k) {
@@ -494,8 +532,7 @@
   }
   function renderCartCount() {
     var n = cart.reduce(function (s, it) { return s + it.qty; }, 0);
-    $("cartCount").hidden = !n;
-    $("cartCount").textContent = n;
+    document.querySelectorAll("[data-cart-count]").forEach(function (c) { c.hidden = !n; c.textContent = n; });
     $("barCartCount").textContent = n ? "(" + n + ")" : "";
   }
   function totals(items) {
@@ -661,9 +698,12 @@
   // ---------- 주소(URL)에 지금 보는 화면 기억 ----------
   function syncUrl() {
     var ps = new URLSearchParams();
-    if (state.cat) ps.set("cat", state.cat);
-    if (state.sub) ps.set("sub", state.sub);
-    if (state.q) ps.set("q", state.q);
+    if (state.view === "list") {
+      if (state.cat) ps.set("cat", state.cat);
+      if (state.sub) ps.set("sub", state.sub);
+      if (state.tag) ps.set("tag", state.tag);
+      if (state.q) ps.set("q", state.q);
+    }
     if ($("productSheet").open && sel.p) ps.set("id", sel.p.id);
     var qs = ps.toString();
     try { history.replaceState(null, "", location.pathname + (qs ? "?" + qs : "") + location.hash); } catch (e) {}
@@ -677,10 +717,95 @@
     } catch (e) {
       fromYoutube = fromYoutube || ps.get("from") === "youtube";
     }
-    if (catOf(ps.get("cat"))) state.cat = ps.get("cat");
-    if (ps.get("sub") && catOf(state.cat) && catOf(state.cat).subs.indexOf(ps.get("sub")) >= 0) state.sub = ps.get("sub");
-    if (ps.get("q")) { state.q = ps.get("q"); $("q").value = state.q; }
+    applyRoute({ cat: ps.get("cat"), sub: ps.get("sub"), tag: ps.get("tag"), q: ps.get("q") });
     return ps.get("id");
+  }
+
+  // ---------- 첫 화면: 기획전 슬라이드 · 베스트 · 신상품 ----------
+  function renderHome() {
+    var box = $("slides"), dots = $("slideDots");
+    var slides = config.slides || [];
+    slides.forEach(function (sl, i) {
+      var a = el("a", "slide");
+      a.href = routeHref(sl.route || {});
+      a.addEventListener("click", function (e) { e.preventDefault(); go(sl.route || {}); });
+      var fake = { c: sl.cat || "", sub: sl.sub, col: [sl.color] };
+      a.innerHTML = '<div class="slide-text"><p class="slide-kicker">' + escapeHtml(sl.kicker || "") + '</p><h2>' + escapeHtml(sl.title) +
+        '</h2><p>' + escapeHtml(sl.desc || "") + '</p><span class="slide-go">보러 가기 →</span></div><div class="slide-art">' + art(fake, sl.color) + "</div>";
+      box.appendChild(a);
+      var d = el("button", "dot-btn");
+      d.type = "button";
+      d.setAttribute("aria-label", (i + 1) + "번째 기획전");
+      d.addEventListener("click", function () { box.scrollTo({ left: box.clientWidth * i, behavior: "smooth" }); });
+      dots.appendChild(d);
+    });
+    function current() { return Math.round(box.scrollLeft / Math.max(1, box.clientWidth)); }
+    function mark() { Array.prototype.forEach.call(dots.children, function (d, i) { d.setAttribute("aria-current", String(i === current())); }); }
+    box.addEventListener("scroll", function () { window.requestAnimationFrame(mark); });
+    mark();
+    // 4.5초마다 다음 장으로 (손으로 넘기거나 화면을 줄이는 설정이면 멈춤)
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var paused = false;
+    box.addEventListener("pointerdown", function () { paused = true; });
+    if (!reduce && slides.length > 1) setInterval(function () {
+      if (paused || document.hidden || state.view !== "home") return;
+      var next = (current() + 1) % slides.length;
+      box.scrollTo({ left: box.clientWidth * next, behavior: "smooth" });
+    }, 4500);
+
+    function fill(id, list) {
+      var ul = $(id);
+      list.slice(0, 8).forEach(function (p) { ul.appendChild(card(p)); });
+    }
+    var live = products.filter(function (p) { return p.st !== "품절"; });
+    // 종목이 골고루 보이도록 번갈아 고릅니다
+    function mix(tag) {
+      var byCat = categories.map(function (c) { return live.filter(function (p) { return p.tag === tag && p.c === c.name; }); });
+      var out = [];
+      for (var i = 0; out.length < 8 && i < 10; i++) byCat.forEach(function (l) { if (l[i] && out.length < 8) out.push(l[i]); });
+      return out;
+    }
+    fill("bestGrid", mix("베스트"));
+    fill("newGrid", mix("신상"));
+  }
+
+  // ---------- 전체 메뉴 (왼쪽에서 열리는 메뉴) ----------
+  function renderDrawer() {
+    var nav = $("drawerNav");
+    categories.forEach(function (c) {
+      var d = el("details");
+      var sm = el("summary", "", c.name);
+      d.appendChild(sm);
+      var ul = el("ul");
+      ["전체"].concat(c.subs).forEach(function (s) {
+        var li = el("li");
+        var a = el("a", "", s === "전체" ? c.name + " 전체" : s);
+        var route = s === "전체" ? { cat: c.name } : { cat: c.name, sub: s };
+        a.href = routeHref(route);
+        a.addEventListener("click", function (e) { e.preventDefault(); go(route); });
+        li.appendChild(a);
+        ul.appendChild(li);
+      });
+      d.appendChild(ul);
+      nav.appendChild(d);
+    });
+  }
+
+  // ---------- 맨 위 메뉴 · 전체 메뉴의 버튼 ----------
+  function goCheckout() {
+    if (!cart.length) { openCart(); toast("장바구니가 비어 있습니다. 상품을 담은 뒤 결제해 주세요."); return; }
+    openCheckout(cart.slice(), "cart");
+  }
+  function handleGo(e) {
+    var t = e.target.closest("[data-go]");
+    if (!t) return;
+    var g = t.dataset.go;
+    if ($("drawer").open && g !== "info") $("drawer").close();
+    if (g === "cart") { e.preventDefault(); openCart(); }
+    else if (g === "checkout") { e.preventDefault(); goCheckout(); }
+    else if (g === "home") { e.preventDefault(); go({}); }
+    else if (g.indexOf("tag:") === 0) { e.preventDefault(); go({ tag: g.slice(4) }); }
+    else if (g === "info" && $("drawer").open) $("drawer").close();
   }
 
   // ---------- 주문 안내 ----------
@@ -705,26 +830,35 @@
   // ---------- 시작 ----------
   document.addEventListener("DOMContentLoaded", function () {
     bindText();
-    renderTiles();
     renderInfo();
     renderCartCount();
+    renderHome();
+    renderDrawer();
     var openId = readUrl();
-    refresh();
+    showView();
     if (openId) openProduct(openId);
+    window.addEventListener("popstate", function () {
+      if ($("productSheet").open) $("productSheet").close();
+      readUrl();
+      showView();
+    });
+    document.addEventListener("click", handleGo);
+    $("menuBtn").addEventListener("click", function () { $("drawer").showModal(); });
+    $("closeDrawer").addEventListener("click", function () { $("drawer").close(); });
+    $("searchBtn").addEventListener("click", function () {
+      var f = $("searchForm");
+      f.hidden = !f.hidden;
+      this.setAttribute("aria-expanded", String(!f.hidden));
+      if (!f.hidden) $("q").focus();
+    });
 
     $("searchForm").addEventListener("submit", function (e) {
       e.preventDefault();
-      state.q = $("q").value.trim();
       // 머리글 검색은 모든 종목에서 찾습니다
-      state.cat = "";
-      state.sub = "";
-      state.shown = PAGE;
-      refresh();
-      $("shop").scrollIntoView();
+      var q = $("q").value.trim();
+      if (!q) return;
+      go({ q: q });
       $("q").blur();
-    });
-    $("q").addEventListener("search", function () {
-      if (!$("q").value) { state.q = ""; state.shown = PAGE; refresh(); }
     });
     $("sort").addEventListener("change", function () { state.sort = this.value; state.shown = PAGE; refresh(); });
     $("more").addEventListener("click", showMore);
@@ -745,7 +879,7 @@
     $("closeCheckout").addEventListener("click", function () { $("checkoutSheet").close(); });
     $("productSheet").addEventListener("close", syncUrl);
     // 바깥 어두운 곳을 누르면 닫기
-    ["productSheet", "filterSheet", "cartSheet"].forEach(function (id) {
+    ["productSheet", "filterSheet", "cartSheet", "drawer"].forEach(function (id) {
       $(id).addEventListener("click", function (e) { if (e.target === this) this.close(); });
     });
 
