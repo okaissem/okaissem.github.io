@@ -85,6 +85,23 @@ window.JEWELRY_CONFIG = {
   },
 
   // ------------------------------------------------------------
+  // 3-1. 루미에르 컬렉션 (같은 디자인의 반지·목걸이·귀걸이·팔찌 세트)
+  // ------------------------------------------------------------
+  // setDiscount: 4종을 함께 사면 깎아 주는 비율(%) - 세트 가격은 자동 계산됩니다
+  // 가격·사진은 시안용 가상 정보입니다 (목걸이·귀걸이·팔찌 사진은 3D로 그린 것)
+  lumiere: {
+    title: "루미에르 컬렉션",
+    desc: "빛을 뜻하는 루미에르. 6발로 감싼 라운드 다이아몬드를 반지부터 목걸이, 귀걸이, 팔찌까지 같은 디자인으로 맞췄습니다.",
+    setDiscount: 20,
+    items: [
+      { name: "루미에르 반지", category: "반지", price: "89,000원", image: "images/01-solitaire-ring-photo.jpg", virtual: true, link: "" },
+      { name: "루미에르 목걸이", category: "목걸이", price: "79,000원", image: "images/13-lumiere-necklace.jpg", virtual: true, link: "" },
+      { name: "루미에르 귀걸이", category: "귀걸이", price: "59,000원", image: "images/14-lumiere-earrings.jpg", virtual: true, link: "" },
+      { name: "루미에르 팔찌", category: "팔찌", price: "99,000원", image: "images/15-lumiere-bracelet.jpg", virtual: true, link: "" },
+    ],
+  },
+
+  // ------------------------------------------------------------
   // 4. 상품 (시안용 예시 - 실제 상품 사진·이름으로 바꿔 주세요)
   // ------------------------------------------------------------
   // category: 반지 / 목걸이 / 귀걸이 / 팔찌 중 하나

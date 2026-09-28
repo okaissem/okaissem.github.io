@@ -152,12 +152,8 @@
   }
 
   // ---------- 컬렉션 ----------
-  function renderCollection() {
-    var grid = document.getElementById("grid");
-    var filters = document.getElementById("filters");
-    var products = config.products || [];
-
-    products.forEach(function (p) {
+  // 상품 카드 한 장 만들기 (컬렉션·루미에르 공용)
+  function makeCard(p) {
       var li = el("li", "card");
       li.dataset.category = p.category;
       var a = el("a");
@@ -188,7 +184,14 @@
       a.appendChild(thumb);
       a.appendChild(body);
       li.appendChild(a);
-      grid.appendChild(li);
+      return li;
+  }
+
+  function renderCollection() {
+    var grid = document.getElementById("grid");
+    var filters = document.getElementById("filters");
+    (config.products || []).forEach(function (p) {
+      grid.appendChild(makeCard(p));
     });
 
     ["전체"].concat(config.categories || []).forEach(function (name, i) {
@@ -206,6 +209,37 @@
       });
       filters.appendChild(btn);
     });
+  }
+
+  // ---------- 루미에르 컬렉션 + 세트 가격 ----------
+  function won(n) {
+    return n.toLocaleString("ko-KR") + "원";
+  }
+
+  function renderLumiere() {
+    var info = config.lumiere;
+    var section = document.getElementById("lumiere");
+    if (!info || !(info.items || []).length) {
+      section.hidden = true;
+      return;
+    }
+    var grid = document.getElementById("lumiereGrid");
+    var total = 0;
+    info.items.forEach(function (p) {
+      grid.appendChild(makeCard(p));
+      total += Number(String(p.price || "0").replace(/[^0-9]/g, ""));
+    });
+    var rate = Number(info.setDiscount) || 0;
+    if (!rate || !total) return;
+    var setPrice = Math.round((total * (100 - rate)) / 100 / 100) * 100;
+    var box = document.getElementById("setBox");
+    box.appendChild(el("span", "set-label", info.items.length + "종 세트로 구매하면"));
+    var row = el("div", "set-row");
+    row.appendChild(el("s", "set-before", won(total)));
+    row.appendChild(el("strong", "set-price", won(setPrice)));
+    row.appendChild(el("span", "set-rate", rate + "% 할인"));
+    box.appendChild(row);
+    box.appendChild(el("span", "set-note", won(total - setPrice) + " 아껴요 · 선물 포장 무료"));
   }
 
   // ---------- 유튜브 ----------
@@ -347,6 +381,7 @@
       heroRing.innerHTML = jewelrySvg("반지", "gold", "#eef3ff");
     }
     renderPoints();
+    renderLumiere();
     renderCollection();
     renderVideo();
     renderGift();

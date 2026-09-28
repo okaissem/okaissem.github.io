@@ -16,7 +16,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Noto+Serif+KR:wght@400;600&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet" />
 
 <!-- 디자인을 고친 뒤에는 ?v= 뒤 숫자를 바꾸면 손님 휴대폰에 새 디자인이 바로 보입니다 -->
-<link rel="stylesheet" href="style.css?v=20260928b" />
+<link rel="stylesheet" href="style.css?v=20260928c" />
 </head>
 <body>
 
@@ -24,6 +24,7 @@
   <a class="logo" href="#top" data-bind="storeName"></a>
   <nav class="nav" aria-label="메뉴">
     <a href="#story">브랜드</a>
+    <a href="#lumiere">루미에르</a>
     <a href="#collection">컬렉션</a>
     <a href="#video">영상</a>
     <a href="#visit" data-nav="info">문의</a>
@@ -56,6 +57,15 @@
     <h2 data-bind="story.title"></h2>
     <p class="lead" data-bind="story.body"></p>
     <ol class="points" id="points"></ol>
+  </section>
+
+  <!-- 루미에르 컬렉션 (세트) -->
+  <section class="section lumiere reveal" id="lumiere">
+    <p class="kicker">SIGNATURE COLLECTION</p>
+    <h2 data-bind="lumiere.title"></h2>
+    <p class="lead" data-bind="lumiere.desc"></p>
+    <ul class="grid lumiere-grid" id="lumiereGrid"></ul>
+    <div class="set-box" id="setBox"></div>
   </section>
 
   <!-- 컬렉션 -->
@@ -114,7 +124,7 @@
   <a class="bar-store" data-link="smartstore" target="_blank" rel="noopener">스토어에서 구매</a>
 </div>
 
-<script src="config.js?v=20260928b"></script>
-<script src="main.js?v=20260928b"></script>
+<script src="config.js?v=20260928c"></script>
+<script src="main.js?v=20260928c"></script>
 </body>
 </html>
