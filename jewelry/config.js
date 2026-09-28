@@ -97,7 +97,7 @@ window.JEWELRY_CONFIG = {
   // link    : 스마트스토어 상품 주소 (빈칸이면 스토어 첫 화면으로 연결)
   categories: ["반지", "목걸이", "귀걸이", "팔찌"],
   products: [
-    { name: "솔리테어 큐빅 반지", price: "89,000원", category: "반지", metal: "gold", gem: "#f4f7ff", virtual: true, image: "images/01-solitaire-ring.jpg", link: "" },
+    { name: "솔리테어 큐빅 반지", price: "89,000원", category: "반지", metal: "gold", gem: "#f4f7ff", virtual: true, image: "images/01-solitaire-ring-photo.jpg", link: "" },
     { name: "이터니티 라인 반지", price: "129,000원", category: "반지", metal: "rose", gem: "#ffe3ea", virtual: true, image: "images/02-eternity-ring.jpg", link: "" },
     { name: "에메랄드 포인트 반지", price: "159,000원", category: "반지", metal: "gold", gem: "#3fb37f", virtual: true, image: "images/03-emerald-ring.jpg", link: "" },
     { name: "데일리 실버 반지", price: "39,000원", category: "반지", metal: "silver", gem: "#dfe8ff", virtual: true, image: "images/04-silver-ring.jpg", link: "" },
@@ -117,14 +117,15 @@ window.JEWELRY_CONFIG = {
   // videoId : 유튜브 영상 주소 끝의 ID (예: https://youtu.be/AbCdEf12345 → "AbCdEf12345")
   //           넣으면 유튜브 영상이 우선 나옵니다.
   // video   : 홈페이지에 직접 올린 영상 파일 (videoId 가 빈칸일 때 사용)
-  //           지금 영상은 3D로 만든 시안용 가상 광고입니다 (음악도 직접 합성)
+  //           지금 영상은 AI 이미지로 만든 시안용 가상 광고입니다 (음악은 직접 합성)
+  //           3D로 만든 광고는 video/finest-jewelry-ad.mp4 에 남아 있습니다
   // 둘 다 빈칸이면 "영상이 들어갈 자리" 표시가 나옵니다.
   youtube: {
     title: "20초 광고로 먼저 만나보세요",
     desc: "빛을 받아 반짝이는 순간은 영상으로 보는 게 가장 정확합니다. 소리를 켜고 재생해 보세요.",
     videoId: "",
-    video: "video/finest-jewelry-ad.mp4",
-    poster: "video/finest-jewelry-ad-poster.jpg",
+    video: "video/finest-jewelry-ad-photo.mp4",
+    poster: "video/finest-jewelry-ad-photo-poster.jpg",
   },
 
   // ------------------------------------------------------------

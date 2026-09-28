@@ -6,6 +6,7 @@
 | --- | --- |
 | `product-render.html` | 상품 3D 이미지 (`../images/`) — 주소 뒤에 `?type=solitaire&metal=gold&gem=%23ffffff` 처럼 붙여 모양·금속·보석 색을 고릅니다 |
 | `ad.html` | 20초 광고 영상의 장면 (1280×720). `window.renderAt(초)` 로 한 장면씩 그립니다 |
+| `ad-photo.html` | AI 이미지 7장으로 만든 사진 광고 (지금 홈페이지에 나오는 영상). 사진 원본은 저장소에 넣지 않았으니 `ai/` 폴더에 같은 이름으로 두고 씁니다 |
 | `make-ad-bgm.py` | 광고 배경음악 (numpy 로 직접 합성, 외부 음원 없음 → 저작권 걱정 없음) |
 
 ## 다시 만드는 방법 (요약)
