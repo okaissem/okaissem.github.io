@@ -31,12 +31,12 @@ g=wb.active; g.title="작성 안내"
 g.sheet_view.showGridLines=False
 g.column_dimensions["A"].width=3; g.column_dimensions["B"].width=22; g.column_dimensions["C"].width=16; g.column_dimensions["D"].width=70
 r=2
-g.cell(r,2,"상품 등록 엑셀 양식 (쥬얼리 · 모자 · 티셔츠 · 가방 / 4,000개)").font=font(size=16,bold=True); r+=2
+g.cell(r,2,"상품 등록 엑셀 양식 (쥬얼리 · 모자 · 의류 · 가방 / 4,000개)").font=font(size=16,bold=True); r+=2
 steps=["① '상품목록' 시트에 상품 1개당 한 줄씩 적어 주세요. (9번째 줄부터, 회색 예시 4줄은 지우지 않아도 됩니다)",
  "② 노란 칸은 꼭 채워야 하는 필수 항목, 파란 칸은 있으면 좋은 선택 항목입니다.",
  "③ 색상·사이즈가 여러 개면 쉼표(,)로 나눠 적어 주세요. 예) 블랙,화이트,네이비 / S,M,L,XL",
  "④ 사진 파일 이름은 실제 사진 파일 이름과 똑같이 적고, 사진은 폴더 하나에 모아 함께 보내 주세요.",
- "⑤ 티셔츠·모자·가방의 실측 치수는 '실측사이즈' 시트에 적어 주세요. (쥬얼리는 적지 않아도 됩니다)",
+ "⑤ 모자·의류·가방의 실측 치수는 '실측사이즈' 시트에 적어 주세요. (쥬얼리는 적지 않아도 됩니다)",
  "⑥ 맨 오른쪽 '확인' 칸에 '필수 항목 빠짐'이나 '상품코드 중복'이 뜨면 그 줄을 고쳐 주세요.",
  "⑦ '현황' 시트에서 종목별로 몇 개가 입력됐는지 볼 수 있습니다."]
 for s in steps:
@@ -50,9 +50,9 @@ for i,h in enumerate(["항목","필수 / 선택","적는 법"]):
     c=g.cell(r,2+i,h); c.font=font(bold=True,color="FFFFFF"); c.fill=HEAD; c.alignment=center; c.border=B
 r+=1
 COLS=[ # (헤더, 필수?, 너비, 설명)
- ("상품코드",True,12,"상품마다 겹치지 않는 번호. 종목 머리글자 + 번호로 적어 주세요. 쥬얼리 JW-0001, 모자 HT-0001, 티셔츠 TS-0001, 가방 BG-0001"),
- ("종목",True,10,"목록에서 고르기: 쥬얼리 / 모자 / 티셔츠 / 가방"),
- ("세부분류",False,12,"아래 '세부분류 예시' 참고. 홈페이지에서 작은 분류 버튼으로 나옵니다"),
+ ("상품코드",True,12,"상품마다 겹치지 않는 번호. 종목 머리글자 + 번호로 적어 주세요. 쥬얼리 JW-0001, 모자 HT-0001, 의류 CL-0001, 가방 BG-0001"),
+ ("종목",True,10,"목록에서 고르기: 쥬얼리 / 모자 / 의류 / 가방"),
+ ("세부분류",False,12,"아래 '세부분류 예시' 참고. 티셔츠·재킷은 종목을 '의류'로 하고 세부분류에 적어 주세요"),
  ("상품명",True,28,"손님에게 보이는 이름. 30자 안쪽을 권합니다"),
  ("판매가(원)",True,12,"숫자만 적어 주세요. 예) 39000"),
  ("할인가(원)",False,12,"할인할 때만 숫자로. 비워 두면 판매가로 보입니다"),
@@ -76,7 +76,7 @@ g.cell(r,2,"세부분류 예시").font=font(size=13,bold=True); r+=1
 for i,h in enumerate(["종목","상품코드 머리글자","세부분류 예시"]):
     c=g.cell(r,2+i,h); c.font=font(bold=True,color="FFFFFF"); c.fill=HEAD; c.alignment=center; c.border=B
 r+=1
-for a,b,c_ in [("쥬얼리","JW","반지, 목걸이, 귀걸이, 팔찌"),("모자","HT","볼캡, 버킷햇, 비니, 스냅백"),("티셔츠","TS","반팔, 긴팔, 민소매, 오버핏"),("가방","BG","숄더백, 토트백, 크로스백, 백팩, 클러치")]:
+for a,b,c_ in [("쥬얼리","JW","반지, 목걸이, 팔찌, 귀걸이"),("모자","HT","볼캡, 스냅백, 비니, 버킷햇"),("의류","CL","티셔츠, 재킷, 후디·맨투맨, 팬츠, 조끼"),("가방","BG","백팩, 슬링백, 힙색, 사이드백, 토트백")]:
     for i,v in enumerate([a,b,c_]):
         cell=g.cell(r,2+i,v); cell.font=font(); cell.border=B; cell.alignment=wrap
     r+=1
@@ -84,7 +84,7 @@ r+=1
 g.cell(r,2,"사진 보내는 법").font=font(size=13,bold=True); r+=1
 for s in ["· 파일 이름은 '상품코드_번호.jpg'로 맞춰 주시면 가장 빠르게 등록됩니다. 예) JW-0001_1.jpg, JW-0001_2.jpg",
           "· 정사각형(1:1) 사진, 가로 1,000px 이상을 권합니다. JPG 또는 PNG로 보내 주세요.",
-          "· 사진이 많으면 종목별 폴더(쥬얼리/모자/티셔츠/가방)로 나눠 압축해서 보내 주세요."]:
+          "· 사진이 많으면 종목별 폴더(쥬얼리/모자/의류/가방)로 나눠 압축해서 보내 주세요."]:
     g.cell(r,2,s).font=font(); g.merge_cells(start_row=r,start_column=2,end_row=r,end_column=4); r+=1
 
 # ---------------- 2. 상품목록 ----------------
@@ -99,10 +99,10 @@ c=p.cell(3,chk,"확인"); c.font=font(bold=True,color="FFFFFF"); c.fill=HEAD; c.
 p.column_dimensions[c.column_letter].width=16
 p.row_dimensions[3].height=30
 examples=[
- ["예시-JW-0001","쥬얼리","반지","루미에르 다이아몬드 반지",89000,None,"화이트골드,로즈골드","9호,11호,13호","14K 골드","6발 프롱으로 감싼 라운드 스톤, 매일 끼기 좋은 높이","JW-0001_1.jpg","JW-0001_2.jpg,JW-0001_3.jpg","판매중","베스트","각인 가능"],
- ["예시-HT-0001","모자","볼캡","워싱 코튼 볼캡",29000,25000,"블랙,베이지,네이비","FREE","면 100%","부드럽게 워싱한 면 소재, 뒷면 버클로 사이즈 조절","HT-0001_1.jpg","HT-0001_2.jpg","판매중","신상",None],
- ["예시-TS-0001","티셔츠","반팔","오버핏 로고 반팔 티셔츠",35000,None,"화이트,블랙,그레이","S,M,L,XL","면 100% (20수)","탄탄한 20수 원단, 여유 있는 오버핏","TS-0001_1.jpg","TS-0001_2.jpg,TS-0001_3.jpg","판매중","추천",None],
- ["예시-BG-0001","가방","숄더백","미니 레더 숄더백",89000,None,"블랙,카멜","FREE","소가죽","스마트폰·지갑이 들어가는 크기, 끈 길이 조절","BG-0001_1.jpg",None,"품절",None,"다음 달 재입고"],
+ ["예시-JW-0001","쥬얼리","반지","실버 시그넷 반지",59000,None,"실버,블랙","11호,13호,15호,17호","925 실버","땀과 물에 강하고 장갑을 껴도 걸리지 않는 마감","JW-0001_1.jpg","JW-0001_2.jpg","판매중","베스트","각인 가능"],
+ ["예시-HT-0001","모자","볼캡","워싱 코튼 볼캡",29000,25000,"블랙,베이지,카키","FREE","면 100%","헬멧을 벗은 뒤 쓰기 좋은 부드러운 볼캡, 뒷면 버클로 크기 조절","HT-0001_1.jpg","HT-0001_2.jpg","판매중","신상",None],
+ ["예시-CL-0001","의류","티셔츠","헤비코튼 그래픽 반팔 티셔츠",39000,None,"블랙,화이트,차콜","S,M,L,XL","헤비코튼 (면 100%)","라이딩 재킷 안에 받쳐 입어도 늘어지지 않는 두께","CL-0001_1.jpg","CL-0001_2.jpg,CL-0001_3.jpg","판매중","추천",None],
+ ["예시-BG-0001","가방","슬링백","방수 라이더 슬링백",89000,None,"블랙,카키","FREE","방수 타포린","달리는 중에도 흔들리지 않게 끈을 조일 수 있음","BG-0001_1.jpg",None,"품절",None,"다음 달 재입고"],
 ]
 L=lambda i: p.cell(1,i).column_letter
 def check(r):
@@ -126,7 +126,7 @@ for col in ("E","F"):
 def dv(formula,col,title,msg):
     d=DataValidation(type="list",formula1=formula,allow_blank=True,showErrorMessage=True,errorTitle=title,error=msg)
     p.add_data_validation(d); d.add(f"{col}{FIRST}:{col}{LAST}")
-dv('"쥬얼리,모자,티셔츠,가방"',"B","종목","쥬얼리 / 모자 / 티셔츠 / 가방 중에서 골라 주세요")
+dv('"쥬얼리,모자,의류,가방"',"B","종목","쥬얼리 / 모자 / 의류 / 가방 중에서 골라 주세요")
 dv('"판매중,품절,숨김"',"M","판매상태","판매중 / 품절 / 숨김 중에서 골라 주세요")
 dv('"신상,추천,베스트"',"N","표시","신상 / 추천 / 베스트 중에서 골라 주세요")
 num=DataValidation(type="whole",operator="greaterThanOrEqual",formula1="0",allow_blank=True,showErrorMessage=True,errorTitle="가격",error="원 단위 숫자만 적어 주세요. 예) 39000")
@@ -140,12 +140,12 @@ p.auto_filter.ref=f"A3:{L(chk)}{LAST}"
 # ---------------- 3. 실측사이즈 ----------------
 s=wb.create_sheet("실측사이즈")
 s.cell(1,1,"실측사이즈 — 사이즈 1개당 한 줄 (해당하는 칸만, 단위 cm)").font=font(size=14,bold=True)
-s.cell(2,1,"티셔츠: 가슴단면·총장·어깨·소매 / 모자: 머리둘레·챙길이·높이 / 가방: 가로·세로·폭·끈길이").font=font(size=10,color="6B6158")
-SH=[("상품코드",14),("사이즈",10),("가슴단면",10),("총장",10),("어깨",10),("소매",10),("머리둘레",10),("챙길이",10),("높이",10),("가로",10),("세로",10),("폭",10),("끈길이",10)]
+s.cell(2,1,"모자: 머리둘레·챙길이·높이 / 의류: 어깨·가슴단면·허리·총장·소매 (팬츠는 허리·총장) / 가방: 가로·세로·폭·끈길이").font=font(size=10,color="6B6158")
+SH=[("상품코드",14),("사이즈",10),("머리둘레",10),("챙길이",10),("높이",10),("어깨",10),("가슴단면",10),("허리",10),("총장",10),("소매",10),("가로",10),("세로",10),("폭",10),("끈길이",10)]
 for i,(h,w) in enumerate(SH,1):
     c=s.cell(3,i,h); c.font=font(bold=True,color="FFFFFF"); c.fill=HEAD; c.alignment=center; c.border=B
     s.column_dimensions[c.column_letter].width=w
-ex=[["예시-TS-0001","S",52,68,50,21],["예시-TS-0001","M",55,70,52,22],["예시-HT-0001","FREE",None,None,None,None,58,7,11],["예시-BG-0001","FREE",None,None,None,None,None,None,None,22,15,7,120]]
+ex=[["예시-CL-0001","M",None,None,None,47,57,None,72,22],["예시-CL-0001","L",None,None,None,49,60,None,74,23],["예시-HT-0001","FREE",58,7,12],["예시-BG-0001","FREE",None,None,None,None,None,None,None,None,18,30,8,110]]
 for k,row in enumerate(ex):
     for i in range(1,len(SH)+1):
         v=row[i-1] if i-1<len(row) else None
@@ -167,7 +167,7 @@ for i,t in enumerate(hd):
     c=h.cell(4,2+i,t); c.font=font(bold=True,color="FFFFFF"); c.fill=HEAD; c.alignment=center; c.border=B
 rng=lambda col: f"상품목록!${col}${FIRST}:${col}${LAST}"
 CK=L(chk)
-for k,cat in enumerate(["쥬얼리","모자","티셔츠","가방"]):
+for k,cat in enumerate(["쥬얼리","모자","의류","가방"]):
     r=5+k
     h.cell(r,2,cat)
     h.cell(r,3,f'=COUNTIF({rng("B")},B{r})')

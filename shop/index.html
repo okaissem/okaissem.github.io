@@ -2,23 +2,23 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8" />
-<!-- 4종목 쇼핑몰 홈페이지 시안 (쥬얼리 · 모자 · 티셔츠 · 가방 / 상품 4,000개) - 결제 전 미리보기 -->
+<!-- 4종목 라이더 쇼핑몰 시안 (쥬얼리 · 모자 · 의류 · 가방 / 상품 4,000개) - 회원가입 없이 홈페이지에서 결제, 상담은 카톡 -->
 <!-- 검색(네이버·구글)에 나오지 않게 합니다 -->
 <meta name="robots" content="noindex, nofollow" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>[미리보기] 4종목 쇼핑몰 홈페이지 시안</title>
-<meta name="theme-color" content="#f6f5f2" />
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%9B%8D%3C/text%3E%3C/svg%3E" />
+<title>[미리보기] 라이더 쇼핑몰 시안</title>
+<meta name="theme-color" content="#121212" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8F%8D%3C/text%3E%3C/svg%3E" />
 
 <!-- 글꼴 (인터넷이 안 되면 기본 글꼴로 자동 표시됩니다) -->
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,600..900&display=swap" rel="stylesheet" />
 
 <!-- 디자인을 고친 뒤에는 ?v= 뒤 숫자를 바꾸면 손님 휴대폰에 새 디자인이 바로 보입니다 -->
-<link rel="stylesheet" href="style.css?v=20260928a" />
+<link rel="stylesheet" href="style.css?v=20260929a" />
 </head>
 <body>
 
@@ -26,12 +26,15 @@
   <a class="logo" href="./" data-bind="storeName"></a>
   <form class="search" id="searchForm" role="search">
     <label class="sr-only" for="q">상품 검색</label>
-    <input id="q" type="search" placeholder="상품명, 색상, 소재로 찾기" autocomplete="off" enterkeyhint="search" />
+    <input id="q" type="search" placeholder="재킷, 티셔츠, 블랙…" autocomplete="off" enterkeyhint="search" />
     <button type="submit" aria-label="검색">
       <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
     </button>
   </form>
-  <a class="header-link" href="#info">주문 안내</a>
+  <button class="cart-btn" type="button" id="openCart" aria-label="장바구니">
+    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M5 7h14l-1.2 11.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8L5 7z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 7V6a3 3 0 0 1 6 0v1" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+    <span class="cart-count" id="cartCount" hidden>0</span>
+  </button>
 </header>
 
 <main>
@@ -42,7 +45,11 @@
       <p class="eyebrow" data-bind="hero.eyebrow"></p>
       <h1 data-bind="hero.headline"></h1>
       <p class="sub" data-bind="hero.subCopy"></p>
-      <p class="total"><b id="totalCount">4,000</b>개 상품 · 매주 새 상품</p>
+      <ul class="hero-points">
+        <li>회원가입 없이 주문</li>
+        <li>카드 · 간편결제 · 계좌이체</li>
+        <li>카톡 상담</li>
+      </ul>
     </div>
     <ul class="cat-tiles" id="catTiles"></ul>
   </section>
@@ -95,7 +102,7 @@
 <!-- 화면 아래 고정 버튼 -->
 <div class="bottom-bar">
   <a class="bar-kakao" data-link="kakao" target="_blank" rel="noopener">카카오톡 상담</a>
-  <a class="bar-dm" data-link="dm" target="_blank" rel="noopener">DM 문의</a>
+  <button class="bar-cart" type="button" id="barCart">장바구니 <span id="barCartCount"></span></button>
 </div>
 
 <!-- 필터 -->
@@ -121,14 +128,14 @@
     <label class="check-row"><input type="checkbox" id="fSale" /> 할인 상품만 보기</label>
     <div class="sheet-actions">
       <button class="btn btn-line" type="button" id="resetFilter">모두 지우기</button>
-      <button class="btn btn-dark" value="apply" id="applyFilter">상품 보기</button>
+      <button class="btn btn-accent" value="apply" id="applyFilter">상품 보기</button>
     </div>
   </form>
 </dialog>
 
-<!-- 상품 상세 + 주문서 -->
+<!-- 상품 상세 -->
 <dialog class="sheet product-sheet" id="productSheet" aria-labelledby="pName">
-  <form method="dialog" class="sheet-body product" id="productForm">
+  <form method="dialog" class="sheet-body product">
     <div class="sheet-head">
       <p class="crumb" id="pCrumb"></p>
       <button class="close" value="cancel" aria-label="닫기">&times;</button>
@@ -161,22 +168,70 @@
         </div>
         <div class="measure" id="pMeasure"></div>
         <dl class="p-spec" id="pSpec"></dl>
-        <div class="order-total"><span>합계</span><strong id="pTotal"></strong></div>
-        <p class="order-how" id="orderHow">아래 방법 중 하나를 누르면 주문 내용이 복사되고 대화창이 열립니다.</p>
-        <div class="order-channels" id="orderChannels"></div>
-        <details class="order-preview">
-          <summary>보낼 주문 내용 보기</summary>
-          <pre id="orderMessage"></pre>
-        </details>
+        <div class="order-total"><span>상품 금액</span><strong id="pTotal"></strong></div>
+        <div class="buy-actions">
+          <button type="button" class="act-cart" id="addCartBtn">장바구니 담기</button>
+          <button type="button" class="act-buy" id="buyNowBtn">바로 구매</button>
+        </div>
+        <button type="button" class="act-kakao" id="consultBtn">카톡으로 상담하기</button>
+        <p class="order-note" id="orderNote"></p>
       </div>
     </div>
   </form>
 </dialog>
 
+<!-- 장바구니 -->
+<dialog class="sheet cart-sheet" id="cartSheet" aria-labelledby="cartTitle">
+  <form method="dialog" class="sheet-body">
+    <div class="sheet-head">
+      <h2 id="cartTitle">장바구니</h2>
+      <button class="close" value="cancel" aria-label="닫기">&times;</button>
+    </div>
+    <ul class="cart-list" id="cartList"></ul>
+    <p class="empty" id="cartEmpty">장바구니가 비어 있습니다.</p>
+    <dl class="sum" id="cartSum"></dl>
+    <button type="button" class="btn btn-accent wide" id="goCheckout">주문하기</button>
+  </form>
+</dialog>
+
+<!-- 주문 · 결제 (회원가입 없이) -->
+<dialog class="sheet checkout-sheet" id="checkoutSheet" aria-labelledby="checkoutTitle">
+  <form class="sheet-body" id="checkoutForm" novalidate>
+    <div class="sheet-head">
+      <h2 id="checkoutTitle">주문 · 결제</h2>
+      <button class="close" type="button" id="closeCheckout" aria-label="닫기">&times;</button>
+    </div>
+    <section class="co-block">
+      <h3>주문 상품</h3>
+      <ul class="co-items" id="coItems"></ul>
+    </section>
+    <section class="co-block">
+      <h3>받는 분 <small>회원가입 없이 주문합니다</small></h3>
+      <label class="field"><span>성함 <em>*</em></span><input id="oName" autocomplete="name" maxlength="20" required /></label>
+      <label class="field"><span>휴대폰 번호 <em>*</em></span><input id="oPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="010-0000-0000" maxlength="13" required /></label>
+      <label class="field"><span>이메일 <small>(선택 · 결제 영수증을 받을 곳)</small></span><input id="oEmail" type="email" autocomplete="email" maxlength="60" /></label>
+      <label class="field"><span>주소 <em>*</em></span><input id="oAddr" autocomplete="street-address" maxlength="120" required /></label>
+      <label class="field"><span>배송 요청 사항</span><input id="oMemo" maxlength="100" placeholder="문 앞에 놔 주세요" /></label>
+    </section>
+    <section class="co-block">
+      <h3>결제 금액</h3>
+      <dl class="sum" id="coSum"></dl>
+    </section>
+    <section class="co-block">
+      <h3>결제 방법</h3>
+      <div id="payment-method"></div>
+      <div id="agreement"></div>
+      <div class="pay-fallback" id="payFallback" hidden></div>
+    </section>
+    <button type="submit" class="btn btn-accent wide" id="payBtn">결제하기</button>
+    <p class="order-note">궁금한 점은 결제 전에 <a data-link="kakao" target="_blank" rel="noopener">카카오톡으로 물어보세요</a>.</p>
+  </form>
+</dialog>
+
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
-<script src="config.js?v=20260928a"></script>
-<script src="data/products.js?v=20260928a"></script>
-<script src="main.js?v=20260928a"></script>
+<script src="config.js?v=20260929a"></script>
+<script src="data/products.js?v=20260929a"></script>
+<script src="main.js?v=20260929a"></script>
 </body>
 </html>
