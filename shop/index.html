@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<!-- 4종목 쇼핑몰 홈페이지 시안 (쥬얼리 · 모자 · 티셔츠 · 가방 / 상품 4,000개) - 결제 전 미리보기 -->
+<!-- 검색(네이버·구글)에 나오지 않게 합니다 -->
+<meta name="robots" content="noindex, nofollow" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>[미리보기] 4종목 쇼핑몰 홈페이지 시안</title>
+<meta name="theme-color" content="#f6f5f2" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%9B%8D%3C/text%3E%3C/svg%3E" />
+
+<!-- 글꼴 (인터넷이 안 되면 기본 글꼴로 자동 표시됩니다) -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&display=swap" rel="stylesheet" />
+
+<!-- 디자인을 고친 뒤에는 ?v= 뒤 숫자를 바꾸면 손님 휴대폰에 새 디자인이 바로 보입니다 -->
+<link rel="stylesheet" href="style.css?v=20260928a" />
+</head>
+<body>
+
+<header class="site-header">
+  <a class="logo" href="./" data-bind="storeName"></a>
+  <form class="search" id="searchForm" role="search">
+    <label class="sr-only" for="q">상품 검색</label>
+    <input id="q" type="search" placeholder="상품명, 색상, 소재로 찾기" autocomplete="off" enterkeyhint="search" />
+    <button type="submit" aria-label="검색">
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+  </form>
+  <a class="header-link" href="#info">주문 안내</a>
+</header>
+
+<main>
+
+  <!-- 첫 화면: 종목 4개 -->
+  <section class="hero">
+    <div class="hero-text">
+      <p class="eyebrow" data-bind="hero.eyebrow"></p>
+      <h1 data-bind="hero.headline"></h1>
+      <p class="sub" data-bind="hero.subCopy"></p>
+      <p class="total"><b id="totalCount">4,000</b>개 상품 · 매주 새 상품</p>
+    </div>
+    <ul class="cat-tiles" id="catTiles"></ul>
+  </section>
+
+  <!-- 상품 목록 -->
+  <section class="shop" id="shop">
+    <nav class="tabs" id="tabs" aria-label="종목"></nav>
+    <div class="subs" id="subs"></div>
+
+    <div class="toolbar">
+      <p class="count" id="count" aria-live="polite"></p>
+      <div class="tool-actions">
+        <button class="filter-btn" type="button" id="openFilter">
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          필터 <span class="filter-badge" id="filterBadge" hidden></span>
+        </button>
+        <label class="sr-only" for="sort">정렬</label>
+        <select id="sort">
+          <option value="rec">추천순</option>
+          <option value="new">신상품순</option>
+          <option value="low">낮은 가격순</option>
+          <option value="high">높은 가격순</option>
+        </select>
+      </div>
+    </div>
+    <div class="active-filters" id="activeFilters"></div>
+
+    <ul class="grid" id="grid"></ul>
+    <p class="empty" id="empty" hidden>조건에 맞는 상품이 없습니다. 필터를 줄이거나 다른 말로 찾아보세요.</p>
+    <div class="more-wrap">
+      <p class="progress" id="progress"></p>
+      <button class="btn btn-line" type="button" id="more">상품 더 보기</button>
+    </div>
+  </section>
+
+  <!-- 주문 안내 -->
+  <section class="info" id="info">
+    <h2>주문 안내</h2>
+    <ol class="notice" id="notice"></ol>
+    <dl class="info-list" id="infoList"></dl>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p class="logo" data-bind="storeName"></p>
+  <p data-bind="tagline"></p>
+</footer>
+
+<!-- 화면 아래 고정 버튼 -->
+<div class="bottom-bar">
+  <a class="bar-kakao" data-link="kakao" target="_blank" rel="noopener">카카오톡 상담</a>
+  <a class="bar-dm" data-link="dm" target="_blank" rel="noopener">DM 문의</a>
+</div>
+
+<!-- 필터 -->
+<dialog class="sheet filter-sheet" id="filterSheet" aria-labelledby="filterTitle">
+  <form method="dialog" class="sheet-body">
+    <div class="sheet-head">
+      <h2 id="filterTitle">필터</h2>
+      <button class="close" value="cancel" aria-label="닫기">&times;</button>
+    </div>
+    <fieldset>
+      <legend>색상</legend>
+      <div class="swatches" id="fColors"></div>
+    </fieldset>
+    <fieldset>
+      <legend>사이즈</legend>
+      <div class="chips" id="fSizes"></div>
+    </fieldset>
+    <fieldset>
+      <legend>가격</legend>
+      <div class="chips" id="fPrices"></div>
+    </fieldset>
+    <label class="check-row"><input type="checkbox" id="fStock" /> 품절 상품 빼고 보기</label>
+    <label class="check-row"><input type="checkbox" id="fSale" /> 할인 상품만 보기</label>
+    <div class="sheet-actions">
+      <button class="btn btn-line" type="button" id="resetFilter">모두 지우기</button>
+      <button class="btn btn-dark" value="apply" id="applyFilter">상품 보기</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- 상품 상세 + 주문서 -->
+<dialog class="sheet product-sheet" id="productSheet" aria-labelledby="pName">
+  <form method="dialog" class="sheet-body product" id="productForm">
+    <div class="sheet-head">
+      <p class="crumb" id="pCrumb"></p>
+      <button class="close" value="cancel" aria-label="닫기">&times;</button>
+    </div>
+    <div class="product-grid">
+      <div class="gallery">
+        <div class="main-pic" id="pPic"></div>
+        <div class="thumbs" id="pThumbs"></div>
+      </div>
+      <div class="product-info">
+        <p class="p-id" id="pId"></p>
+        <h2 id="pName"></h2>
+        <p class="p-price" id="pPrice"></p>
+        <p class="p-desc" id="pDesc"></p>
+        <div class="opt" id="pColorRow">
+          <p class="opt-label">색상 <span id="pColorName"></span></p>
+          <div class="swatches" id="pColors"></div>
+        </div>
+        <div class="opt" id="pSizeRow">
+          <p class="opt-label">사이즈</p>
+          <div class="chips" id="pSizes"></div>
+        </div>
+        <div class="opt qty-row">
+          <p class="opt-label">수량</p>
+          <div class="stepper">
+            <button type="button" id="qtyDown" aria-label="수량 줄이기">−</button>
+            <output id="qty" aria-live="polite">1</output>
+            <button type="button" id="qtyUp" aria-label="수량 늘리기">+</button>
+          </div>
+        </div>
+        <div class="measure" id="pMeasure"></div>
+        <dl class="p-spec" id="pSpec"></dl>
+        <div class="order-total"><span>합계</span><strong id="pTotal"></strong></div>
+        <p class="order-how" id="orderHow">아래 방법 중 하나를 누르면 주문 내용이 복사되고 대화창이 열립니다.</p>
+        <div class="order-channels" id="orderChannels"></div>
+        <details class="order-preview">
+          <summary>보낼 주문 내용 보기</summary>
+          <pre id="orderMessage"></pre>
+        </details>
+      </div>
+    </div>
+  </form>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script src="config.js?v=20260928a"></script>
+<script src="data/products.js?v=20260928a"></script>
+<script src="main.js?v=20260928a"></script>
+</body>
+</html>
