@@ -2,385 +2,549 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8" />
+<!-- 첫 화면: 홈페이지 제작 서비스 소개 (카드뉴스·배너와 같은 디자인) · 과일철이네2 시안은 preview/ 에 있습니다 -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>과일철이네2 | 신선한 제철과일·선물용 과일</title>
-<meta name="description" content="가족에게 드리는 마음으로 좋은 과일만 정성껏 고르는 과일철이네2. 신선한 제철과일, 선물용 과일, 지역 배달을 만나보세요." />
-<meta name="theme-color" content="#ffe9a6" />
-
-<!-- Open Graph 기본 메타태그 -->
+<title>우리 가게 홈페이지 제작 | 휴대폰으로 보고 DM·카톡으로 바로 주문</title>
+<meta name="description" content="자영업자·사업자를 위한 홈페이지 제작. 휴대폰·PC 맞춤, DM·카톡 주문서, 유튜브 연동. 결제 전에 시안부터 확인하세요. 제작비 50만 원부터(VAT 별도)." />
+<meta name="theme-color" content="#1f6bff" />
 <meta property="og:type" content="website" />
-<meta property="og:title" content="과일철이네2 | 신선한 제철과일·선물용 과일" />
-<meta property="og:description" content="가족에게 드리는 마음으로 좋은 과일만 정성껏 고르는 과일철이네2. 신선한 제철과일, 선물용 과일, 지역 배달을 만나보세요." />
+<meta property="og:title" content="우리 가게 홈페이지 제작" />
+<meta property="og:description" content="휴대폰으로 보고, DM·카톡으로 바로 주문받는 홈페이지. 제작비 50만 원부터(VAT 별도)." />
+<meta property="og:image" content="https://okaissem.github.io/cardnews/00-banner.png" />
+<meta property="og:url" content="https://okaissem.github.io/" />
+<link rel="canonical" href="https://okaissem.github.io/" />
 <meta property="og:locale" content="ko_KR" />
-<meta property="og:image" content="public/images/fruits/17-strawberry.jpg" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%92%BB%3C/text%3E%3C/svg%3E" />
 
-<!-- 파비콘 (사과 이모지, 별도 파일 없이 바로 표시됩니다) -->
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8D%8E%3C/text%3E%3C/svg%3E" />
-
-<!-- 글꼴 (인터넷이 안 되면 기본 글꼴로 자동 표시됩니다) -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet" />
 
-<!-- 영화 같은 3D 스크롤 효과 켜기 ("동작 줄이기" 설정 기기에서는 자동으로 꺼집니다) -->
-<script>
-  if (!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches)) {
-    document.documentElement.classList.add("cinema");
+<style>
+  :root {
+    --navy: #0b1f4d;
+    --ink: #1c2742;
+    --soft: #4a5878;
+    --blue: #1f6bff;
+    --blue-deep: #1747c9;
+    --blue-2: #4c8dff;
+    --sky: #e8f1ff;
+    --sky-2: #cfe2ff;
+    --yellow: #ffd21f;
+    --kakao: #fee500;
+    --kakao-text: #3a1d1d;
+    --white: #fff;
+    --display: "Black Han Sans", "Noto Sans KR", "Apple SD Gothic Neo", sans-serif;
+    --body: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    --shadow: 0 14px 30px rgba(11, 31, 77, 0.12);
+    --bar: 60px;
   }
-</script>
-<!-- 디자인을 고친 뒤에는 아래 ?v= 뒤 숫자를 바꾸면 손님 휴대폰에 새 디자인이 바로 보입니다 -->
-<link rel="stylesheet" href="css/style.css?v=20260927a" />
-<link rel="stylesheet" href="css/cinema.css?v=20260927a" />
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; font-family: var(--body); color: var(--ink); line-height: 1.6; word-break: keep-all;
+    background: linear-gradient(180deg, #f5f9ff 0%, var(--sky) 40%, #f5f9ff 100%);
+    padding-bottom: calc(var(--bar) + env(safe-area-inset-bottom));
+  }
+  a { color: inherit; }
+  img { max-width: 100%; display: block; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
+
+  /* ---------- 머리글 ---------- */
+  .header { position: sticky; top: 0; z-index: 20; background: rgba(245, 249, 255, 0.85); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(31, 107, 255, 0.12); }
+  .header .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .logo { font-family: var(--display); font-size: 24px; color: var(--navy); text-decoration: none; }
+  .logo span { color: var(--blue); }
+  .nav { display: flex; gap: 22px; font-weight: 700; font-size: 15px; }
+  .nav a { text-decoration: none; color: var(--soft); }
+  .nav a:hover { color: var(--blue); }
+  @media (max-width: 720px) { .nav { display: none; } }
+
+  /* ---------- 공통 ---------- */
+  .pill {
+    display: inline-block; background: linear-gradient(135deg, var(--blue-deep), var(--blue)); color: var(--white);
+    font-weight: 900; border-radius: 999px; border: 3px solid rgba(255, 255, 255, 0.7);
+    box-shadow: 0 10px 24px rgba(23, 71, 201, 0.3); padding: 8px 26px; font-size: clamp(17px, 2.4vw, 26px);
+  }
+  .pill b { color: var(--yellow); }
+  .display { font-family: var(--display); font-weight: 400; color: var(--navy); line-height: 1.1; margin: 0; position: relative; z-index: 0; }
+  .display .hl { color: var(--blue); }
+  .underline { position: relative; display: inline-block; }
+  .underline::after {
+    content: ""; position: absolute; left: -2%; right: -4%; bottom: -4px; height: 0.13em;
+    background: linear-gradient(90deg, var(--blue-2), rgba(76, 141, 255, 0)); border-radius: 999px; z-index: -1;
+  }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 15px 28px; border-radius: 999px;
+    font: inherit; font-weight: 900; font-size: 17px; text-decoration: none; cursor: pointer; border: 0; transition: transform 0.2s, filter 0.2s;
+  }
+  .btn:hover { transform: translateY(-2px); filter: brightness(1.05); }
+  .btn-blue { background: linear-gradient(135deg, var(--blue-deep), var(--blue)); color: var(--white); box-shadow: 0 12px 26px rgba(23, 71, 201, 0.3); }
+  .btn-white { background: var(--white); color: var(--blue); box-shadow: var(--shadow); }
+  .btn-kakao { background: var(--kakao); color: var(--kakao-text); }
+  .btn-dm { background: linear-gradient(135deg, #f58529, #dd2a7b 50%, #8134af); color: var(--white); }
+
+  section { padding: 90px 0; }
+  .kicker { font-weight: 900; color: var(--blue); font-size: clamp(17px, 2.2vw, 22px); margin: 0 0 10px; }
+  .title { font-size: clamp(36px, 6vw, 62px); }
+  .lead { font-size: clamp(16px, 2vw, 20px); color: var(--soft); font-weight: 500; margin: 18px 0 0; }
+  .lead b { color: var(--navy); }
+  .center { text-align: center; }
+  .center .lead { max-width: 640px; margin-left: auto; margin-right: auto; }
+
+  /* 휴대폰 틀 */
+  .phone { background: #0d0f14; border-radius: 44px; padding: 11px; box-shadow: 0 34px 70px rgba(11, 31, 77, 0.32), inset 0 0 0 3px #2b2f38; position: relative; }
+  .phone::before { content: ""; position: absolute; top: 20px; left: 50%; width: 30%; height: 22px; transform: translateX(-50%); background: #0d0f14; border-radius: 999px; z-index: 2; }
+  .phone .screen { border-radius: 34px; overflow: hidden; background: #fff; aspect-ratio: 9 / 19; }
+  .phone img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+
+  /* ---------- 첫 화면 (배너) ---------- */
+  .hero { padding: 56px 0 30px; overflow: hidden; }
+  .hero .wrap { display: grid; grid-template-columns: 1.05fr 1fr; gap: 20px; align-items: center; }
+  .hero h1 { font-size: clamp(46px, 7vw, 96px); margin-top: 26px; }
+  .nowrap { white-space: nowrap; }
+  .hero .sub { font-size: clamp(19px, 2.6vw, 30px); font-weight: 900; color: var(--navy); margin: 26px 0 0; }
+  .hero .sub span { color: var(--blue); }
+  .chips { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 28px; max-width: 640px; }
+  .chip { background: var(--white); border-radius: 22px; box-shadow: var(--shadow); display: grid; justify-items: center; gap: 8px; padding: 16px 8px; font-weight: 700; font-size: 16px; text-align: center; }
+  .ico { width: 54px; height: 54px; border-radius: 16px; display: grid; place-items: center; }
+  .ico svg { width: 32px; height: 32px; }
+  .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+
+  .hero-art { position: relative; height: 620px; }
+  .hero-art .phone { position: absolute; }
+  .hero-art .p1 { width: 44%; left: 4%; top: 10px; transform: rotate(-3deg); z-index: 3; }
+  .hero-art .p2 { width: 40%; left: 36%; top: 40px; transform: rotate(4deg); z-index: 2; }
+  .hero-art .p3 { width: 36%; left: 62%; top: 80px; transform: rotate(8deg); z-index: 1; }
+  .sticker {
+    position: absolute; border-radius: 50%; background: var(--yellow); color: var(--navy); z-index: 4;
+    display: grid; place-content: center; text-align: center; font-weight: 900; border: 6px solid var(--white);
+    box-shadow: 0 18px 36px rgba(11, 31, 77, 0.28); transform: rotate(-10deg);
+  }
+  .sticker .big { font-family: var(--display); font-weight: 400; line-height: 1; }
+  .hero-art .sticker { width: 190px; height: 190px; right: -6px; bottom: 30px; font-size: 20px; }
+  .hero-art .sticker .big { font-size: 52px; }
+  @media (max-width: 900px) {
+    .hero .wrap { grid-template-columns: 1fr; }
+    .hero-art { height: 520px; max-width: 520px; width: 100%; margin: 10px auto 0; }
+    .hero-art .sticker { width: 150px; height: 150px; font-size: 16px; }
+    .hero-art .sticker .big { font-size: 40px; }
+  }
+  @media (max-width: 520px) {
+    .chips { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .chip { grid-template-columns: auto 1fr; justify-items: start; align-items: center; padding: 10px 12px; font-size: 15px; }
+    .chip .ico { width: 42px; height: 42px; border-radius: 12px; }
+    .chip .ico svg { width: 26px; height: 26px; }
+    .hero-art { height: 420px; }
+  }
+
+  /* 사진 카드 띠 */
+  .tiles { display: flex; gap: 0; padding: 20px 0 30px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .tiles::-webkit-scrollbar { display: none; }
+  .tile {
+    flex: 0 0 260px; height: 250px; margin: 0 -10px; scroll-snap-align: center;
+    background: var(--white); border-radius: 26px; padding: 9px; box-shadow: 0 20px 44px rgba(11, 31, 77, 0.2);
+  }
+  .tile:nth-child(odd) { transform: rotate(-4deg); }
+  .tile:nth-child(even) { transform: rotate(4deg) translateY(16px); }
+  .tile .pic { position: relative; height: 100%; border-radius: 18px; overflow: hidden; }
+  .tile img { width: 100%; height: 100%; object-fit: cover; }
+  .tile .cap { position: absolute; inset: 0 0 auto; padding: 16px 18px 50px; font-weight: 900; font-size: 24px; line-height: 1.25; color: var(--navy); background: linear-gradient(180deg, rgba(255, 255, 255, 0.92) 35%, rgba(255, 255, 255, 0)); }
+  .tile .cap small { display: block; font-size: 15px; font-weight: 700; color: var(--soft); }
+  .tile .cap.dark { color: #f5efe4; background: linear-gradient(180deg, rgba(10, 10, 10, 0.78) 35%, rgba(10, 10, 10, 0)); }
+  .tile .cap.dark small { color: #d4b06a; }
+  @media (min-width: 1200px) { .tiles { justify-content: center; overflow: visible; } }
+
+  /* ---------- 할 수 있는 것 ---------- */
+  .features { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 44px; }
+  .feature { background: var(--white); border-radius: 26px; padding: 30px 24px; box-shadow: var(--shadow); text-align: left; }
+  .feature .ico { margin-bottom: 16px; }
+  .feature b { display: block; font-size: 21px; color: var(--navy); margin-bottom: 6px; }
+  .feature p { margin: 0; color: var(--soft); font-size: 15px; }
+  @media (max-width: 900px) { .features { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 520px) { .features { grid-template-columns: 1fr; } }
+
+  /* ---------- 제작 사례 ---------- */
+  .works { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 44px; }
+  .work { background: var(--white); border-radius: 30px; padding: 28px; box-shadow: var(--shadow); display: grid; grid-template-columns: 170px 1fr; gap: 24px; align-items: center; text-decoration: none; transition: transform 0.25s; }
+  .work:hover { transform: translateY(-6px); }
+  .work .phone { border-radius: 30px; padding: 7px; }
+  .work .phone::before { top: 13px; height: 14px; }
+  .work .phone .screen { border-radius: 24px; }
+  .work .tag { display: inline-block; font-size: 14px; font-weight: 900; color: var(--blue); background: var(--sky); border-radius: 999px; padding: 3px 12px; }
+  .work b { display: block; font-size: 26px; color: var(--navy); margin: 10px 0 6px; }
+  .work p { margin: 0 0 14px; color: var(--soft); font-size: 15px; }
+  .work .go { font-weight: 900; color: var(--blue); }
+  @media (max-width: 900px) { .works { grid-template-columns: 1fr; } }
+  @media (max-width: 480px) { .work { grid-template-columns: 120px 1fr; padding: 20px; gap: 16px; } .work b { font-size: 21px; } }
+
+  /* ---------- 주문 흐름 ---------- */
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+  .split-art { position: relative; min-height: 560px; }
+  .split-art .phone { width: 280px; transform: rotate(-5deg); }
+  .bubble {
+    position: absolute; right: 0; top: 150px; width: min(360px, 70%); transform: rotate(2deg);
+    background: var(--white); border-radius: 26px; padding: 24px 26px; box-shadow: 0 24px 50px rgba(11, 31, 77, 0.2); font-size: 16px; line-height: 1.7;
+  }
+  .bubble b { color: var(--blue); }
+  .bubble .who { display: flex; align-items: center; gap: 10px; font-weight: 900; color: var(--navy); margin-bottom: 8px; }
+  .bubble .who i { width: 30px; height: 30px; border-radius: 9px; background: linear-gradient(135deg, #f58529, #dd2a7b 50%, #8134af); }
+  .bubble .end { margin-top: 10px; padding-top: 10px; border-top: 2px dashed #dbe4f5; font-weight: 900; color: var(--navy); }
+  .checks { list-style: none; padding: 0; margin: 26px 0 0; display: grid; gap: 12px; }
+  .checks li { display: flex; gap: 12px; align-items: flex-start; font-size: 18px; font-weight: 700; color: var(--navy); }
+  .checks li::before { content: "✓"; flex: none; width: 28px; height: 28px; border-radius: 50%; background: var(--blue); color: var(--white); display: grid; place-items: center; font-size: 15px; margin-top: 2px; }
+  @media (max-width: 900px) {
+    .split { grid-template-columns: 1fr; }
+    .split-art { min-height: 480px; max-width: 520px; width: 100%; margin: 0 auto; }
+    .split-art .phone { width: 230px; }
+    .bubble { top: 120px; font-size: 15px; }
+  }
+
+  /* 유튜브 */
+  .yt { display: grid; grid-template-columns: 1.2fr 1fr; gap: 36px; align-items: center; }
+  .yt-video { background: var(--white); padding: 10px; border-radius: 28px; box-shadow: 0 24px 50px rgba(11, 31, 77, 0.2); transform: rotate(-2deg); }
+  .yt-video video { width: 100%; border-radius: 20px; display: block; background: #000; aspect-ratio: 16 / 9; }
+  .steps { display: grid; gap: 14px; margin-top: 26px; }
+  .step { display: grid; grid-template-columns: 58px 1fr; gap: 16px; align-items: center; background: var(--white); border-radius: 22px; padding: 16px 20px; box-shadow: var(--shadow); }
+  .step .n { width: 58px; height: 58px; border-radius: 18px; background: var(--blue); color: var(--white); font-family: var(--display); font-size: 30px; display: grid; place-items: center; }
+  .step b { display: block; font-size: 19px; color: var(--navy); }
+  .step span { font-size: 15px; color: var(--soft); }
+  @media (max-width: 900px) { .yt { grid-template-columns: 1fr; } }
+
+  /* ---------- 가격 ---------- */
+  .plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 44px; align-items: stretch; }
+  .plan { position: relative; background: var(--white); border-radius: 28px; padding: 32px 28px; box-shadow: var(--shadow); border: 4px solid transparent; text-align: left; }
+  .plan.best { border-color: var(--blue); }
+  .plan .tag { position: absolute; top: -18px; left: 24px; background: var(--yellow); color: var(--navy); font-weight: 900; font-size: 15px; padding: 4px 14px; border-radius: 999px; }
+  .plan b { font-size: 24px; color: var(--navy); }
+  .plan .price { font-family: var(--display); font-size: 58px; color: var(--blue); line-height: 1.1; margin: 8px 0 2px; }
+  .plan .price small { font-family: var(--body); font-weight: 900; font-size: 22px; color: var(--navy); margin-left: 4px; }
+  .plan .meta { color: var(--soft); font-size: 14px; }
+  .plan ul { list-style: none; padding: 0; margin: 18px 0 0; display: grid; gap: 8px; border-top: 1px solid #e3ebf8; padding-top: 18px; }
+  .plan li { font-size: 15px; color: var(--ink); padding-left: 22px; position: relative; }
+  .plan li::before { content: "✓"; position: absolute; left: 0; color: var(--blue); font-weight: 900; }
+  .price-note { margin-top: 22px; color: var(--soft); font-size: 15px; }
+  @media (max-width: 900px) { .plans { grid-template-columns: 1fr; max-width: 480px; margin-left: auto; margin-right: auto; } }
+
+  /* ---------- 진행 순서 ---------- */
+  .process { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 44px; counter-reset: s; }
+  .process li { list-style: none; background: var(--white); border-radius: 24px; padding: 26px 22px; box-shadow: var(--shadow); counter-increment: s; text-align: left; }
+  .process li::before { content: counter(s); display: grid; place-items: center; width: 46px; height: 46px; border-radius: 14px; background: var(--sky); color: var(--blue); font-family: var(--display); font-size: 24px; margin-bottom: 12px; }
+  .process b { display: block; font-size: 19px; color: var(--navy); }
+  .process span { font-size: 15px; color: var(--soft); }
+  .process { padding: 0; }
+  @media (max-width: 900px) { .process { grid-template-columns: 1fr 1fr; } }
+
+  /* ---------- 문의 ---------- */
+  .contact-box {
+    background: linear-gradient(135deg, var(--blue-deep), var(--blue)); color: var(--white); border-radius: 36px; padding: 56px 40px;
+    text-align: center; box-shadow: 0 24px 50px rgba(23, 71, 201, 0.35); position: relative; overflow: hidden;
+  }
+  .contact-box h2 { font-family: var(--display); font-weight: 400; font-size: clamp(34px, 6vw, 56px); margin: 0; line-height: 1.15; }
+  .contact-box p { font-size: clamp(16px, 2vw, 20px); opacity: 0.92; margin: 16px 0 0; }
+  .contact-box em { font-style: normal; color: var(--yellow); font-weight: 900; }
+  .contact-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 30px; }
+
+  .footer { text-align: center; padding: 40px 20px; color: var(--soft); font-size: 14px; }
+  .footer .logo { font-size: 20px; }
+
+  /* 아래 고정 버튼 */
+  .bottom-bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; display: grid; grid-template-columns: 1fr 1fr; height: calc(var(--bar) + env(safe-area-inset-bottom)); padding-bottom: env(safe-area-inset-bottom); }
+  .bottom-bar a { display: grid; place-items: center; font-weight: 900; font-size: 17px; text-decoration: none; }
+  .bottom-bar .b1 { background: var(--kakao); color: var(--kakao-text); }
+  .bottom-bar .b2 { background: linear-gradient(135deg, var(--blue-deep), var(--blue)); color: var(--white); }
+
+  .toast {
+    position: fixed; left: 50%; bottom: calc(var(--bar) + 20px + env(safe-area-inset-bottom)); z-index: 50;
+    transform: translate(-50%, 20px); opacity: 0; pointer-events: none; transition: 0.3s;
+    background: var(--navy); color: var(--white); font-size: 15px; font-weight: 700; padding: 12px 20px; border-radius: 14px;
+    width: max-content; max-width: calc(100vw - 32px); text-align: center; box-shadow: 0 10px 26px rgba(0, 0, 0, 0.3);
+  }
+  .toast.shown { opacity: 1; transform: translate(-50%, 0); }
+
+  /* 스크롤하면 나타나기 */
+  .reveal { opacity: 0; transform: translateY(36px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .reveal.shown { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .reveal { opacity: 1; transform: none; transition: none; }
+  }
+</style>
 </head>
 <body>
 
-<!-- 영화 효과: 오프닝 타이틀, 위아래 검은 띠, 필름 질감, 진행바 -->
-<div class="film-intro" id="film-intro" aria-hidden="true">
-  <p class="film-intro-small">A FRESH FRUIT STORY</p>
-  <p class="film-intro-title" data-config="storeName">과일철이네2</p>
-</div>
-<div class="letterbox letterbox-top" aria-hidden="true"></div>
-<div class="letterbox letterbox-bottom" aria-hidden="true"></div>
-<div class="film-grain" aria-hidden="true"></div>
-<div class="scroll-progress" aria-hidden="true"><span id="scroll-progress-bar"></span></div>
-<nav class="scene-nav" id="scene-nav" aria-label="장면 바로가기"></nav>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-device" viewBox="0 0 24 24"><rect x="2" y="4" width="14" height="10" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M6 18h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><rect x="15" y="8" width="7" height="12" rx="1.5" fill="currentColor"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-9l-5 4v-4H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z" fill="currentColor"/><path d="M8 10h8M8 13h5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="4" fill="currentColor"/><path d="M10 9l5 3-5 3z" fill="#fff"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2" fill="currentColor"/><path d="M8 12l3 3 5-6" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </defs>
+</svg>
 
-<!-- ============================================================ -->
-<!-- ① 상단 헤더 -->
-<!-- ============================================================ -->
-<header class="site-header" id="site-header">
-  <div class="header-inner">
-    <a href="#hero" class="logo"><span class="logo-mark">🍎</span><span data-config="storeName">과일철이네2</span></a>
-
-    <nav class="main-nav" id="main-nav">
-      <a href="#trailer" class="nav-link">예고편</a>
-      <a href="#about" class="nav-link">소개</a>
-      <a href="#showcase" class="nav-link">과일 20종</a>
-      <a href="#gift" class="nav-link">선물세트</a>
-      <a href="#benefits" class="nav-link">이용혜택</a>
-      <a href="#info" class="nav-link">배달·영업안내</a>
-      <a href="#visit" class="nav-link">오시는길</a>
+<header class="header">
+  <div class="wrap">
+    <a class="logo" href="#top">우리가게<span>홈페이지</span></a>
+    <nav class="nav" aria-label="메뉴">
+      <a href="#works">제작 사례</a>
+      <a href="#order">주문 기능</a>
+      <a href="#price">가격</a>
+      <a href="#process">진행 순서</a>
+      <a href="#contact">문의</a>
     </nav>
-
-    <a href="#" class="btn btn-kakao btn-header-kakao">카카오톡 상담</a>
-
-    <button class="menu-toggle" id="menu-toggle" aria-label="메뉴 열기" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
   </div>
 </header>
 
-<main>
+<main id="top">
 
-<!-- ============================================================ -->
-<!-- ② 히어로 (검정 배경) -->
-<!-- ============================================================ -->
-<section class="hero scene-pin" id="hero" data-scene="hero" data-chapter="첫 만남">
-  <div class="scene-stage hero-stage">
-    <div class="hero-particles" id="hero-particles" aria-hidden="true"></div>
-
-    <div class="wrap hero-inner">
-      <div class="hero-text" id="hero-text">
-        <span class="scene-no">SCENE 01</span>
-        <p class="hero-question" data-config="hero.question">마트 과일, 맛이 매번 복불복이셨죠?</p>
-        <h1 class="hero-headline display" data-config="hero.headline">그럼 과일철이네2!</h1>
-        <p class="hero-sub" data-config-nl="hero.subCopy">신선한 제철과일부터 소중한 분께 전하는 선물용 과일까지<br />과일철이네2가 정성껏 준비합니다.</p>
-        <div class="hero-buttons">
-          <a href="#products" class="btn btn-primary">오늘의 과일 보기</a>
-          <a href="#" class="btn btn-kakao">카카오톡 1:1 상담</a>
+  <!-- 첫 화면: 카드뉴스 배너와 같은 구성 -->
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <span class="pill"><b>자영업자 · 사업자</b>를 위한</span>
+        <h1 class="display">우리 가게<br /><span class="nowrap"><span class="hl underline">홈페이지</span> 제작</span></h1>
+        <p class="sub">휴대폰으로 보고, <span>DM·카톡으로 바로 주문</span></p>
+        <div class="chips">
+          <div class="chip"><span class="ico" style="background:#e3edff;color:var(--blue)"><svg><use href="#i-device"/></svg></span>휴대폰·PC</div>
+          <div class="chip"><span class="ico" style="background:#fff7c2;color:#3a1d1d"><svg><use href="#i-chat"/></svg></span>DM·카톡 주문</div>
+          <div class="chip"><span class="ico" style="background:#ffe3e3;color:#e62117"><svg><use href="#i-play"/></svg></span>유튜브 연동</div>
+          <div class="chip"><span class="ico" style="background:#dff7e8;color:#1f9d55"><svg><use href="#i-check"/></svg></span>시안 먼저</div>
+        </div>
+        <div class="hero-cta">
+          <a class="btn btn-blue" href="#contact">무료 상담 받기</a>
+          <a class="btn btn-white" href="#works">제작 사례 보기</a>
         </div>
       </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="phone p3"><div class="screen"><img src="cardnews/src/shots/fruit-m.png" alt="" /></div></div>
+        <div class="phone p2"><div class="screen"><img src="cardnews/src/shots/jw-m-order.png" alt="" style="object-position:50% 20%" /></div></div>
+        <div class="phone p1"><div class="screen"><img src="cardnews/src/shots/jw-m.png" alt="" /></div></div>
+        <div class="sticker"><span>제작비</span><span class="big">50만 원</span><span>부터 · VAT 별도</span></div>
+      </div>
+    </div>
+  </section>
 
-      <div class="hero-visual" id="hero-visual">
-        <div class="hero-photo" id="hero-photo">
-          <img data-config-img="hero.image" src="public/images/fruits/17-strawberry.jpg" alt="과일철이네2 딸기 선물세트" />
+  <!-- 사진 카드 띠 -->
+  <div class="tiles" aria-hidden="true">
+    <div class="tile"><div class="pic"><img src="public/images/fruits/17-strawberry.jpg" alt="" loading="lazy" /><div class="cap">과일가게<small>오늘의 과일·선물세트</small></div></div></div>
+    <div class="tile"><div class="pic"><img src="jewelry/images/01-solitaire-ring-photo.jpg" alt="" loading="lazy" /><div class="cap dark">쥬얼리 쇼핑몰<small>분류별 컬렉션</small></div></div></div>
+    <div class="tile"><div class="pic"><img src="jewelry/video/finest-jewelry-ad-photo-poster.jpg" alt="" loading="lazy" style="object-position:62% 30%;transform:scale(1.35);transform-origin:60% 30%" /><div class="cap dark">광고 영상까지<small>유튜브·릴스용</small></div></div></div>
+    <div class="tile"><div class="pic"><img src="public/images/fruits/16-shine-muscat.jpg" alt="" loading="lazy" /><div class="cap">상품 사진 그대로<small>사진만 보내 주세요</small></div></div></div>
+    <div class="tile"><div class="pic"><img src="jewelry/images/13-lumiere-necklace.jpg" alt="" loading="lazy" /><div class="cap">세트 할인<small>자동 계산</small></div></div></div>
+  </div>
+
+  <!-- 할 수 있는 것 -->
+  <section class="reveal" id="features">
+    <div class="wrap center">
+      <p class="kicker">사장님 가게에 꼭 필요한 것만</p>
+      <h2 class="display title">홈페이지 하나로 <span class="hl">주문까지</span></h2>
+      <div class="features">
+        <div class="feature"><span class="ico" style="background:#e3edff;color:var(--blue)"><svg><use href="#i-device"/></svg></span><b>휴대폰·PC 맞춤</b><p>손님 대부분이 보는 휴대폰 화면을 먼저 생각해서 만듭니다.</p></div>
+        <div class="feature"><span class="ico" style="background:#fff7c2;color:#3a1d1d"><svg><use href="#i-chat"/></svg></span><b>DM·카톡 주문서</b><p>제품을 누르면 주문서가 열리고 인스타 DM·카카오톡·문자로 주문이 들어옵니다.</p></div>
+        <div class="feature"><span class="ico" style="background:#ffe3e3;color:#e62117"><svg><use href="#i-play"/></svg></span><b>유튜브 연동</b><p>광고 영상을 홈페이지에서 바로 재생하고, 영상 보고 온 손님을 주문으로 연결합니다.</p></div>
+        <div class="feature"><span class="ico" style="background:#dff7e8;color:#1f9d55"><svg><use href="#i-check"/></svg></span><b>결제 전 시안</b><p>돈을 내시기 전에 완성될 모습을 먼저 보고 결정하실 수 있습니다.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 제작 사례 -->
+  <section class="reveal" id="works">
+    <div class="wrap center">
+      <p class="kicker">직접 눌러 보세요</p>
+      <h2 class="display title">업종에 맞춘 <span class="hl">디자인</span></h2>
+      <p class="lead">아래 홈페이지는 실제로 만든 시안입니다. 휴대폰으로 열어 보시면 더 잘 보여요.</p>
+      <div class="works">
+        <a class="work" href="preview/">
+          <div class="phone"><div class="screen"><img src="cardnews/src/shots/fruit-m.png" alt="과일철이네2 홈페이지 화면" loading="lazy" /></div></div>
+          <div style="text-align:left"><span class="tag">동네 과일가게 · 표준형</span><b>과일철이네2</b><p>움직이는 화면 효과, 카카오톡 상담, 네이버플레이스 연결, 홍보영상</p><span class="go">홈페이지 보러 가기 →</span></div>
+        </a>
+        <a class="work" href="jewelry/">
+          <div class="phone"><div class="screen"><img src="cardnews/src/shots/jw-m.png" alt="Finest Jewelry 홈페이지 화면" loading="lazy" /></div></div>
+          <div style="text-align:left"><span class="tag">온라인 쥬얼리 브랜드</span><b>Finest Jewelry</b><p>분류별 컬렉션, 세트 할인 자동 계산, DM·카톡 주문서, 20초 광고 영상</p><span class="go">홈페이지 보러 가기 →</span></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 주문 흐름 -->
+  <section class="reveal" id="order">
+    <div class="wrap split">
+      <div>
+        <p class="kicker">스토어 수수료 없이</p>
+        <h2 class="display title">누르면 주문서,<br /><span class="hl">DM으로 바로</span></h2>
+        <p class="lead">손님이 제품을 누르면 주문서가 열리고, 고른 내용이 <b>주문 메시지로 자동 정리</b>되어 사장님께 도착합니다.</p>
+        <ul class="checks">
+          <li>수량·사이즈·선물 포장 선택, 합계 자동 계산</li>
+          <li>인스타그램 DM · 카카오톡 · 문자 중 편한 방법으로</li>
+          <li>스마트스토어 수수료 없이 직접 판매</li>
+        </ul>
+      </div>
+      <div class="split-art" aria-hidden="true">
+        <div class="phone"><div class="screen"><img src="cardnews/src/shots/jw-m-order.png" alt="" loading="lazy" style="object-position:50% 12%" /></div></div>
+        <div class="bubble">
+          <div class="who"><i></i>인스타그램 DM</div>
+          안녕하세요, 홈페이지 보고 주문합니다.<br />
+          · 제품: <b>루미에르 4종 세트</b><br />
+          · 수량: 1개 · 사이즈: 11호<br />
+          · 선물 포장: 원해요<br />
+          · 금액: <b>260,800원</b>
+          <div class="end">손님은 붙여넣기만 하면 끝!</div>
         </div>
-        <div class="stamp" id="hero-stamp" data-config-nl="hero.stamp">오늘도<br />과일철이네</div>
       </div>
     </div>
+  </section>
 
-    <p class="hero-caption display" id="hero-caption" data-config-nl="hero.caption">진짜 맛있는 과일은,<br />고르는 사람이 다릅니다.</p>
-
-    <div class="scroll-cue" id="scroll-cue" aria-hidden="true"><span></span>SCROLL</div>
-
-    <div class="hero-ticker" aria-hidden="true">
-      <div class="ticker-track" id="ticker-track"></div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================ -->
-<!-- ③ 노란 띠 - 질문 & 큰 제목 -->
-<!-- ============================================================ -->
-<section class="hook stage3d" id="hook" data-transition="iris" data-chapter="질문">
-  <div class="wrap hook-inner">
-    <span class="scene-no dark" data-3d="rise">SCENE 02</span>
-    <p class="hook-question" data-3d="rise" data-config-nl="hook.question">가족과 함께 먹을 과일,<br />아무거나 고르진 않으셨나요?</p>
-    <div class="hook-circle" data-3d="coin">
-      <img data-config-img="hook.image" src="public/images/fruits/16-shine-muscat.jpg" alt="과일철이네2 샤인머스켓" loading="lazy" />
-    </div>
-    <p class="hook-small" data-3d="rise" data-config="hook.smallCopy">아이부터 어르신까지, 온 가족이 만족하는</p>
-    <h2 class="hook-big display outline" data-3d="standup" data-config="hook.bigCopy">과일철이네2 제철과일!</h2>
-  </div>
-</section>
-
-<!-- ============================================================ -->
-<!-- ③-1 15초 홍보 영상 (예고편) -->
-<!-- ============================================================ -->
-<section class="section trailer stage3d" id="trailer" data-transition="frame">
-  <div class="wrap trailer-inner">
-    <div class="section-head trailer-head">
-      <span class="scene-no" data-3d="subtitle" data-i="0">TRAILER</span>
-      <p class="eyebrow" data-3d="subtitle" data-i="1" data-config-nl="trailer.smallCopy">15초 만에 만나보는</p>
-      <h2 class="section-title display" data-3d="subtitle" data-i="2" data-config-nl="trailer.title">과일철이네2 예고편</h2>
-      <p class="section-desc" data-3d="subtitle" data-i="3" data-config-nl="trailer.desc"></p>
-    </div>
-    <div class="trailer-phone" data-3d="zoom">
-      <video
-        class="trailer-video"
-        id="trailer-video"
-        src="public/video/promo-15s.mp4"
-        poster="public/video/promo-15s-poster.jpg"
-        muted
-        loop
-        playsinline
-        controls
-        preload="none"
-        aria-label="과일철이네2 15초 홍보 영상"
-      ></video>
-      <button class="trailer-sound" id="trailer-sound" type="button" aria-pressed="false">🔇 소리 켜기</button>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================ -->
-<!-- ④ 소개 + POINT 3가지 (흰 배경) -->
-<!-- ============================================================ -->
-<section class="section about stage3d" id="about" data-transition="frame" data-chapter="약속">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="scene-no" data-3d="subtitle" data-i="0">SCENE 03</span>
-      <p class="eyebrow" data-3d="subtitle" data-i="1" data-config-nl="about.smallCopy">어린이부터 어르신까지<br />모두의 입맛을 사로잡은</p>
-      <h2 class="section-title display red" data-3d="subtitle" data-i="2" data-config="about.title">과일철이네2!</h2>
-      <p class="section-desc" data-3d="subtitle" data-i="3" data-config-nl="about.body"></p>
-    </div>
-
-    <div class="points" id="points">
-      <!-- JS가 config.about.points 값으로 자동 채웁니다 -->
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================ -->
-<!-- ④-1 3D 회전 과일 쇼케이스 (스크롤하면 원형으로 돌아갑니다) -->
-<!-- ============================================================ -->
-<section class="showcase scene-pin" id="showcase" data-scene="ring" data-chapter="과일 20종">
-  <div class="scene-stage showcase-stage">
-    <div class="showcase-glow" aria-hidden="true"></div>
-    <div class="ring-viewport">
-      <div class="ring" id="ring">
-        <!-- JS가 config.fruits 값으로 20개 카드를 원형으로 배치합니다 -->
+  <!-- 유튜브 -->
+  <section class="reveal" id="youtube">
+    <div class="wrap yt">
+      <div class="yt-video">
+        <video src="jewelry/video/finest-jewelry-ad-photo.mp4" poster="jewelry/video/finest-jewelry-ad-photo-poster.jpg" controls playsinline preload="none" aria-label="광고 영상 예시"></video>
+      </div>
+      <div>
+        <p class="kicker">영상 보고 바로 구매</p>
+        <h2 class="display title"><span style="color:#e62117">유튜브</span> 손님도<br />주문으로 연결</h2>
+        <div class="steps">
+          <div class="step"><span class="n">1</span><div><b>영상 설명란 링크 누르기</b><span>광고 영상·쇼츠 설명란, 고정 댓글에 넣어 드려요</span></div></div>
+          <div class="step"><span class="n">2</span><div><b>영상 속 제품 주문서가 바로</b><span>"유튜브 보고 주문해요"가 자동으로 붙어요</span></div></div>
+        </div>
+        <p class="lead" style="font-size:16px">왼쪽 영상은 쥬얼리 시안에 넣은 20초 광고 예시입니다. 광고 영상 제작도 함께 맡기실 수 있어요.</p>
       </div>
     </div>
-    <div class="showcase-center">
-      <span class="scene-no">SCENE 04</span>
-      <p class="showcase-small" data-config="showcase.smallCopy">스크롤을 내려보세요</p>
-      <h2 class="showcase-title display" data-config-nl="showcase.title">오늘의 과일<br />20가지 이야기</h2>
-    </div>
-    <p class="showcase-now" id="showcase-now"></p>
-  </div>
-</section>
+  </section>
 
-<!-- ============================================================ -->
-<!-- ⑤ 과일 상품 20종 -->
-<!-- ============================================================ -->
-<section class="section products stage3d" id="products" data-transition="frame" data-chapter="골라보기">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="scene-no" data-3d="subtitle" data-i="0">SCENE 05</span>
-      <p class="eyebrow" data-3d="subtitle" data-i="1" data-config="products.smallCopy">오늘은 어떤 과일 드실래요?</p>
-      <h2 class="section-title display" data-3d="subtitle" data-i="2" data-config="products.title">과일철이네2 과일 20종</h2>
-      <p class="section-desc" data-3d="subtitle" data-i="3" data-config="products.subtitle"></p>
-    </div>
-
-    <p class="price-notice" data-3d="rise" data-config-nl="products.priceNotice">
-      과일 가격은 매일 아침 시세에 따라 바뀌어서 홈페이지에 정가를 적어두지 않아요.<br />오늘 가격은 전화(010-2237-3494)나 카카오톡으로 직접 물어봐 주세요!
-    </p>
-
-    <div class="season-tabs" id="season-tabs" role="tablist" aria-label="계절별 과일 보기">
-      <!-- JS가 계절 탭을 자동으로 만듭니다 -->
-    </div>
-
-    <div class="fruit-grid" id="fruit-grid">
-      <!-- JS가 config.fruits(20개) 값으로 자동 채웁니다 -->
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================ -->
-<!-- ⑥ 선물용 과일 -->
-<!-- ============================================================ -->
-<section class="section gift stage3d" id="gift" data-transition="wipe" data-chapter="선물">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="scene-no" data-3d="subtitle" data-i="0">SCENE 06</span>
-      <p class="eyebrow" data-3d="subtitle" data-i="1" data-config="gift.smallCopy">소중한 마음까지 함께 전합니다</p>
-      <h2 class="section-title display red" data-3d="subtitle" data-i="2" data-config="gift.title">선물용 과일세트</h2>
-      <p class="section-desc" data-3d="subtitle" data-i="3" data-config-nl="gift.body"></p>
-    </div>
-
-    <div class="gift-cards" id="gift-cards">
-      <!-- JS가 config.gift.cards 값으로 자동 채웁니다 -->
-    </div>
-
-    <div class="section-cta" data-3d="rise">
-      <a href="#" class="btn btn-kakao btn-large">카카오톡으로 선물 상담하기</a>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================ -->
-<!-- ⑦ 이런 분들께 추천해요 (주황 배경 말풍선) -->
-<!-- ============================================================ -->
-<section class="section recommend stage3d" id="recommend" data-transition="iris" data-chapter="추천">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="scene-no dark" data-3d="subtitle" data-i="0">SCENE 07</span>
-      <p class="eyebrow dark" data-3d="subtitle" data-i="1" data-config="recommend.smallCopy">이럴 때 과일철이네2를 찾아주세요</p>
-      <h2 class="section-title display outline" data-3d="subtitle" data-i="2" data-config="recommend.title">이런 분들께 추천해요</h2>
-    </div>
-    <div class="bubbles" id="bubbles">
-      <!-- JS가 config.recommend.items 값으로 자동 채웁니다 -->
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================ -->
-<!-- ⑧ 이용 혜택 (쿠폰) -->
-<!-- ============================================================ -->
-<section class="section benefits stage3d" id="benefits" data-transition="wipe" data-chapter="혜택">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="scene-no dark" data-3d="subtitle" data-i="0">SCENE 08</span>
-      <p class="eyebrow dark" data-3d="subtitle" data-i="1" data-config="benefits.smallCopy">과일철이네2에서만 누리는</p>
-      <h2 class="section-title display outline tilt" data-3d="subtitle" data-i="2" data-config="benefits.title">이용 혜택</h2>
-    </div>
-    <div class="coupons" id="coupons">
-      <!-- JS가 config.benefits.items 값으로 자동 채웁니다 -->
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================ -->
-<!-- ⑨ 배달 / 영업 안내 -->
-<!-- ============================================================ -->
-<section class="section info stage3d" id="info" data-transition="frame" data-chapter="안내">
-  <div class="wrap">
-    <div class="info-grid">
-      <div class="info-box" id="delivery" data-3d="rise" data-i="0">
-        <span class="info-badge">DELIVERY</span>
-        <h3 class="info-title" data-config="delivery.title">신선한 과일, 편하게 받아보세요</h3>
-        <dl class="info-list">
-          <div><dt>배달시간</dt><dd data-config="delivery.time">08:00 ~ 18:30</dd></div>
-          <div><dt>배달지역</dt><dd id="delivery-areas">성남 구시가지 / 위례 / 야탑</dd></div>
-          <div><dt>최소주문</dt><dd data-config="delivery.minOrder">20,000원 이상</dd></div>
-        </dl>
-        <p class="info-note" data-config-nl="delivery.note"></p>
-        <a href="#" class="btn btn-kakao">카카오톡으로 배달 문의</a>
+  <!-- 가격 -->
+  <section class="reveal" id="price">
+    <div class="wrap center">
+      <p class="kicker">결제 전에 시안 먼저 보세요</p>
+      <h2 class="display title">제작 <span class="hl">가격</span></h2>
+      <div class="plans">
+        <div class="plan"><b>기본형</b><div class="price">50<small>만 원</small></div><div class="meta">제작 7일 · 수정 2회</div>
+          <ul><li>한 페이지 홈페이지</li><li>휴대폰·PC 화면 모두 대응</li><li>가게 소개·위치·전화 연결</li></ul></div>
+        <div class="plan best"><span class="tag">가장 많이 선택</span><b>표준형</b><div class="price">90<small>만 원</small></div><div class="meta">제작 10~14일 · 수정 3회</div>
+          <ul><li>기본형 내용 전부</li><li>상품(메뉴) 소개 20개 이내</li><li>움직이는 화면 효과</li><li>카카오톡 상담 버튼</li><li>네이버·구글 검색 등록</li></ul></div>
+        <div class="plan"><b>프리미엄</b><div class="price">150<small>만 원</small></div><div class="meta">제작 14~21일 · 수정 5회</div>
+          <ul><li>표준형 내용 전부</li><li>여러 페이지 구성</li><li>홍보영상(쇼츠) 1편 제작</li><li>유튜브·SNS 연동 전체 포함</li></ul></div>
       </div>
+      <p class="price-note">※ 모든 금액 VAT 별도 · 유튜브·SNS 연동, 1년 관리 패키지는 <a href="pricing/" style="color:var(--blue);font-weight:900">자세한 가격표</a>에서 확인하세요.</p>
+    </div>
+  </section>
 
-      <div class="info-box" id="hours" data-3d="rise" data-i="1">
-        <span class="info-badge">OPEN</span>
-        <h3 class="info-title" data-config="hours.title">과일철이네2 영업안내</h3>
-        <dl class="info-list">
-          <div><dt>영업시간</dt><dd data-config="hours.openTime">08:00 ~ 19:00</dd></div>
-          <div><dt>정기휴무</dt><dd data-config="hours.closedDay">매월 둘째·넷째 일요일</dd></div>
-          <div><dt>배달시간</dt><dd data-config="hours.deliveryTime">08:00 ~ 18:30</dd></div>
-        </dl>
-      </div>
+  <!-- 진행 순서 -->
+  <section class="reveal" id="process">
+    <div class="wrap center">
+      <p class="kicker">돈을 내시기 전에 시안부터</p>
+      <h2 class="display title">진행 <span class="hl">순서</span></h2>
+      <ol class="process">
+        <li><b>상담</b><span>가게 사진과 원하시는 내용을 알려 주세요</span></li>
+        <li><b>시안 확인</b><span>"미리보기" 표시가 붙은 시안을 먼저 보여 드립니다</span></li>
+        <li><b>계약 · 계약금 50%</b><span>시안이 마음에 드시면 계약합니다</span></li>
+        <li><b>완성 · 잔금 50%</b><span>수정을 마치고 정식으로 오픈합니다</span></li>
+      </ol>
+    </div>
+  </section>
 
-      <div class="info-box" id="visit" data-3d="rise" data-i="2">
-        <span class="info-badge">VISIT</span>
-        <h3 class="info-title">매장 방문 안내</h3>
-        <dl class="info-list">
-          <div><dt>주소</dt><dd id="visit-address">주소 준비중입니다. 카카오톡으로 문의해주세요.</dd></div>
-          <div id="visit-phone-row" hidden><dt>전화</dt><dd><a id="visit-phone" href="#"></a></dd></div>
-        </dl>
-        <a href="#" class="btn btn-naver">네이버 지도에서 위치 보기</a>
+  <!-- 문의 -->
+  <section class="reveal" id="contact">
+    <div class="wrap">
+      <div class="contact-box">
+        <h2>사진만 보내 주세요</h2>
+        <p>시안을 먼저 보고 <em>마음에 들면 결제</em>하시면 됩니다.<br />편한 방법으로 문의 주세요.</p>
+        <div class="contact-actions" id="contactActions"></div>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- ============================================================ -->
-<!-- ⑩ 엔딩: 마지막 장면 → 엔딩 크레딧 → THE END -->
-<!-- ============================================================ -->
-<section class="finale scene-pin" id="contact" data-chapter="엔딩" data-scene="finale">
-  <div class="scene-stage finale-stage">
-    <div class="finale-bg" id="finale-bg" aria-hidden="true">
-      <img data-config-img="finale.image" src="public/images/fruits/12-watermelon.jpg" alt="" loading="lazy" />
-    </div>
-
-    <div class="wrap finale-inner" id="finale-title">
-      <span class="scene-no">FINAL SCENE</span>
-      <p class="finale-small" data-config="finale.smallCopy">오늘 저녁 식탁에, 소중한 분께 드릴 선물로</p>
-      <h2 class="finale-big display" data-config-nl="finale.bigCopy">지금 바로<br />과일철이네2를 만나보세요!</h2>
-      <div class="contact-buttons">
-        <a href="#" class="btn btn-kakao btn-large">카카오톡 1:1 상담</a>
-        <a href="#" class="btn btn-naver btn-large">네이버 지도로 오시는 길</a>
-      </div>
-    </div>
-
-    <!-- 엔딩 크레딧 (config.finale.credits + 매장 정보로 자동 작성) -->
-    <div class="credits-window" id="credits-window">
-      <div class="credits" id="credits">
-        <p class="credits-head">CREDITS</p>
-        <p class="credits-title display" data-config="storeName">과일철이네2</p>
-        <dl class="credits-list" id="credits-list"></dl>
-      </div>
-    </div>
-
-    <div class="the-end" id="the-end">
-      <p class="the-end-small">THE END</p>
-      <p class="the-end-big display" data-config="finale.theEnd">과일철이네2에서 만나요!</p>
-      <div class="contact-buttons">
-        <a href="#" class="btn btn-kakao btn-large">카카오톡 1:1 상담</a>
-        <a href="#" class="btn btn-naver btn-large">오시는 길</a>
-        <a href="#" class="btn btn-tel btn-large" id="the-end-tel" hidden>전화하기</a>
-      </div>
-    </div>
-  </div>
-</section>
+  </section>
 
 </main>
 
-<!-- ============================================================ -->
-<!-- ⑪ 하단 Footer -->
-<!-- ============================================================ -->
-<footer class="site-footer">
-  <div class="wrap footer-inner">
-    <p class="footer-store-name display" data-config="storeName">과일철이네2</p>
-    <p class="footer-copy" data-config-nl="mainCopy">가족에게 드리는 마음으로, 좋은 과일만 정성껏</p>
-    <nav class="footer-links">
-      <a href="#about">소개</a>
-      <a href="#products">과일 20종</a>
-      <a href="#gift">선물세트</a>
-      <a href="#benefits">이용혜택</a>
-      <a href="#info">배달·영업안내</a>
-      <a href="#visit">오시는길</a>
-    </nav>
-    <p class="footer-bottom">© <span id="footer-year">2026</span> <span data-config="storeName">과일철이네2</span>. All rights reserved.</p>
-  </div>
+<footer class="footer">
+  <p class="logo">우리가게<span style="color:var(--blue)">홈페이지</span></p>
+  <p>자영업자·사업자를 위한 홈페이지 제작 · 모든 금액 VAT 별도</p>
 </footer>
 
-<!-- 모바일 하단 고정 상담바 -->
-<div class="mobile-fixed-bar" id="mobile-fixed-bar">
-  <a href="#" class="mobile-bar-btn btn-kakao">카카오톡 상담</a>
-  <a href="#" class="mobile-bar-btn btn-naver">오시는 길</a>
+<div class="bottom-bar">
+  <a class="b1" data-contact="kakao" href="#contact">카카오톡 상담</a>
+  <a class="b2" data-contact="dm" href="#contact">DM으로 문의</a>
 </div>
 
-<script src="config/site-config.js?v=20260927a"></script>
-<script src="js/main.js?v=20260927a"></script>
-<script src="js/cinema.js?v=20260927a"></script>
+<script>
+  /* ============================================================
+     ★ 연락처 - 여기만 채우면 문의 버튼이 연결됩니다 ★
+     - "#demo" 는 아직 주소가 없다는 표시입니다 (누르면 안내만 뜹니다)
+     - "" (빈칸) 이면 버튼이 숨겨집니다
+     ============================================================ */
+  var CONTACT = {
+    dm: "#demo",     // 인스타그램 DM 주소 (예: https://ig.me/m/인스타아이디)
+    kakao: "#demo",  // 카카오톡 채널 채팅 주소 (예: https://pf.kakao.com/_xxxx/chat)
+    phone: "",       // 전화번호 (예: 010-1234-5678)
+  };
+
+  (function () {
+    "use strict";
+    var toastTimer;
+    function showToast(msg) {
+      var t = document.querySelector(".toast");
+      if (!t) {
+        t = document.createElement("div");
+        t.className = "toast";
+        t.setAttribute("role", "status");
+        document.body.appendChild(t);
+      }
+      t.textContent = msg;
+      t.classList.add("shown");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function () { t.classList.remove("shown"); }, 2400);
+    }
+
+    function hrefFor(key) {
+      if (key === "phone") return CONTACT.phone ? "tel:" + CONTACT.phone.replace(/[^0-9+]/g, "") : "";
+      return CONTACT[key] || "";
+    }
+
+    function wire(a, key) {
+      var url = hrefFor(key);
+      if (!url) { a.hidden = true; return; }
+      if (url === "#demo") {
+        a.href = "#";
+        a.addEventListener("click", function (e) {
+          e.preventDefault();
+          showToast("연락처를 준비 중입니다. 곧 연결됩니다.");
+        });
+        return;
+      }
+      a.href = url;
+      if (key !== "phone") { a.target = "_blank"; a.rel = "noopener"; }
+    }
+
+    // 문의 버튼 만들기
+    var box = document.getElementById("contactActions");
+    [["dm", "인스타그램 DM 문의", "btn-dm"], ["kakao", "카카오톡 상담", "btn-kakao"], ["phone", "전화 문의", "btn-white"]].forEach(function (c) {
+      var a = document.createElement("a");
+      a.className = "btn " + c[2];
+      a.textContent = c[1];
+      box.appendChild(a);
+      wire(a, c[0]);
+    });
+
+    // 아래 고정 버튼 (주소가 없으면 문의 구역으로 이동)
+    document.querySelectorAll("[data-contact]").forEach(function (a) {
+      var key = a.getAttribute("data-contact");
+      if (hrefFor(key)) wire(a, key);
+    });
+
+    // 스크롤하면 나타나기
+    var items = document.querySelectorAll(".reveal");
+    if (!("IntersectionObserver" in window)) {
+      items.forEach(function (n) { n.classList.add("shown"); });
+    } else {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add("shown"); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.1 });
+      items.forEach(function (n) { io.observe(n); });
+    }
+  })();
+</script>
 </body>
 </html>
