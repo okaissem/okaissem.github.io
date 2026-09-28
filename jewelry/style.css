@@ -292,3 +292,6 @@ body:has(.order-sheet[open]) { overflow: hidden; }
   .spark { opacity: 0.8; }
   .reveal { opacity: 1; transform: none; transition: none; }
 }
+
+/* ---------- 루미에르 반지 상세페이지 바로가기 ---------- */
+.detail-link { text-align: center; margin: 28px 0 0; }
