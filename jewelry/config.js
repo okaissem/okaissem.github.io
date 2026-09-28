@@ -97,7 +97,7 @@ window.JEWELRY_CONFIG = {
   // link    : 스마트스토어 상품 주소 (빈칸이면 스토어 첫 화면으로 연결)
   categories: ["반지", "목걸이", "귀걸이", "팔찌"],
   products: [
-    { name: "솔리테어 큐빅 반지", price: "89,000원", category: "반지", metal: "gold", gem: "#f4f7ff", virtual: true, image: "images/01-solitaire-ring-photo.jpg", link: "" },
+    { name: "루미에르 다이아몬드 반지", price: "89,000원", category: "반지", metal: "gold", gem: "#f4f7ff", virtual: true, image: "images/01-solitaire-ring-photo.jpg", link: "" },
     { name: "이터니티 라인 반지", price: "129,000원", category: "반지", metal: "rose", gem: "#ffe3ea", virtual: true, image: "images/02-eternity-ring.jpg", link: "" },
     { name: "에메랄드 포인트 반지", price: "159,000원", category: "반지", metal: "gold", gem: "#3fb37f", virtual: true, image: "images/03-emerald-ring.jpg", link: "" },
     { name: "데일리 실버 반지", price: "39,000원", category: "반지", metal: "silver", gem: "#dfe8ff", virtual: true, image: "images/04-silver-ring.jpg", link: "" },
