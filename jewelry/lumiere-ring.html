@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<!-- 루미에르 다이아몬드 반지 상세페이지 (쥬얼리 홈페이지 시안) -->
+<!-- 검색(네이버·구글)에 나오지 않게 합니다 -->
+<meta name="robots" content="noindex, nofollow" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>[미리보기] 루미에르 다이아몬드 반지 | Finest Jewelry</title>
+<meta name="theme-color" content="#141210" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%92%8D%3C/text%3E%3C/svg%3E" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Noto+Serif+KR:wght@400;600&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet" />
+
+<style>
+  /* ============================================================
+     상세페이지 스타일 - 홈페이지(style.css)와 같은 검정·아이보리·금색
+     ============================================================ */
+  :root {
+    --bg: #141210;
+    --bg-2: #1d1a17;
+    --card: #221e1a;
+    --ivory: #f5efe4;
+    --ivory-soft: #bfb5a6;
+    --gold: #d4b06a;
+    --gold-deep: #a9853f;
+    --line: rgba(212, 176, 106, 0.25);
+    --kakao: #fee500;
+    --kakao-text: #3a1d1d;
+    --font-body: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    --font-serif: "Noto Serif KR", "Apple SD Gothic Neo", serif;
+    --font-latin: "Cormorant Garamond", "Noto Serif KR", serif;
+    --bar-height: 60px;
+    --page: 860px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ivory);
+    font-family: var(--font-body); line-height: 1.8; word-break: keep-all;
+    padding-bottom: calc(var(--bar-height) + env(safe-area-inset-bottom));
+  }
+  a { color: inherit; }
+  img { display: block; width: 100%; height: auto; }
+  h1, h2, h3 { font-family: var(--font-serif); font-weight: 600; margin: 0; }
+
+  /* 머리글 */
+  .site-header {
+    position: sticky; top: 0; z-index: 20;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    padding: 14px 20px; background: rgba(20, 18, 16, 0.85);
+    backdrop-filter: blur(10px); border-bottom: 1px solid var(--line);
+  }
+  .logo { font-family: var(--font-latin); font-size: 22px; font-weight: 600; letter-spacing: 0.06em; color: var(--gold); text-decoration: none; }
+  .back { font-size: 14px; color: var(--ivory-soft); text-decoration: none; }
+  .back:hover { color: var(--gold); }
+
+  /* 상세페이지 본문: 가운데 한 줄 (쇼핑몰 상세페이지처럼 세로로 길게) */
+  .detail { max-width: var(--page); margin: 0 auto; background: var(--bg); }
+  .block { padding: 72px 24px; text-align: center; }
+  .block + .block { border-top: 1px solid var(--line); }
+  .kicker { font-family: var(--font-latin); letter-spacing: 0.3em; color: var(--gold); font-size: 15px; margin: 0 0 12px; }
+  .title { font-size: clamp(26px, 5.4vw, 38px); line-height: 1.4; }
+  .lead { color: var(--ivory-soft); margin: 18px auto 0; max-width: 560px; font-size: 16px; }
+  .gold { color: var(--gold); }
+  .full { margin: 36px -24px 0; }
+  .full + .caption, .pair + .caption { margin-top: 14px; }
+  .framed { max-width: 420px; margin: 36px auto 0; border-radius: 16px; overflow: hidden; }
+  .caption { color: var(--ivory-soft); font-size: 13px; }
+  .tag-virtual { position: relative; }
+  .tag-virtual::after {
+    content: "가상 이미지"; position: absolute; bottom: 12px; right: 12px;
+    font-size: 11px; padding: 3px 9px; border-radius: 999px;
+    background: rgba(20, 18, 16, 0.7); color: var(--ivory-soft); border: 1px solid var(--line);
+  }
+
+  /* 첫 화면 */
+  .hero { position: relative; }
+  .hero img { aspect-ratio: 16 / 9; object-fit: cover; }
+  .hero-body { padding: 40px 24px 56px; text-align: center; }
+  .hero-body .name { font-family: var(--font-latin); font-size: clamp(40px, 9vw, 64px); font-weight: 500; line-height: 1.1; letter-spacing: 0.04em; color: var(--gold); margin: 0; }
+  .hero-body h1 { font-size: clamp(22px, 4.6vw, 30px); margin-top: 8px; }
+  .hero-body .tagline { color: var(--ivory-soft); margin: 14px 0 0; }
+  .price-box { display: inline-flex; flex-direction: column; gap: 4px; margin: 28px auto 0; padding: 18px 32px; border: 1px solid var(--line); border-radius: 16px; background: var(--bg-2); }
+  .price-box strong { font-size: 28px; font-family: var(--font-serif); }
+  .price-box small { color: var(--ivory-soft); font-size: 13px; }
+  .actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 28px; }
+  .btn {
+    display: inline-block; cursor: pointer; padding: 14px 28px; border-radius: 999px;
+    font-weight: 700; font-size: 15px; text-decoration: none; transition: 0.2s;
+  }
+  .btn-gold { background: linear-gradient(135deg, #e8cd8f, var(--gold) 45%, var(--gold-deep)); color: #1b150c; }
+  .btn-gold:hover { filter: brightness(1.08); }
+  .btn-line { border: 1px solid var(--gold); color: var(--gold); }
+  .btn-line:hover { background: var(--gold); color: #1b150c; }
+
+  /* 한눈에 보기 */
+  .summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 36px 0 0; padding: 0; list-style: none; }
+  .summary li { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 22px 12px; }
+  .summary .num { font-family: var(--font-latin); color: var(--gold); font-size: 30px; line-height: 1; }
+  .summary b { display: block; margin-top: 10px; font-size: 15px; }
+  .summary span { display: block; color: var(--ivory-soft); font-size: 13px; margin-top: 4px; line-height: 1.6; }
+  @media (max-width: 520px) { .summary { grid-template-columns: 1fr; } }
+
+  /* 포인트 */
+  .point-no { display: inline-block; font-family: var(--font-latin); font-style: italic; font-size: 18px; color: var(--gold); border-bottom: 1px solid var(--gold); padding-bottom: 2px; margin-bottom: 16px; }
+  .notes { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 22px 0 0; padding: 0; list-style: none; }
+  .notes li { font-size: 13px; padding: 6px 14px; border: 1px solid var(--line); border-radius: 999px; color: var(--ivory-soft); }
+  .pair { display: grid; grid-template-columns: 1.48fr 1fr; gap: 8px; margin: 36px -24px 0; }
+  .pair img { height: 100%; object-fit: cover; }
+  @media (max-width: 520px) { .pair { grid-template-columns: 1fr; } }
+
+  /* 인용 문구 */
+  .quote { font-family: var(--font-serif); font-size: clamp(20px, 4.4vw, 26px); line-height: 1.7; margin: 0; }
+  .quote::before, .quote::after { display: block; font-family: var(--font-latin); color: var(--gold); font-size: 44px; line-height: 0.8; }
+  .quote::before { content: "\201C"; margin-bottom: 14px; }
+  .quote::after { content: "\201D"; margin-top: 22px; }
+
+  /* 표 */
+  .spec { width: 100%; margin: 32px 0 0; border-collapse: collapse; text-align: left; font-size: 15px; }
+  .spec th, .spec td { padding: 14px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .spec th { width: 32%; color: var(--gold); font-weight: 500; white-space: nowrap; }
+  .fine { color: var(--ivory-soft); font-size: 13px; margin: 14px 0 0; }
+
+  .sizes { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 28px 0 0; padding: 0; list-style: none; }
+  .sizes li { min-width: 58px; padding: 10px 0; border-radius: 12px; background: var(--card); border: 1px solid var(--line); font-weight: 500; }
+  .steps { counter-reset: s; list-style: none; margin: 28px auto 0; padding: 0; max-width: 520px; text-align: left; }
+  .steps li { counter-increment: s; position: relative; padding: 0 0 18px 44px; color: var(--ivory-soft); }
+  .steps li::before {
+    content: counter(s); position: absolute; left: 0; top: 0; width: 30px; height: 30px;
+    display: grid; place-items: center; border-radius: 50%; border: 1px solid var(--gold);
+    color: var(--gold); font-family: var(--font-latin); font-size: 17px;
+  }
+  .steps b { color: var(--ivory); }
+
+  .gift-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 28px 0 0; padding: 0; list-style: none; }
+  .gift-list li { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px 10px; font-size: 15px; }
+
+  .care { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 28px 0 0; padding: 0; list-style: none; text-align: left; }
+  .care li { background: var(--card); border-radius: 14px; padding: 18px; font-size: 14px; color: var(--ivory-soft); }
+  .care b { display: block; color: var(--ivory); font-size: 15px; margin-bottom: 4px; }
+  @media (max-width: 520px) { .care { grid-template-columns: 1fr; } }
+
+  /* 세트 안내 */
+  .set { background: radial-gradient(ellipse at top, rgba(212, 176, 106, 0.16), transparent 70%), var(--bg-2); }
+  .set-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 28px 0 0; padding: 0; list-style: none; }
+  .set-grid li { font-size: 13px; color: var(--ivory-soft); }
+  .set-grid img { aspect-ratio: 1; object-fit: cover; border-radius: 12px; margin-bottom: 8px; }
+  .set-price { margin: 24px 0 0; font-size: 15px; }
+  .set-price s { color: var(--ivory-soft); margin-right: 8px; }
+  .set-price strong { font-size: 24px; font-family: var(--font-serif); color: var(--gold); }
+
+  /* 안내 */
+  .info { margin: 28px 0 0; text-align: left; }
+  .info div { display: grid; grid-template-columns: 96px 1fr; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+  .info dt { color: var(--gold); }
+  .info dd { margin: 0; color: var(--ivory-soft); }
+
+  .site-footer { text-align: center; padding: 40px 20px 32px; color: var(--ivory-soft); font-size: 13px; border-top: 1px solid var(--line); }
+  .site-footer .logo { display: inline-block; margin-bottom: 6px; }
+
+  /* 화면 아래 고정 버튼 */
+  .bottom-bar {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
+    display: grid; grid-template-columns: 1fr 1.6fr;
+    height: calc(var(--bar-height) + env(safe-area-inset-bottom));
+    padding-bottom: env(safe-area-inset-bottom); background: var(--bg);
+  }
+  .bottom-bar a { display: grid; place-items: center; font-weight: 700; text-decoration: none; }
+  .bar-kakao { background: var(--kakao); color: var(--kakao-text); }
+  .bar-order { background: linear-gradient(135deg, #e8cd8f, var(--gold) 45%, var(--gold-deep)); color: #1b150c; }
+
+  /* 미리보기(결제 전 시안) 표시 */
+  .preview-badge {
+    position: fixed; top: 70px; right: 12px; z-index: 25;
+    font-size: 12px; padding: 5px 12px; border-radius: 999px;
+    background: rgba(20, 18, 16, 0.85); color: var(--gold); border: 1px solid var(--line);
+  }
+
+  /* 스크롤하면 나타나기 */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .reveal.shown { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a class="logo" href="./">Finest Jewelry</a>
+  <a class="back" href="./#lumiere">← 루미에르 컬렉션</a>
+</header>
+
+<main class="detail">
+
+  <!-- 1. 첫 화면 -->
+  <section class="hero">
+    <div class="tag-virtual"><img src="images/detail/01-prong-closeup.jpg" alt="6발 프롱에 감싸인 라운드 다이아몬드 클로즈업" width="1600" height="900" fetchpriority="high" /></div>
+    <div class="hero-body">
+      <p class="kicker">SIGNATURE COLLECTION</p>
+      <p class="name">Lumière</p>
+      <h1>루미에르 다이아몬드 반지</h1>
+      <p class="tagline">빛을 모아, 단 한 사람의 손끝에</p>
+      <div class="price-box">
+        <strong>89,000원</strong>
+        <small>무료 선물 포장 · 5만 원 이상 무료배송</small>
+      </div>
+      <div class="actions">
+        <a class="btn btn-gold" href="./?order=lumiere-ring">DM으로 주문하기</a>
+        <a class="btn btn-line" href="#spec">상세 정보 보기</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. 한눈에 보기 -->
+  <section class="block reveal">
+    <p class="kicker">AT A GLANCE</p>
+    <h2 class="title">루미에르가 특별한<br /><span class="gold">세 가지 이유</span></h2>
+    <ul class="summary">
+      <li><span class="num">6</span><b>6발 프롱 세팅</b><span>여섯 개의 발이<br />스톤을 단단히</span></li>
+      <li><span class="num">∞</span><b>파베 사이드 스톤</b><span>밴드 위까지<br />이어지는 반짝임</span></li>
+      <li><span class="num">✦</span><b>데일리 착용감</b><span>매일 껴도<br />걸리지 않는 높이</span></li>
+    </ul>
+  </section>
+
+  <!-- 3. 브랜드 이야기 -->
+  <section class="block reveal">
+    <p class="quote">빛을 뜻하는 이름, 루미에르.<br />가장 빛나는 순간을<br />가장 오래 간직하도록.</p>
+    <div class="full tag-virtual"><img src="images/detail/02-on-table.jpg" alt="금빛 조명 아래 놓인 루미에르 반지" width="1600" height="900" loading="lazy" /></div>
+    <p class="lead">프러포즈, 기념일, 혹은 스스로에게 주는 선물.<br />특별한 날에 어울리면서도, 매일의 옷차림에 자연스럽게 스며드는 반지를 만들었습니다.</p>
+  </section>
+
+  <!-- 4. 포인트 1: 6발 프롱 -->
+  <section class="block reveal">
+    <span class="point-no">Point 01</span>
+    <h2 class="title">여섯 개의 발이 만드는<br /><span class="gold">완벽한 원</span></h2>
+    <p class="lead">6발 프롱은 스톤을 더 많은 면에서 받쳐 안정감이 높고, 위에서 봤을 때 스톤이 더 둥글고 크게 보입니다. 끝을 둥글게 다듬어 옷이나 머리카락에 걸리지 않습니다.</p>
+    <div class="full tag-virtual"><img src="images/detail/04-front.jpg" alt="정면에서 본 6발 프롱 라운드 스톤" width="1600" height="900" loading="lazy" /></div>
+    <ul class="notes">
+      <li>라운드 브릴리언트 컷</li>
+      <li>둥근 프롱 끝 마감</li>
+      <li>빛이 드는 오픈 갤러리</li>
+    </ul>
+  </section>
+
+  <!-- 5. 포인트 2: 사이드 스톤 + 옆모습 -->
+  <section class="block reveal">
+    <span class="point-no">Point 02</span>
+    <h2 class="title">옆에서 봐도 아름다운<br /><span class="gold">캐시드럴 라인</span></h2>
+    <p class="lead">밴드가 스톤을 향해 아치형으로 솟아오르는 캐시드럴 디자인. 양쪽 어깨에 촘촘히 박힌 파베 스톤이 손을 움직일 때마다 메인 스톤의 빛을 이어 받습니다.</p>
+    <div class="full tag-virtual"><img src="images/detail/05-side-profile.jpg" alt="캐시드럴 라인과 파베 사이드 스톤이 보이는 반지 옆모습" width="1600" height="900" loading="lazy" /></div>
+    <p class="caption">안쪽 갤러리까지 섬세하게 다듬은 옆모습</p>
+  </section>
+
+  <!-- 6. 포인트 3: 착용 -->
+  <section class="block reveal">
+    <span class="point-no">Point 03</span>
+    <h2 class="title">손끝에 올렸을 때<br /><span class="gold">비로소 완성되는 빛</span></h2>
+    <p class="lead">손가락 위에서 너무 높이 뜨지 않도록 세팅 높이를 맞췄습니다. 니트, 장갑을 낄 때도 부담 없는 데일리 다이아몬드 반지입니다.</p>
+    <div class="pair">
+      <div class="tag-virtual"><img src="images/detail/06-model.jpg" alt="루미에르 반지를 낀 손을 볼에 댄 모델" width="822" height="941" loading="lazy" /></div>
+      <div class="tag-virtual"><img src="images/detail/07-hand.jpg" alt="손가락에 착용한 루미에르 반지 클로즈업" width="388" height="551" loading="lazy" /></div>
+    </div>
+    <p class="caption">착용 컷 · 모델 착용 사이즈 9호</p>
+  </section>
+
+  <!-- 7. 룩북 -->
+  <section class="block reveal">
+    <p class="kicker">LOOKBOOK</p>
+    <h2 class="title">어느 각도에서 봐도</h2>
+    <div class="full tag-virtual"><img src="images/detail/03-lookbook.jpg" alt="모델 착용, 정면, 옆모습, 밴드, 케이스 속 반지를 모은 룩북" width="1600" height="900" loading="lazy" /></div>
+  </section>
+
+  <!-- 8. 상세 정보 -->
+  <section class="block reveal" id="spec">
+    <p class="kicker">DETAILS</p>
+    <h2 class="title">상세 정보</h2>
+    <table class="spec">
+      <tbody>
+        <tr><th scope="row">제품명</th><td>루미에르 다이아몬드 반지</td></tr>
+        <tr><th scope="row">디자인</th><td>6발 프롱 솔리테어 · 캐시드럴 밴드 · 파베 사이드 스톤</td></tr>
+        <tr><th scope="row">메인 스톤</th><td>라운드 브릴리언트 컷</td></tr>
+        <tr><th scope="row">소재</th><td>상담 시 안내 (14K · 18K · 925 실버 중 선택)</td></tr>
+        <tr><th scope="row">사이즈</th><td>5호 ~ 19호 (홀수 호수)</td></tr>
+        <tr><th scope="row">구성</th><td>반지 · 케이스 · 쇼핑백 · 메시지 카드</td></tr>
+        <tr><th scope="row">가격</th><td>89,000원</td></tr>
+      </tbody>
+    </table>
+    <p class="fine">※ 시안용 예시 정보입니다. 실제 소재·스톤 크기·가격으로 바꿔 넣어 드립니다.</p>
+  </section>
+
+  <!-- 9. 사이즈 안내 -->
+  <section class="block reveal">
+    <p class="kicker">SIZE GUIDE</p>
+    <h2 class="title">사이즈 고르는 법</h2>
+    <ul class="sizes" aria-label="주문 가능한 사이즈">
+      <li>5호</li><li>7호</li><li>9호</li><li>11호</li><li>13호</li><li>15호</li><li>17호</li><li>19호</li>
+    </ul>
+    <ol class="steps">
+      <li><b>가진 반지가 있다면</b><br />평소 잘 맞는 반지의 호수를 그대로 골라 주세요.</li>
+      <li><b>처음이라면</b><br />실이나 종이띠로 반지 낄 손가락 둘레를 재어 mm로 알려 주세요.</li>
+      <li><b>선물이라 모른다면</b><br />DM으로 상담해 주시면 알맞은 호수를 함께 찾아 드립니다.</li>
+    </ol>
+  </section>
+
+  <!-- 10. 선물 포장 -->
+  <section class="block reveal">
+    <p class="kicker">GIFT WRAPPING</p>
+    <h2 class="title">열어 보는 순간까지<br /><span class="gold">선물이 되도록</span></h2>
+    <div class="framed tag-virtual"><img src="images/detail/08-box.jpg" alt="벨벳 케이스에 담긴 루미에르 반지" width="422" height="360" loading="lazy" /></div>
+    <ul class="gift-list">
+      <li>벨벳 반지 케이스</li>
+      <li>브랜드 쇼핑백</li>
+      <li>손글씨 메시지 카드</li>
+      <li>흠집 방지 개별 포장</li>
+    </ul>
+    <p class="lead">모든 주문에 무료로 준비해 드립니다. 메시지는 주문서 요청 사항에 적어 주세요.</p>
+  </section>
+
+  <!-- 11. 관리 방법 -->
+  <section class="block reveal">
+    <p class="kicker">CARE</p>
+    <h2 class="title">오래 빛나게 하는 관리법</h2>
+    <ul class="care">
+      <li><b>마지막에 끼기</b>향수·로션·화장품을 바른 뒤에 착용해 주세요.</li>
+      <li><b>물기는 바로</b>샤워·수영·설거지 전에는 빼 두는 것이 좋습니다.</li>
+      <li><b>따로 보관</b>다른 쥬얼리와 부딪히지 않게 케이스에 따로 넣어 주세요.</li>
+      <li><b>부드러운 천으로</b>착용 후 부드러운 천으로 가볍게 닦아 주세요.</li>
+    </ul>
+  </section>
+
+  <!-- 12. 루미에르 세트 -->
+  <section class="block set reveal">
+    <p class="kicker">COMPLETE THE SET</p>
+    <h2 class="title">루미에르 4종 세트로<br /><span class="gold">20% 할인</span></h2>
+    <p class="lead">같은 디자인의 반지 · 목걸이 · 귀걸이 · 팔찌를 함께 맞춰 보세요.</p>
+    <ul class="set-grid">
+      <li><img src="images/01-solitaire-ring-photo.jpg" alt="" width="800" height="800" loading="lazy" />반지</li>
+      <li><img src="images/13-lumiere-necklace.jpg" alt="" width="800" height="800" loading="lazy" />목걸이</li>
+      <li><img src="images/14-lumiere-earrings.jpg" alt="" width="800" height="800" loading="lazy" />귀걸이</li>
+      <li><img src="images/15-lumiere-bracelet.jpg" alt="" width="800" height="800" loading="lazy" />팔찌</li>
+    </ul>
+    <p class="set-price"><s>326,000원</s><strong>260,800원</strong></p>
+    <div class="actions">
+      <a class="btn btn-gold" href="./?order=lumiere-set">4종 세트 주문하기</a>
+      <a class="btn btn-line" href="./?order=lumiere-ring">반지만 주문하기</a>
+    </div>
+  </section>
+
+  <!-- 13. 주문·배송 안내 -->
+  <section class="block reveal">
+    <p class="kicker">ORDER &amp; DELIVERY</p>
+    <h2 class="title">주문·배송 안내</h2>
+    <dl class="info">
+      <div><dt>주문 방법</dt><dd>주문하기를 누르면 주문서가 열립니다. 인스타그램 DM·카카오톡·문자로 바로 보내 주세요.</dd></div>
+      <div><dt>결제</dt><dd>주문 확인 후 계좌이체 또는 결제 링크로 안내해 드립니다.</dd></div>
+      <div><dt>배송</dt><dd>주문 확인 후 2~3일 안에 택배 발송 · 5만 원 이상 무료배송</dd></div>
+      <div><dt>상담 시간</dt><dd>평일 10:00 – 18:00 (DM·카카오톡 주문은 24시간 접수)</dd></div>
+      <div><dt>교환·반품</dt><dd>상품 수령 후 상담 채널로 먼저 문의해 주세요. 사이즈·각인 맞춤 제작 상품은 교환·반품이 어려울 수 있습니다.</dd></div>
+    </dl>
+    <p class="fine">※ 사진은 시안용 가상 이미지이며, 실제 제품 사진으로 바꿔 드립니다.</p>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <a class="logo" href="./">Finest Jewelry</a>
+  <p>매일 끼고 싶은, 오래 남는 반짝임</p>
+</footer>
+
+<div class="preview-badge">미리보기 · 결제 전 시안입니다</div>
+
+<!-- 화면 아래 고정 버튼 -->
+<nav class="bottom-bar" aria-label="주문">
+  <a class="bar-kakao" href="./#visit">카카오톡 상담</a>
+  <a class="bar-order" href="./?order=lumiere-ring">DM으로 주문하기</a>
+</nav>
+
+<script>
+  // 스크롤하면 부드럽게 나타나기
+  (function () {
+    var items = document.querySelectorAll(".reveal");
+    if (!("IntersectionObserver" in window)) {
+      items.forEach(function (n) { n.classList.add("shown"); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add("shown"); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    items.forEach(function (n) { io.observe(n); });
+  })();
+</script>
+</body>
+</html>
