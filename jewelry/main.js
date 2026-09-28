@@ -1,5 +1,5 @@
 /* ============================================================
-   쥬얼리 매장 홈페이지 시안 - 동작
+   쥬얼리 브랜드 홈페이지 시안 - 동작
    - config.js 의 내용을 화면에 채웁니다.
    - 사진이 아직 없는 상품은 예시 그림(SVG)을 그려 줍니다.
    ============================================================ */
@@ -271,12 +271,12 @@
       video.controls = true;
       video.playsInline = true;
       video.preload = "metadata";
-      video.setAttribute("aria-label", "매장 광고 영상");
+      video.setAttribute("aria-label", "브랜드 광고 영상");
       box.appendChild(video);
     } else if (id) {
       var frame = el("iframe");
       frame.src = "https://www.youtube-nocookie.com/embed/" + encodeURIComponent(id);
-      frame.title = "매장 소개 영상";
+      frame.title = "브랜드 소개 영상";
       frame.loading = "lazy";
       frame.allow = "accelerometer; encrypted-media; gyroscope; picture-in-picture";
       frame.allowFullscreen = true;
@@ -296,7 +296,7 @@
     });
   }
 
-  // ---------- 홈페이지 안내 / 매장 안내 중 하나 보여 주기 ----------
+  // ---------- 홈페이지 안내 / 주문·문의 안내 중 하나 보여 주기 ----------
   function renderSiteInfo() {
     var info = config.siteInfo || {};
     if (!info.show) return;
@@ -316,17 +316,17 @@
     });
   }
 
-  // ---------- 매장 안내 ----------
+  // ---------- 주문·문의 안내 (온라인 전용이라 주소·영업시간 없음) ----------
   function renderInfo() {
     var dl = document.getElementById("info");
     [
-      ["전화", config.phone],
-      ["주소", config.address],
-      ["영업시간", config.hours],
+      ["문의 전화", config.phone],
+      ["상담 시간", config.contactHours],
+      ["배송", config.shipping],
     ].forEach(function (row) {
       if (!row[1] && !config.previewMode) return;
       dl.appendChild(el("dt", null, row[0]));
-      var dd = el("dd", row[1] ? null : "todo", row[1] || "매장 정보를 받으면 채워집니다");
+      var dd = el("dd", row[1] ? null : "todo", row[1] || "정보를 받으면 채워집니다");
       dl.appendChild(dd);
     });
 
@@ -335,7 +335,6 @@
       ["smartstore", "스마트스토어"],
       ["kakao", "카카오톡 채널"],
       ["dm", "인스타그램 DM"],
-      ["naverPlace", "네이버플레이스"],
       ["instagram", "인스타그램"],
       ["youtube", "유튜브"],
     ].forEach(function (item) {
@@ -348,7 +347,7 @@
     });
 
     if (config.previewMode) {
-      box.parentNode.appendChild(el("p", "demo-note", "※ 전화번호·주소·영업시간·가격은 시안용 가상 정보입니다."));
+      box.parentNode.appendChild(el("p", "demo-note", "※ 전화번호·상담 시간·배송 조건·가격은 시안용 가상 정보입니다."));
     }
     if (config.previewMode && (config.siteInfo || {}).show) {
       document.getElementById("site-info").appendChild(el("p", "demo-note", "※ 위 컬렉션의 상품·가격과 채널 링크는 시안용 가상 정보입니다."));
